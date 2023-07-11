@@ -6,6 +6,7 @@ import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity()
 {
 
