@@ -22,6 +22,12 @@ class HomeFragment : Fragment()
     {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O)
+        {
+            binding.dayText.text = LocalDate.now().toString()
+        }
+
+
         //출근
         binding.attendanceBtn.setOnClickListener{
 
