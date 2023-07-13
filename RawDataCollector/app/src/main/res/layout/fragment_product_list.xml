@@ -5,9 +5,33 @@
     android:layout_height="match_parent">
 
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="List" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/dayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2023년 07월 14일"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일일 생산 목록"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="40sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerView"/>
+    </LinearLayout>
 
 </FrameLayout>
