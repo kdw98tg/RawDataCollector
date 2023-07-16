@@ -1,9 +1,9 @@
-package com.bst.rawdatacollector
+package com.bst.rawdatacollector.MainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
+import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.ActivityMainBinding
 
 

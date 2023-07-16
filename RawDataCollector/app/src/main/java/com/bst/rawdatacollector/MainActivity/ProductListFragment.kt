@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector
+package com.bst.rawdatacollector.MainActivity
 
 import android.content.Intent
 import android.os.Build
@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
+import com.bst.rawdatacollector.DataClass.Product
+import com.bst.rawdatacollector.Product.ProductAdapter
+import com.bst.rawdatacollector.Product.ProductInfoActivity
 import com.bst.rawdatacollector.databinding.FragmentProductListBinding
 import java.time.LocalDate
 
@@ -40,7 +43,7 @@ class ProductListFragment : Fragment()
         {
             override fun voidVoidDelegate()
             {
-                val intent: Intent = Intent(requireContext(),ProductInfoActivity::class.java)
+                val intent: Intent = Intent(requireContext(), ProductInfoActivity::class.java)
                 startActivity(intent)
             }
 

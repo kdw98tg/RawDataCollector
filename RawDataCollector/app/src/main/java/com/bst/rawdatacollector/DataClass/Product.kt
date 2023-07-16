@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector
+package com.bst.rawdatacollector.DataClass
 
 data class Product(
     val productName:String,

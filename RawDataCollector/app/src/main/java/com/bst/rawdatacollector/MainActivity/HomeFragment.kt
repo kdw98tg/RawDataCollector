@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector
+package com.bst.rawdatacollector.MainActivity
 
 import android.content.Context
 import android.os.Build

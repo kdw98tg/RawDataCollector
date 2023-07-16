@@ -1,10 +1,11 @@
-package com.bst.rawdatacollector
+package com.bst.rawdatacollector.Product
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
+import com.bst.rawdatacollector.DataClass.Product
 import com.bst.rawdatacollector.databinding.ItemProducelistBinding
 
 class ProductAdapter(private val context: Context, private val productList: ArrayList<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>()
