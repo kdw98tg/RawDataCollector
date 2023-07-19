@@ -14,53 +14,49 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.CalendarModel
 import com.bst.rawdatacollector.Delegate.VoidStringDelegate
 import com.bst.rawdatacollector.R
+import com.bst.rawdatacollector.databinding.FragmentMoreBinding
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 
-class MoreFragment : Fragment() {
+class MoreFragment : Fragment()
+{
 
-    var monthYearText: TextView? = null //년,월 텍스트
-    var recyclerView: RecyclerView? = null
+    private lateinit var binding: FragmentMoreBinding
     private lateinit var adapter: CalendarAdapter
     private lateinit var curStateBottomDialog: CurStateBottomDialog
-    private lateinit var preBtn: ImageButton
-    private lateinit var nextBtn: ImageButton
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    override fun onCreateView(
-        _inflater: LayoutInflater, _container: ViewGroup?,
-        _savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View?
+    {
         //프래그먼트 연결
-        val calendarView =
-            _inflater.inflate(R.layout.fragment_more, _container, false) as ViewGroup?
+        val binding = FragmentMoreBinding.inflate(layoutInflater)
         curStateBottomDialog = CurStateBottomDialog()
-        bindView(calendarView!!)
 
         var selectedDate = LocalDate.now() //현재 날짜
 
         setMonthView() //화면 설정
-        adapter.setCurStateCallback(object : VoidStringDelegate {
+        adapter.setCurStateCallback(object : VoidStringDelegate
+        {
 
-            override fun voidStringDelegate(_data: String) {
+            override fun voidStringDelegate(_data: String)
+            {
                 curStateBottomDialog.show(
-                    activity!!.supportFragmentManager,
-                    CurStateBottomDialog.TAG
+                    activity!!.supportFragmentManager, CurStateBottomDialog.TAG
                 )
                 curStateBottomDialog.setDayString(_data)
             }
         })
-        preBtn.setOnClickListener {
+        binding.prevBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1) //오늘에서 월만 -1
             setMonthView()
         } //이전달 클릭 리스너
-        nextBtn.setOnClickListener {
+        binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1) //오늘에서 월만 +1
             setMonthView()
         }//다음달 클릭 리스너
-        return calendarView
+        return binding.root
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -70,7 +66,7 @@ class MoreFragment : Fragment() {
 
         val selectedDate = LocalDate.now()
         //년월 텍스트뷰 셋팅
-        monthYearText!!.text = (monthYearFromDate(selectedDate))
+        binding.monthYearText.text = (monthYearFromDate(selectedDate))
 
         //년월 텍스트 뷰 셋팅
         val dayList: ArrayList<LocalDate?> = daysInMonthArray(selectedDate)
@@ -82,19 +78,11 @@ class MoreFragment : Fragment() {
         val manager: RecyclerView.LayoutManager = GridLayoutManager(getContext(), 7)
         //StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(7,StaggeredGridLayoutManager.HORIZONTAL);
         //레이아웃 적용
-        recyclerView?.setLayoutManager(manager)
+        binding.recyclerView.layoutManager = manager
 
         //어댑터 적용
-        recyclerView?.setAdapter(adapter)
+        binding.recyclerView.adapter = adapter
     }
-
-    private fun bindView(_viewGroup: ViewGroup) {
-        monthYearText = _viewGroup.findViewById<TextView>(R.id.monthYearText)
-        recyclerView = _viewGroup.findViewById<RecyclerView>(R.id.recyclerView)
-        preBtn = _viewGroup.findViewById<ImageButton>(R.id.prevBtn)
-        nextBtn = _viewGroup.findViewById<ImageButton>(R.id.nextBtn)
-    }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun monthYearFromDate(_date: LocalDate): String? //날짜 타입 설정/(4월 20일)
@@ -105,7 +93,8 @@ class MoreFragment : Fragment() {
 
     //날짜 생성
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun daysInMonthArray(_date: LocalDate): ArrayList<LocalDate?> {
+    private fun daysInMonthArray(_date: LocalDate): ArrayList<LocalDate?>
+    {
 
 
         val selectedDate = LocalDate.now()
@@ -122,15 +111,17 @@ class MoreFragment : Fragment() {
         val dayOfWeek = firstDay.dayOfWeek.value
 
         //날짜 생성
-        for (i in 0..41) {
-            if (i <= dayOfWeek || i > lastDay + dayOfWeek) {
+        for (i in 0..41)
+        {
+            if (i <= dayOfWeek || i > lastDay + dayOfWeek)
+            {
                 dayList.add(null)
-            } else {
+            }
+            else
+            {
                 dayList.add(
                     LocalDate.of(
-                        selectedDate.getYear(),
-                        selectedDate.getMonth(),
-                        i - dayOfWeek
+                        selectedDate.getYear(), selectedDate.getMonth(), i - dayOfWeek
                     )
                 )
             }
