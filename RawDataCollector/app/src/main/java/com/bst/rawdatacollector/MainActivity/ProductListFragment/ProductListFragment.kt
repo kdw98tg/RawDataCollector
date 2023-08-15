@@ -21,7 +21,7 @@ class ProductListFragment : Fragment()
     private lateinit var binding: FragmentProductListBinding
     private lateinit var productAdapter: ProductAdapter
     private lateinit var productList: ArrayList<Product>
-    override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View?
+    override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
     {
         binding = FragmentProductListBinding.inflate(_inflater, _container, false)
         productList = ArrayList()

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/findBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:background="#00ff0000"
+        android:text="ID / PW 찾기"
+        android:textColor="#3b608c"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/registerBtn"
+        app:layout_constraintTop_toBottomOf="@+id/pwText" />
+
+    <EditText
+        android:id="@+id/pwText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="32dp"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:text="Rlaehddn1!"
+        android:textColorHint="#38608C"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idText" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RDC"
+        android:textColor="#6672FF"
+        android:textSize="80sp"
+        android:layout_marginTop="200dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/idText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="32dp"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:text="ABC123"
+        android:textColorHint="#38608C"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <!-- SNS 연동
+<LinearLayout
+  android:id="@+id/linearLayout3"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="16dp"
+  android:orientation="horizontal"
+  app:layout_constraintTop_toBottomOf="@+id/imageView3"
+  tools:layout_editor_absoluteX="32dp">
+
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/button"
+      style="@android:style/Widget.Button"
+      android:layout_width="0dp"
+      android:layout_height="55dp"
+      android:layout_marginEnd="8dp"
+      android:layout_weight="0.5"
+      android:background="@drawable/btn_background"
+      android:drawableStart="@drawable/facebook"
+      android:padding="16dp"
+      android:text="Facebook"
+      android:textColor="#3b608c"
+      android:textSize="16sp"
+      android:textStyle="bold" />
+
+  <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/button2"
+      style="@android:style/Widget.Button"
+      android:layout_width="0dp"
+      android:layout_height="55dp"
+      android:layout_marginStart="8dp"
+      android:layout_weight="0.5"
+      android:background="@drawable/btn_background"
+      android:drawableStart="@drawable/google"
+      android:padding="16dp"
+      android:text="Google"
+      android:textColor="#3b608c"
+      android:textSize="16sp"
+      android:textStyle="bold" />
+</LinearLayout>
+-->
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:text="로그인"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwText" />
+
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:background="#00ff0000"
+        android:text="회원가입"
+        android:textColor="#3b608c"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwText" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

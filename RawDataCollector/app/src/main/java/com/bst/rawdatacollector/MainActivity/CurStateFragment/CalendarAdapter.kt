@@ -13,31 +13,34 @@ import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.ItemCalendarBinding
 import java.time.LocalDate
 
-class CalendarAdapter(
-    private val context: Context,
-    private var dayList: ArrayList<LocalDate?>
-) : RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
+class CalendarAdapter(private val context: Context, private var dayList: ArrayList<LocalDate?>
+) : RecyclerView.Adapter<CalendarAdapter.ViewHolder>()
+{
 
     private var curStateCallback: VoidStringDelegate? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
+    {
         val binding = ItemCalendarBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int
+    {
         return dayList.size
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int)
+    {
 
         //날짜 변수에 담기
         val day = dayList[position]
         if (day == null) //day == null 이면 날짜 표시 하지 않기
         {
             holder.binding.dayText.text = ""
-        } else  //그게 아니면 날짜 표시
+        }
+        else  //그게 아니면 날짜 표시
         {
             holder.binding.dayText.text = day.dayOfMonth.toString()
 
@@ -54,7 +57,8 @@ class CalendarAdapter(
         if ((position + 1) % 7 == 0) //토요일 이면
         {
             holder.binding.dayText.setTextColor(Color.BLUE)
-        } else if (position == 0 || position % 7 == 0) //일요일 이면
+        }
+        else if (position == 0 || position % 7 == 0) //일요일 이면
         {
             holder.binding.dayText.setTextColor(Color.RED)
             // 오늘 날짜 색상 칠하기
@@ -63,15 +67,15 @@ class CalendarAdapter(
 
         //날짜 클릭 이벤트
         holder.itemView.setOnClickListener {
-            if (day != null) {
+            if (day != null)
+            {
                 val iYear = day.year //년
                 val iMonth = day.monthValue //월
                 val iDay = day.dayOfMonth //일
-                val yearMonday =
-                    iYear.toString() + "년 " + monthValueFormat(iMonth) + "월 " + dayValueFormat(iDay) + "일"
-                val yearMonthDate =
-                    iYear.toString() + "-" + monthValueFormat(iMonth) + "-" + dayValueFormat(iDay)
-                if (curStateCallback != null) {
+                val yearMonday = iYear.toString() + "년 " + monthValueFormat(iMonth) + "월 " + dayValueFormat(iDay) + "일"
+                val yearMonthDate = iYear.toString() + "-" + monthValueFormat(iMonth) + "-" + dayValueFormat(iDay)
+                if (curStateCallback != null)
+                {
                     curStateCallback?.voidStringDelegate(yearMonthDate)
                 }
                 Toast.makeText(holder.itemView.context, yearMonday, Toast.LENGTH_SHORT).show()
@@ -81,22 +85,31 @@ class CalendarAdapter(
 
     inner class ViewHolder(val binding: ItemCalendarBinding) : RecyclerView.ViewHolder(binding.root)
 
-    fun setCurStateCallback(_curStateCallback: VoidStringDelegate) {
+    fun setCurStateCallback(_curStateCallback: VoidStringDelegate)
+    {
         this.curStateCallback = _curStateCallback
     }
 
-    private fun monthValueFormat(_month: Int): String? {
-        return if (_month < 10) {
+    private fun monthValueFormat(_month: Int): String?
+    {
+        return if (_month < 10)
+        {
             "0$_month"
-        } else {
+        }
+        else
+        {
             "" + _month
         }
     }
 
-    private fun dayValueFormat(_day: Int): String? {
-        return if (_day < 10) {
+    private fun dayValueFormat(_day: Int): String?
+    {
+        return if (_day < 10)
+        {
             "0$_day"
-        } else {
+        }
+        else
+        {
             "" + _day
         }
     }

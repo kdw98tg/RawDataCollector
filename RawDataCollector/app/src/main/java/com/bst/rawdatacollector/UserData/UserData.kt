@@ -20,14 +20,98 @@ class UserData private constructor(context: Context)
             }
             return instance!!
         }
+
+
+        private var userCode: String = ""
+        private var userPw: String = ""
+        private var userName: String = ""
+        private var userEmail: String = ""
+        private var userCompany: String = ""
+        private var userPhoneNumber: String = ""
+        private var userProfileImg:String=""
+        private var userPosition: String = ""
+
     }
-
-    private val userAuthority = 0
-
-    fun getUserAuthority(): Int
+//region getter/setter
+     fun getUserCode(): String
     {
-        return userAuthority
+        return userCode
     }
 
+     fun setUserCode(_userCode: String)
+    {
+        userCode = _userCode
+    }
+
+     fun getUserPw(): String
+    {
+        return userPw
+    }
+
+     fun setUserPw(_userPw: String)
+    {
+        userPw = _userPw
+    }
+
+     fun getUserName(): String
+    {
+        return userName
+    }
+
+     fun setUserName(_userName: String)
+    {
+        userName = _userName
+    }
+
+     fun getUserEmail(): String
+    {
+        return userCode
+    }
+
+     fun setUserEmail(_userEmail: String)
+    {
+        userEmail = _userEmail
+    }
+
+     fun getUserCompany(): String
+    {
+        return userCompany
+    }
+
+     fun setUserCompany(_userCompany: String)
+    {
+        userCompany = _userCompany
+    }
+
+     fun getUserPhoneNumber(): String
+    {
+        return userPhoneNumber
+    }
+
+     fun setUserPhoneNumber(_userPhoneNumber: String)
+    {
+        userPhoneNumber = _userPhoneNumber
+    }
+     fun getUserPosition(): String
+    {
+        return userPosition
+    }
+
+     fun setUserPosition(_userPosition: String)
+    {
+        userPosition = _userPosition
+    }
+
+    fun getUserProfileImg(): String
+    {
+        return userProfileImg
+    }
+
+    fun setUserProfileImg(_userProfileImg: String)
+    {
+        userProfileImg = _userProfileImg
+    }
+
+//endregion
 
 }
