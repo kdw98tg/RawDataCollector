@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity
+package com.bst.rawdatacollector.MainActivity.FragmentHome
 
 import android.content.Context
 import android.os.Build

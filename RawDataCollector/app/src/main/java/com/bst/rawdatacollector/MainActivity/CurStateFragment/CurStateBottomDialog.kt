@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity
+package com.bst.rawdatacollector.MainActivity.CurStateFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

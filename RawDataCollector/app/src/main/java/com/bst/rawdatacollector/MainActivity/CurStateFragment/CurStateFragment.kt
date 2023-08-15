@@ -1,26 +1,22 @@
-package com.bst.rawdatacollector.MainActivity
+package com.bst.rawdatacollector.MainActivity.CurStateFragment
 
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bst.rawdatacollector.DataClass.CalendarModel
 import com.bst.rawdatacollector.Delegate.VoidStringDelegate
-import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.FragmentMoreBinding
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 
-class MoreFragment : Fragment()
+class CurStateFragment : Fragment()
 {
 
     private lateinit var binding: FragmentMoreBinding

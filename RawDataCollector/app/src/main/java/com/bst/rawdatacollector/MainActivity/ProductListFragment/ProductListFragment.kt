@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity
+package com.bst.rawdatacollector.MainActivity.ProductListFragment
 
 import android.content.Intent
 import android.os.Build

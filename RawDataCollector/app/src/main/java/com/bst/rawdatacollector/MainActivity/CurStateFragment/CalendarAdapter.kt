@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity
+package com.bst.rawdatacollector.MainActivity.CurStateFragment
 
 import android.content.Context
 import android.graphics.Color
