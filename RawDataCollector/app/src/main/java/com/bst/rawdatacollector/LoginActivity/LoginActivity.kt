@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bst.rawdatacollector.MainActivity.MainActivity
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.UserData.UserData
@@ -38,18 +40,28 @@ class LoginActivity : AppCompatActivity()
         //init
 
         binding.loginBtn.setOnClickListener {
-            val userId = binding.idText.text.toString()//id 추출
-            val userPw = binding.pwText.text.toString()//pw 추출
+            val userId = binding.idText.text.toString().trim() { it <= ' ' }//id 추출
+            val userPw = binding.pwText.text.toString().trim() { it <= ' ' }//pw 추출
+
             loginRequest(userId, userPw)//로그인 요청
         }
 
+    }
+
+    private fun empty(_str: String)
+    {
+        val dialog: AlertDialog
+        val builder = AlertDialog.Builder(this@LoginActivity)
+        dialog = builder.setMessage(_str + "을(를) 입력해주세요.").setPositiveButton("확인", null).create()
+        dialog!!.show()
+        return
     }
 
     private fun loginRequest(_userId: String, _userPw: String)
     {
         val client = OkHttpClient()
 
-        val body = FormBody.Builder().add("userCode", _userId).build()
+        val body = FormBody.Builder().add("userCode", _userId).add("userPw", _userPw).build()
 
         val request = Request.Builder().url(LOGIN_URL).post(body).build()
 
@@ -86,21 +98,23 @@ class LoginActivity : AppCompatActivity()
                         setUserData(userCode, userPw, userName, userEmail, userCompany, userPhoneNumber, userProfileImg, userPosition)
 
                         //다 됐으면 권한에 따라 MainActivity로 옮김
-                        if(userPosition == "사원")//사원이면 메인으로
+                        if (userPosition == "사원")//사원이면 메인으로
                         {
                             moveActivity(MainActivity::class.java)
                         }
                         else//관리자면 관리자 화면으로
                         {
-                            runOnUiThread{
+                            runOnUiThread {
 
-                            Toast.makeText(applicationContext,"관리자 모드로 로그인 하셨습니다",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(applicationContext, "관리자 모드로 로그인 하셨습니다", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
-                    catch (e: Exception)
+                    catch (e: Exception)//로그인 실패시
                     {
-                        e.printStackTrace()
+                        runOnUiThread {
+                            Toast.makeText(applicationContext, "사번 또는 비밀번호를 확인하세요", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                 }
@@ -117,7 +131,8 @@ class LoginActivity : AppCompatActivity()
         userCompany: String,
         userPhoneNumber: String,
         userProfileImg: String,
-        userPosition: String)
+        userPosition: String
+    )
     {
         val userData = UserData.getInstance(this@LoginActivity)
         userData.setUserCode(userCode)

@@ -4,8 +4,9 @@
     mysqli_set_charset($con,"utf8");		
 
 	$userCode = $_POST['userCode'];	
+	$userPw = $_POST['userPw'];
 
-	$query = "SELECT * FROM user WHERE user_code = '$userCode'";
+	$query = "SELECT * FROM user WHERE user_code = '$userCode' AND pw ='$userPw'";
 	 
 	//echo $query;
 	
