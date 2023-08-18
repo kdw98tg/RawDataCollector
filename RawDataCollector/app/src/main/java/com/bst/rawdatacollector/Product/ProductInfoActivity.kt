@@ -60,7 +60,7 @@ class ProductInfoActivity : AppCompatActivity()
             {
                 //고른 아이템을 반환
                 val selectedItem = spinnerAdapter.getItem()
-                Toast.makeText(this@ProductInfoActivity,"선택된 아이템:$selectedItem",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ProductInfoActivity, "선택된 아이템:$selectedItem", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?)
@@ -87,12 +87,12 @@ class ProductInfoActivity : AppCompatActivity()
 
         dialogBuilder.setView(dialogView)
 
-
         dialogBuilder.setNegativeButton("취소") { dialog, which ->
             // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
             dialog.dismiss()
         }.setPositiveButton("확인") { dialog, which ->
             Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
+            //통신 해야 함
         }
 
         val alertDialog = dialogBuilder.create()
