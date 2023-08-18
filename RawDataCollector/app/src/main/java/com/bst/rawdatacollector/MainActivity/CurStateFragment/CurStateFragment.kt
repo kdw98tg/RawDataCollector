@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.Delegate.VoidStringDelegate
-import com.bst.rawdatacollector.databinding.FragmentMoreBinding
+import com.bst.rawdatacollector.databinding.FragmentCurStateBinding
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -19,15 +19,15 @@ import java.time.format.DateTimeFormatter
 class CurStateFragment : Fragment()
 {
 
-    private lateinit var binding: FragmentMoreBinding
+    private lateinit var binding: FragmentCurStateBinding
     private lateinit var adapter: CalendarAdapter
     private lateinit var curStateBottomDialog: CurStateBottomDialog
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View?
+    override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
     {
         //프래그먼트 연결
-        val binding = FragmentMoreBinding.inflate(layoutInflater)
+        binding = FragmentCurStateBinding.inflate(layoutInflater)
         curStateBottomDialog = CurStateBottomDialog()
 
         var selectedDate = LocalDate.now() //현재 날짜
@@ -38,9 +38,7 @@ class CurStateFragment : Fragment()
 
             override fun voidStringDelegate(_data: String)
             {
-                curStateBottomDialog.show(
-                    activity!!.supportFragmentManager, CurStateBottomDialog.TAG
-                )
+                curStateBottomDialog.show(activity!!.supportFragmentManager, CurStateBottomDialog.TAG)
                 curStateBottomDialog.setDayString(_data)
             }
         })
@@ -115,11 +113,7 @@ class CurStateFragment : Fragment()
             }
             else
             {
-                dayList.add(
-                    LocalDate.of(
-                        selectedDate.getYear(), selectedDate.getMonth(), i - dayOfWeek
-                    )
-                )
+                dayList.add(LocalDate.of(selectedDate.getYear(), selectedDate.getMonth(), i - dayOfWeek))
             }
         }
         return dayList

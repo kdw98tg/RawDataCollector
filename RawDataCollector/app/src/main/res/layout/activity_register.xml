@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:text="계정 생성"
+        android:textAlignment="center"
+        android:textColor="@color/textBlue"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="회원 정보를 입력해 주세요"
+        android:textAlignment="center"
+        android:textColor="@color/textBlue"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/userCode"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="사번"
+                android:inputType="textPersonName"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/checkIdBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="중복확인"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.636"
+                app:layout_constraintStart_toEndOf="@+id/userEmail"
+                app:layout_constraintTop_toTopOf="@+id/userEmail" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/userName"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="110dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="이름"
+                android:inputType="textPersonName"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/userPw"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="110dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="비밀번호"
+                android:inputType="textPersonName"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/checkUserPw"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="110dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="비밀번호 확인"
+                android:inputType="textPersonName"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/companyName"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="110dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="회사명"
+                android:inputType="textPersonName"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/phoneNum"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="110dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="전화번호"
+                android:inputType="number"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/userEmail"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="110dp"
+                android:layout_weight="3"
+                android:ems="10"
+                android:hint="이메일"
+                android:inputType="number"
+                android:maxLength="100"
+                android:paddingStart="10dp"
+                android:textColorHint="#38608C"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:text="다음" />
+
+    </LinearLayout>
+
+</LinearLayout>

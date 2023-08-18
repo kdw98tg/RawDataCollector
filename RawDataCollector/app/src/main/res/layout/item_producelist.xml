@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/productLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/productLayout"
     android:layout_margin="10dp"
-    android:orientation="horizontal"
     android:background="@drawable/border_all"
-    >
+    android:orientation="horizontal">
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="5dp"
-        android:src ="@drawable/productimg"
-        />
+        android:src="@drawable/productimg" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="7dp">
+        android:layout_marginBottom="7dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,18 +28,19 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="제품명 :"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/productNameText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_weight="3"
                 android:text="제품명"
                 android:textColor="@color/black"
-                android:layout_weight="3"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,18 +52,19 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_weight="1"
                 android:text="품    번 :"
                 android:textColor="@color/black"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
+
             <TextView
-                android:id="@+id/productNumberText"
+                android:id="@+id/productCodeText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_weight="3"
                 android:text="품번"
                 android:textColor="@color/black"
-                android:layout_weight="3"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,20 +76,22 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="생산자 :"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
+
             <TextView
-                android:id="@+id/producerNameText"
+                android:id="@+id/acceptName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="생산자 명"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_weight="3"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,21 +101,21 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="관리자 :"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
+
             <TextView
-                android:id="@+id/managerNameText"
+                android:id="@+id/requestName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="김태형"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_weight="3"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

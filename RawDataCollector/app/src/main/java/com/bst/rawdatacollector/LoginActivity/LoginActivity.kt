@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bst.rawdatacollector.MainActivity.MainActivity
 import com.bst.rawdatacollector.R
+import com.bst.rawdatacollector.Register.RegisterActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityLoginBinding
 import okhttp3.Call
@@ -46,16 +47,11 @@ class LoginActivity : AppCompatActivity()
             loginRequest(userId, userPw)//로그인 요청
         }
 
+        binding.registerBtn.setOnClickListener {
+            moveActivity(RegisterActivity::class.java)
+        }
     }
 
-    private fun empty(_str: String)
-    {
-        val dialog: AlertDialog
-        val builder = AlertDialog.Builder(this@LoginActivity)
-        dialog = builder.setMessage(_str + "을(를) 입력해주세요.").setPositiveButton("확인", null).create()
-        dialog!!.show()
-        return
-    }
 
     private fun loginRequest(_userId: String, _userPw: String)
     {
@@ -105,7 +101,6 @@ class LoginActivity : AppCompatActivity()
                         else//관리자면 관리자 화면으로
                         {
                             runOnUiThread {
-
                                 Toast.makeText(applicationContext, "관리자 모드로 로그인 하셨습니다", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -116,7 +111,6 @@ class LoginActivity : AppCompatActivity()
                             Toast.makeText(applicationContext, "사번 또는 비밀번호를 확인하세요", Toast.LENGTH_SHORT).show()
                         }
                     }
-
                 }
             }
 

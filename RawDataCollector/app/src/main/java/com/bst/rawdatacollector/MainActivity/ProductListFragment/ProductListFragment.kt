@@ -1,5 +1,6 @@
 package com.bst.rawdatacollector.MainActivity.ProductListFragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,12 +8,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.DataClass.Product
+import com.bst.rawdatacollector.MainActivity.MainActivity
 import com.bst.rawdatacollector.Product.ProductAdapter
 import com.bst.rawdatacollector.Product.ProductInfoActivity
+import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.FragmentProductListBinding
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.IOException
 import java.time.LocalDate
 
 
@@ -21,11 +34,26 @@ class ProductListFragment : Fragment()
     private lateinit var binding: FragmentProductListBinding
     private lateinit var productAdapter: ProductAdapter
     private lateinit var productList: ArrayList<Product>
+
+
+
+    companion object{
+        private const val PRODUCT_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Today_Products.php"
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
     {
         binding = FragmentProductListBinding.inflate(_inflater, _container, false)
         productList = ArrayList()
-        setTestList()
+
+
+        //setTestList()
+
+        selectTodayProductLists(UserData.getInstance(requireContext()).getUserCode(),LocalDate.now().toString())
+
         productAdapter = ProductAdapter(requireContext(), productList)//kotlin 은 requireContext()
 
 
@@ -33,7 +61,6 @@ class ProductListFragment : Fragment()
         {
             binding.dayText.text = LocalDate.now().toString()//오늘 날짜를 나타냄
         }
-
 
         binding.recyclerView.adapter = productAdapter//set adapter
         val linearLayoutManager = LinearLayoutManager(requireContext())
@@ -52,26 +79,51 @@ class ProductListFragment : Fragment()
         return binding.root
     }
 
-    private fun setTestList()
+    private fun selectTodayProductLists(_userCode:String, _curDate : String)
     {
-        val product1: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product2: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product3: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product4: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product5: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product6: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product7: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product8: Product = Product("제품 A", "ABC-123", "홍길동")
-        val product9: Product = Product("제품 A", "ABC-123", "홍길동")
+        val client = OkHttpClient()
+        val body = FormBody.Builder().add("userCode",_userCode).add("curDate",_curDate).build()
+        val request = Request.Builder().url(PRODUCT_URL).post(body).build()
 
-        productList.add(product1)
-        productList.add(product2)
-        productList.add(product3)
-        productList.add(product4)
-        productList.add(product5)
-        productList.add(product6)
-        productList.add(product7)
-        productList.add(product8)
-        productList.add(product9)
+        client.newCall(request).enqueue(object: Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                if(response.isSuccessful)
+                {
+                    val mainActivity = requireContext() as MainActivity //runOnUiThread 사용하기 위한 방법
+                    mainActivity.runOnUiThread {
+                        try
+                        {
+                            val jsonObject = JSONObject(response.body!!.string())
+                            val jsonArray = JSONArray(jsonObject.getString("results"))
+
+                            for (i in 0 until jsonArray.length())
+                            {
+                                val json: JSONObject = jsonArray.getJSONObject(i)
+                                val product = Product()
+                                product.productName = json.getString("product_name")
+                                product.productCode = json.getString("product_code")
+                                product.requestName = json.getString("request_user")
+                                product.acceptName = json.getString("accept_user")
+                                product.productImg = json.getString("product_image")
+                                productList.add(product)
+                                productAdapter.notifyDataSetChanged()
+                            }
+                        }
+                        catch (_e: Exception)
+                        {
+                            _e.printStackTrace()
+                        }
+                    }
+                }
+            }
+        })
+
     }
 }

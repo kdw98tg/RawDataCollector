@@ -27,8 +27,9 @@ class ProductAdapter(private val context: Context, private val productList: Arra
     {
         val product = productList[_position]
         _holder.binding.productNameText.text = product.productName//제품명
-        _holder.binding.productNumberText.text = product.productNumber//품번
-        _holder.binding.producerNameText.text = product.producerName//생산자 명
+        _holder.binding.productCodeText.text = product.productCode//품번
+        _holder.binding.requestName.text = product.requestName//생산자 명
+        _holder.binding.acceptName.text = product.acceptName//생산자 명
 
         _holder.binding.productLayout.setOnClickListener{
             productItemTouchCallback?.voidVoidDelegate()
