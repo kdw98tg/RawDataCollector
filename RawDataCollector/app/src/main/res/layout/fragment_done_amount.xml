@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductInfo.DoneAmountFragment">
+    tools:context=".MainActivity.Main_Worker.ProductInfo.DoneAmountFragment">
 
     <TextView
         android:layout_width="match_parent"

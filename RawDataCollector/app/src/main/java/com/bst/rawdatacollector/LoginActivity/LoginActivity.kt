@@ -4,11 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import com.bst.rawdatacollector.MainActivity.MainActivity
-import com.bst.rawdatacollector.R
+import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
+import com.bst.rawdatacollector.MainActivity.Main_Worker.MainActivityWorker
 import com.bst.rawdatacollector.Register.RegisterActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityLoginBinding
@@ -52,6 +50,11 @@ class LoginActivity : AppCompatActivity()
         }
     }
 
+    override fun onRestart()
+    {
+        super.onRestart()
+        binding.loginBtn.isEnabled = true
+    }
 
     private fun loginRequest(_userId: String, _userPw: String)
     {
@@ -65,15 +68,21 @@ class LoginActivity : AppCompatActivity()
         {
             override fun onFailure(call: Call, e: IOException)
             {
-                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "인터넷 연결을 확인해 주세요", Toast.LENGTH_SHORT).show()
+                    binding.loginBtn.isEnabled = true
+                    e.printStackTrace()
+                }
             }
 
             override fun onResponse(call: Call, response: Response)
             {
                 if (response.isSuccessful)
                 {
+                    runOnUiThread {
+                        binding.loginBtn.isEnabled = false
+                    }
                     val result = response.body!!.string()
-                    Log.d("로그인", "onResponse: $result")
                     try
                     {
                         val jsonObject = JSONObject(result)
@@ -96,12 +105,13 @@ class LoginActivity : AppCompatActivity()
                         //다 됐으면 권한에 따라 MainActivity로 옮김
                         if (userPosition == "사원")//사원이면 메인으로
                         {
-                            moveActivity(MainActivity::class.java)
+                            moveActivity(MainActivityWorker::class.java)
                         }
                         else//관리자면 관리자 화면으로
                         {
                             runOnUiThread {
                                 Toast.makeText(applicationContext, "관리자 모드로 로그인 하셨습니다", Toast.LENGTH_SHORT).show()
+                                moveActivity(MainActivityManager::class.java)
                             }
                         }
                     }
@@ -113,7 +123,6 @@ class LoginActivity : AppCompatActivity()
                     }
                 }
             }
-
         })
     }
 

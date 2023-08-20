@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.ProductListFragment
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment
 
 import android.content.Intent
 import android.os.Build
@@ -11,9 +11,8 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.DataClass.Product
-import com.bst.rawdatacollector.MainActivity.MainActivity
-import com.bst.rawdatacollector.ProductInfo.ProductAdapter
-import com.bst.rawdatacollector.ProductInfo.ProductInfoActivity
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.ProductAdapter
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.ProductInfoActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.FragmentProductListBinding
 import okhttp3.Call

@@ -15,6 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UserInfo.UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity.Main_Manager.MainActivityManager"
+            android:exported="false" />
+        <activity
             android:name=".Register.PhoneNumberAuthActivity"
             android:exported="false" />
         <activity
@@ -30,10 +36,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProductInfo.ProductInfoActivity"
+            android:name=".MainActivity.Main_Worker.ProductInfo.ProductInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity.MainActivity"
+            android:name=".MainActivity.Main_Worker.MainActivityWorker"
             android:exported="false" />
     </application>
 

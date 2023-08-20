@@ -1,6 +1,7 @@
-package com.bst.rawdatacollector.MainActivity.FragmentHome
+package com.bst.rawdatacollector.MainActivity.Main_Worker.FragmentHome
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bst.rawdatacollector.UserInfo.UserInfoActivity
 import com.bst.rawdatacollector.databinding.FragmentHomeBinding
 import java.time.LocalDate
 
@@ -35,6 +37,11 @@ class HomeFragment : Fragment()
         //퇴근
         binding.attendanceBtn.setOnClickListener {
 
+        }
+
+        binding.userInfoImg.setOnClickListener{
+            val intent = Intent(requireContext(), UserInfoActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root

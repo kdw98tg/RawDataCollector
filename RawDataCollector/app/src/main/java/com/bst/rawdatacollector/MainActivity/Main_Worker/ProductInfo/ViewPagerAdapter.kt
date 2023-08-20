@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.ProductInfo
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

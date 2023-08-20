@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userInfoImg"
+            android:layout_width="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:src="@drawable/baseline_person_24"
+            app:civ_border_overlay="true"
+            app:civ_circle_background_color="#EEEEEE"
+            />
 
         <TextView
             android:id="@+id/dayText"

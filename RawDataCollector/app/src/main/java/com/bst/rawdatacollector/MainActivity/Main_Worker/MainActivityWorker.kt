@@ -1,16 +1,16 @@
-package com.bst.rawdatacollector.MainActivity
+package com.bst.rawdatacollector.MainActivity.Main_Worker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.bst.rawdatacollector.MainActivity.CurStateFragment.CurStateFragment
-import com.bst.rawdatacollector.MainActivity.FragmentHome.HomeFragment
-import com.bst.rawdatacollector.MainActivity.ProductListFragment.ProductListFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.CurStateFragment.CurStateFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.FragmentHome.HomeFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment.ProductListFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity()
+class MainActivityWorker : AppCompatActivity()
 {
 
     private lateinit var binding: ActivityMainBinding

@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.ProductInfo
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +18,9 @@ class ProductInfoActivity : AppCompatActivity()
 {
     private lateinit var binding: ActivityProductInfoBinding
     private lateinit var spinnerLists: SpinnerArrayLists
-    private lateinit var viewPagerAdapter:ViewPagerAdapter
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
-    private lateinit var machineErrorFragment:ProductErrorFragment
+    private lateinit var machineErrorFragment: ProductErrorFragment
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -30,31 +30,36 @@ class ProductInfoActivity : AppCompatActivity()
 
         //init
         spinnerLists = SpinnerArrayLists()
-        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle,3)//fragmentManager, lifecycle, tab 개수
+        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 3)//fragmentManager, lifecycle, tab 개수
         machineErrorFragment = ProductErrorFragment()
 
         //tabList 설정
-        setTabList(binding.tabLayout,"완료 수량","제품 불량", "기계 불량")
-        
+        setTabList(binding.tabLayout, "완료 수량", "제품 불량", "기계 불량")
+
         //viewPager 어뎁터 설정
         binding.viewPager.adapter = viewPagerAdapter
 
-        binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener
+        {
             override fun onTabSelected(tab: TabLayout.Tab?)
             {
-                if(tab!=null){
+                if (tab != null)
+                {
                     binding.viewPager.currentItem = tab.position
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?)
             {
             }
+
             override fun onTabReselected(tab: TabLayout.Tab?)
             {
             }
         })
 
-        binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback()
+        {
             override fun onPageSelected(position: Int)
             {
                 super.onPageSelected(position)
@@ -62,11 +67,10 @@ class ProductInfoActivity : AppCompatActivity()
             }
         })
 
+
         binding.submitBtn.setOnClickListener {
-            Toast.makeText(this@ProductInfoActivity,"프래그먼트에서 올라온 값 ${machineErrorFragment.getMachineErrorCount()}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ProductInfoActivity, "프래그먼트에서 올라온 값 ${machineErrorFragment.getMachineErrorCount()}", Toast.LENGTH_SHORT).show()
         }
-
-
 
 
         //스피너를 세팅해주는 함수
@@ -88,7 +92,7 @@ class ProductInfoActivity : AppCompatActivity()
     }
 
 
-    private fun setTabList(tabLayout:TabLayout,tab1: String, tab2: String, tab3: String)
+    private fun setTabList(tabLayout: TabLayout, tab1: String, tab2: String, tab3: String)
     {
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab1))
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab2))
