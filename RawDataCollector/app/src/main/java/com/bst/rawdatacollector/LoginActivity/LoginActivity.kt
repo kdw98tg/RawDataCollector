@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity()
         //init
 
         binding.loginBtn.setOnClickListener {
+            binding.loginBtn.isEnabled=false
             val userId = binding.idText.text.toString().trim() { it <= ' ' }//id 추출
             val userPw = binding.pwText.text.toString().trim() { it <= ' ' }//pw 추출
 
@@ -79,9 +80,7 @@ class LoginActivity : AppCompatActivity()
             {
                 if (response.isSuccessful)
                 {
-                    runOnUiThread {
-                        binding.loginBtn.isEnabled = false
-                    }
+
                     val result = response.body!!.string()
                     try
                     {

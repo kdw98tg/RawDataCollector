@@ -52,7 +52,6 @@ class UserInfoActivity : AppCompatActivity()
         //viewInit
         viewInit()
 
-
         binding.userProfileImg.setOnClickListener {
             ImagePicker.with(this@UserInfoActivity).crop() //Crop image(Optional), Check Customization for more option
                 .compress(1024) //Final image size will be less than 1 MB(Optional)
