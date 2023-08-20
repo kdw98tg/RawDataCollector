@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Product.ProductInfoActivity"
+            android:name=".ProductInfo.ProductInfoActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity.MainActivity"

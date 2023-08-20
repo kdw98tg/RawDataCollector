@@ -1,6 +1,5 @@
 package com.bst.rawdatacollector.MainActivity.ProductListFragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -13,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.DataClass.Product
 import com.bst.rawdatacollector.MainActivity.MainActivity
-import com.bst.rawdatacollector.Product.ProductAdapter
-import com.bst.rawdatacollector.Product.ProductInfoActivity
+import com.bst.rawdatacollector.ProductInfo.ProductAdapter
+import com.bst.rawdatacollector.ProductInfo.ProductInfoActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.FragmentProductListBinding
 import okhttp3.Call
@@ -29,19 +28,15 @@ import java.io.IOException
 import java.time.LocalDate
 
 
-class ProductListFragment : Fragment()
+class ProductListFragment() : Fragment()
 {
     private lateinit var binding: FragmentProductListBinding
     private lateinit var productAdapter: ProductAdapter
     private lateinit var productList: ArrayList<Product>
 
-
-
     companion object{
         private const val PRODUCT_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Today_Products.php"
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
@@ -96,8 +91,8 @@ class ProductListFragment : Fragment()
             {
                 if(response.isSuccessful)
                 {
-                    val mainActivity = requireContext() as MainActivity //runOnUiThread 사용하기 위한 방법
-                    mainActivity.runOnUiThread {
+                    //val mainActivity = requireContext() as MainActivity //runOnUiThread 사용하기 위한 방법
+                    activity?.runOnUiThread {
                         try
                         {
                             val jsonObject = JSONObject(response.body!!.string())

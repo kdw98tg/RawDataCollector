@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.Product
+package com.bst.rawdatacollector.ProductInfo
 
 import android.content.Context
 import android.view.LayoutInflater
