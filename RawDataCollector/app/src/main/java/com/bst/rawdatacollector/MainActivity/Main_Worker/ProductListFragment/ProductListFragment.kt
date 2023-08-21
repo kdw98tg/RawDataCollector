@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.DataClass.Product
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.ProductAdapter
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.ProductInfoActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.FragmentProductListBinding

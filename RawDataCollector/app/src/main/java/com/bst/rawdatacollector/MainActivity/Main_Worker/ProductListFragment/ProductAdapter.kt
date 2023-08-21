@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment
 
 import android.content.Context
 import android.view.LayoutInflater

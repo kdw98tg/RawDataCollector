@@ -1,5 +1,6 @@
 package com.bst.rawdatacollector.MainActivity.Main_Worker.CurStateFragment
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.Delegate.VoidStringDelegate
+import com.bst.rawdatacollector.MainActivity.Main_Worker.WorkHistory.WorkHistoryActivity
 import com.bst.rawdatacollector.databinding.FragmentCurStateBinding
 import java.time.LocalDate
 import java.time.YearMonth
@@ -21,35 +23,39 @@ class CurStateFragment : Fragment()
 
     private lateinit var binding: FragmentCurStateBinding
     private lateinit var adapter: CalendarAdapter
-    private lateinit var curStateBottomDialog: CurStateBottomDialog
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
     {
         //프래그먼트 연결
         binding = FragmentCurStateBinding.inflate(layoutInflater)
-        curStateBottomDialog = CurStateBottomDialog()
 
         var selectedDate = LocalDate.now() //현재 날짜
 
         setMonthView() //화면 설정
+
+        //날짜 선택시 이벤트
         adapter.setCurStateCallback(object : VoidStringDelegate
         {
-
             override fun voidStringDelegate(_data: String)
             {
-                curStateBottomDialog.show(activity!!.supportFragmentManager, CurStateBottomDialog.TAG)
-                curStateBottomDialog.setDayString(_data)
+                val intent = Intent(requireContext(), WorkHistoryActivity::class.java)
+                intent.putExtra("selectedDate",_data)
+                startActivity(intent)
             }
         })
+
+        //이전달 클릭 이벤트
         binding.prevBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1) //오늘에서 월만 -1
             setMonthView()
-        } //이전달 클릭 리스너
+        }
+
+        //다음달 클릭 리스너
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1) //오늘에서 월만 +1
             setMonthView()
-        }//다음달 클릭 리스너
+        }
         return binding.root
     }
 
