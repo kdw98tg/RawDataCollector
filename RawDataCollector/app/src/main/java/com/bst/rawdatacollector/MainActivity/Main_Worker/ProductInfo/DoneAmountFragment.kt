@@ -17,6 +17,8 @@ class DoneAmountFragment : Fragment()
     {
         binding = FragmentDoneAmountBinding.inflate(layoutInflater)
 
+
+
         return binding.root
     }
 

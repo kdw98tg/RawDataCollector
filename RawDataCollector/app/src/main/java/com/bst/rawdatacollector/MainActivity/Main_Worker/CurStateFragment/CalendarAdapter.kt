@@ -49,8 +49,6 @@ class CalendarAdapter(private val context: Context, private var dayList: ArrayLi
             {
                 holder.binding.dayText.setBackgroundResource(R.drawable.today_circle)
             }
-
-
         }
 
         //텍스트 색상 지정 (토,일)

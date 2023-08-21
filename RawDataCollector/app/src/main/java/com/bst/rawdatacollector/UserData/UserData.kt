@@ -21,7 +21,6 @@ class UserData private constructor(context: Context)
             return instance!!
         }
 
-
         private var userCode: String = ""
         private var userPw: String = ""
         private var userName: String = ""
