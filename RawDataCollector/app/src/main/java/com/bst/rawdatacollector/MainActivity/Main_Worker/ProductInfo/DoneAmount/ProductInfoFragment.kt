@@ -1,19 +1,16 @@
 package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount
 
-import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
-import com.bst.rawdatacollector.DataClass.WorkList
-import com.bst.rawdatacollector.MainActivity.Main_Worker.WorkHistory.WorkHistoryActivity
-import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.FragmentDoneAmountBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -21,19 +18,29 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import okhttp3.internal.notify
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
 
-class DoneAmountFragment : Fragment()
+class ProductInfoFragment : Fragment()
 {
 
     private lateinit var binding:FragmentDoneAmountBinding
     private lateinit var errorListAdapter:ErrorListAdapter
     private lateinit var errorList:ArrayList<ProductError>
     private lateinit var errorType:ArrayList<String>
+
+    var name: String = ""
+        set(value) {
+            field = if (value == "김연아") "$value 는 천재입니다"
+            else value
+        }
+        get(){
+            return "$field 에 거주"
+        }
+
+    private var doneAmount: String = ""
 
     companion object{
         private const val SELECT_ERROR_TYPE_URL ="http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
@@ -53,11 +60,13 @@ class DoneAmountFragment : Fragment()
         binding.errorListRecyclerView.adapter = errorListAdapter
         binding.errorListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+
         binding.addErrorListBtn.setOnClickListener{
             val error:ProductError = ProductError()
             errorList.add(error)
             errorListAdapter.notifyDataSetChanged()
         }
+
 
         return binding.root
     }

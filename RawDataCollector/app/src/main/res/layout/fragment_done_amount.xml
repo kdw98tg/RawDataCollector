@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="350dp"
-    tools:context=".MainActivity.Main_Worker.ProductInfo.DoneAmount.DoneAmountFragment">
+    tools:context=".MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductInfoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
                 android:text="완료 수량"/>
 
             <EditText
+                android:id="@+id/doneAmountText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

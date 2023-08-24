@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.DoneAmountFragment
 import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.FragmentMachineInfoBinding
 import okhttp3.Call
