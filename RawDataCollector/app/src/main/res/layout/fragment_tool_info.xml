@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity.Main_Worker.ProductInfo.ProductErrorFragment">
+    tools:context=".MainActivity.Main_Worker.ProductInfo.ToolInfoFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Product"
-        android:textSize="50sp"/>
+
+
 </FrameLayout>

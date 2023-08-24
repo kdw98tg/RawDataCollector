@@ -20,7 +20,7 @@ class ProductInfoActivity : AppCompatActivity()
     private lateinit var spinnerLists: SpinnerArrayLists
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
-    private lateinit var machineErrorFragment: ProductErrorFragment
+    private lateinit var machineErrorFragment: ToolInfoFragment
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -31,10 +31,10 @@ class ProductInfoActivity : AppCompatActivity()
         //init
         spinnerLists = SpinnerArrayLists()
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 3)//fragmentManager, lifecycle, tab 개수
-        machineErrorFragment = ProductErrorFragment()
+        machineErrorFragment = ToolInfoFragment()
 
         //tabList 설정
-        setTabList(binding.tabLayout, "완료 수량", "제품 불량", "기계 불량")
+        setTabList(binding.tabLayout, "제품 수량", "도구 정보", "기계 불량")
 
         //viewPager 어뎁터 설정
         binding.viewPager.adapter = viewPagerAdapter
