@@ -7,11 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
-import com.bst.rawdatacollector.databinding.FragmentDoneAmountBinding
+import com.bst.rawdatacollector.Delegate.VoidStringDelegate
+import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -26,28 +25,21 @@ import java.io.IOException
 class ProductInfoFragment : Fragment()
 {
 
-    private lateinit var binding:FragmentDoneAmountBinding
+    private lateinit var binding:FragmentProductInfoBinding
     private lateinit var errorListAdapter:ErrorListAdapter
     private lateinit var errorList:ArrayList<ProductError>
     private lateinit var errorType:ArrayList<String>
 
-    var name: String = ""
-        set(value) {
-            field = if (value == "김연아") "$value 는 천재입니다"
-            else value
-        }
-        get(){
-            return "$field 에 거주"
-        }
+    private var doneAmount:String=""
 
-    private var doneAmount: String = ""
+    private var doneAmountChangedCallback: VoidStringDelegate?=null
 
     companion object{
         private const val SELECT_ERROR_TYPE_URL ="http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        binding = FragmentDoneAmountBinding.inflate(layoutInflater)
+        binding = FragmentProductInfoBinding.inflate(layoutInflater)
 
         //init
         errorList = ArrayList()
@@ -59,16 +51,34 @@ class ProductInfoFragment : Fragment()
         //setRecyclerView
         binding.errorListRecyclerView.adapter = errorListAdapter
         binding.errorListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        
+        binding.doneAmountText.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
+            {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
+            {
+            }
+            override fun afterTextChanged(p0: Editable?)
+            {
+                doneAmount = binding.doneAmountText.text.toString()
+                //프래그먼트의 생명주기 생각해보기
+                doneAmountChangedCallback?.voidStringDelegate(doneAmount)
+            }
+        })
 
-
+        //불량 리스트 추가
         binding.addErrorListBtn.setOnClickListener{
             val error:ProductError = ProductError()
             errorList.add(error)
             errorListAdapter.notifyDataSetChanged()
         }
 
-
         return binding.root
+    }
+    fun setDoneAmountChangedCallback(_doneAmountChangedCallback:VoidStringDelegate)
+    {
+        doneAmountChangedCallback=_doneAmountChangedCallback
     }
 
     private fun selectErrorType(_type:String)

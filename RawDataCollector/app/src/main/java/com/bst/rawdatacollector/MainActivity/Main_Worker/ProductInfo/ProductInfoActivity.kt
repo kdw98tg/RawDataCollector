@@ -2,11 +2,13 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
+import com.bst.rawdatacollector.Delegate.VoidStringDelegate
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductInfoFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.SpinnerInterface.SpinnerArrayLists
@@ -21,7 +23,9 @@ class ProductInfoActivity : AppCompatActivity()
 
     private lateinit var toolInfoFragment: ToolInfoFragment
     private lateinit var productInfoFragment: ProductInfoFragment
-    private lateinit var machineErrorFragment:MachineInfoFragment
+    private lateinit var machineErrorFragment: MachineInfoFragment
+
+    private var doneAmount:String=""
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -72,15 +76,18 @@ class ProductInfoActivity : AppCompatActivity()
             }
         })
 
-
-        binding.submitBtn.setOnClickListener {
-
-        }
-
+        //프래그먼트 생명주기가 늦어서 연결이 안됨 고민해보기
+//        productInfoFragment.setDoneAmountChangedCallback(object : VoidStringDelegate
+//        {
+//            override fun voidStringDelegate(_data: String)
+//            {
+//                doneAmount = _data
+//            }
+//        })
 
         //button click event -> submit
         binding.submitBtn.setOnClickListener {
-                showSubmitDialog()
+            showSubmitDialog(doneAmount)
         }
     }
 
@@ -92,7 +99,7 @@ class ProductInfoActivity : AppCompatActivity()
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab3))
     }
 
-    private fun showSubmitDialog()
+    private fun showSubmitDialog(_test:String)
     {
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
@@ -102,6 +109,8 @@ class ProductInfoActivity : AppCompatActivity()
         val doneAmountText = dialogView.findViewById<TextView>(R.id.doneAmount)
 
         //TODO 각 정보를 받아올 작업 해야함
+        //TODO 콜백으로 구현하기
+        doneAmountText.text = _test
 
         dialogBuilder.setView(dialogView)
 
@@ -109,9 +118,9 @@ class ProductInfoActivity : AppCompatActivity()
             // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
             dialog.dismiss()
         }.setPositiveButton("확인") { dialog, which ->
-            Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
-            //통신 해야 함
-        }
+                Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
+                //통신 해야 함
+            }
 
         val alertDialog = dialogBuilder.create()
         alertDialog.show()
