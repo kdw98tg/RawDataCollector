@@ -2,20 +2,18 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
-import com.bst.rawdatacollector.Delegate.VoidStringDelegate
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductInfoFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.SpinnerInterface.SpinnerArrayLists
 import com.bst.rawdatacollector.databinding.ActivityProductInfoBinding
 import com.google.android.material.tabs.TabLayout
 
-class ProductInfoActivity : AppCompatActivity()
+class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountChangedListener
 {
     private lateinit var binding: ActivityProductInfoBinding
     private lateinit var spinnerLists: SpinnerArrayLists
@@ -25,8 +23,14 @@ class ProductInfoActivity : AppCompatActivity()
     private lateinit var productInfoFragment: ProductInfoFragment
     private lateinit var machineErrorFragment: MachineInfoFragment
 
-    private var doneAmount:String=""
+    private var doneAmount: String = ""
 
+    //Listener의 함수 재정의
+    override fun onChanged(doneAmount: String)
+    {
+        //프래그먼트에서 보낸 매시지
+        this.doneAmount = doneAmount
+    }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -47,6 +51,7 @@ class ProductInfoActivity : AppCompatActivity()
         //viewPager 어뎁터 설정
         binding.viewPager.adapter = viewPagerAdapter
 
+
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener
         {
             override fun onTabSelected(tab: TabLayout.Tab?)
@@ -59,7 +64,6 @@ class ProductInfoActivity : AppCompatActivity()
 
             override fun onTabUnselected(tab: TabLayout.Tab?)
             {
-
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?)
@@ -76,19 +80,12 @@ class ProductInfoActivity : AppCompatActivity()
             }
         })
 
-        //프래그먼트 생명주기가 늦어서 연결이 안됨 고민해보기
-//        productInfoFragment.setDoneAmountChangedCallback(object : VoidStringDelegate
-//        {
-//            override fun voidStringDelegate(_data: String)
-//            {
-//                doneAmount = _data
-//            }
-//        })
-
         //button click event -> submit
         binding.submitBtn.setOnClickListener {
+
             showSubmitDialog(doneAmount)
         }
+
     }
 
 
@@ -99,7 +96,7 @@ class ProductInfoActivity : AppCompatActivity()
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab3))
     }
 
-    private fun showSubmitDialog(_test:String)
+    private fun showSubmitDialog(_test: String)
     {
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
@@ -118,9 +115,9 @@ class ProductInfoActivity : AppCompatActivity()
             // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
             dialog.dismiss()
         }.setPositiveButton("확인") { dialog, which ->
-                Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
-                //통신 해야 함
-            }
+            Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
+            //통신 해야 함
+        }
 
         val alertDialog = dialogBuilder.create()
         alertDialog.show()
@@ -131,9 +128,10 @@ class ProductInfoActivity : AppCompatActivity()
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error Message").setMessage("수량을 입력해 주세요")
         builder.setPositiveButton("확인") { dialogInterface, i ->
-
         }
         val dialog = builder.create()
         dialog.show()
     }
+
+
 }

@@ -1,8 +1,8 @@
 package com.bst.rawdatacollector.DataClass
 
 data class ProductError(
-    private var errorName:String,
-    private var errorAmount:Int,
+     var errorName:String,
+     var errorAmount:Int,
 )
 {
 constructor():this("",0)

@@ -30,6 +30,8 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         val productError = errorList[position]
+        //여기서 문제 발생
+        //다 만들어진 스피너 객체를 받아오는 방법 생각해보기
         setSpinnerAdapter(holder.binding.machineErrorSpinner, context, errorType)
     }
 
