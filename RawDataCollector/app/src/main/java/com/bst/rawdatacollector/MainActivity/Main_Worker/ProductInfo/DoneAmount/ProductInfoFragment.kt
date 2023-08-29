@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
+import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
+import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -45,8 +47,7 @@ class ProductInfoFragment : Fragment()
     {
         super.onAttach(context)
         doneAmountChangedListener = context as DoneAmountChangedListener
-        //productErrorListChangedListener = context as ProductErrorListChangedListener
-
+        productErrorListChangedListener = context as ProductErrorListChangedListener
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
@@ -72,15 +73,25 @@ class ProductInfoFragment : Fragment()
         binding.doneAmountText.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
             {
-            }
 
+            }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
             {
-            }
 
+            }
             override fun afterTextChanged(p0: Editable?)
             {
                 doneAmountChangedListener?.onChanged(binding.doneAmountText.text.toString())
+            }
+        })
+
+        //델리게이트 설정 - Adapter 내의 아이템의 EditText 가 변경되었을때 호출
+        errorListAdapter.setAmountChangedListener(object:VoidArrayListDelegate{
+
+            override fun voidArrayListDelegate(_arrayList: ArrayList<ProductError>)
+            {
+                Log.d("호출됨2", "afterTextChanged: 호출됨")
+                productErrorListChangedListener?.onChanged(_arrayList)
             }
         })
 
@@ -91,11 +102,6 @@ class ProductInfoFragment : Fragment()
             Log.d("에러 메세지1 " , "onViewCreated: ${errorList[0].errorName}")
             errorListAdapter.notifyDataSetChanged()
         }
-    }
-
-    fun getErrorList():ArrayList<ProductError>
-    {
-        return errorList
     }
 
     private fun selectErrorType(_type: String)
@@ -144,7 +150,7 @@ class ProductInfoFragment : Fragment()
         fun onChanged(doneAmount:String)
     }
     interface ProductErrorListChangedListener{
-        fun onChanged(errorList:ArrayList<Map<String,Int>>)
+        fun onChanged(errorList:ArrayList<ProductError>)
     }
 
 

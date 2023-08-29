@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Machine
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
-import com.bst.rawdatacollector.databinding.FragmentToolInfoBinding
+import com.bst.rawdatacollector.databinding.FragmentMachineInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -22,23 +22,21 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class ToolInfoFragment : Fragment()
+class MachineInfoFragment : Fragment()
 {
-    private lateinit var binding:FragmentToolInfoBinding
+    private lateinit var binding:FragmentMachineInfoBinding
     private lateinit var errorType:ArrayList<String>
 
     companion object{
         private const val SELECT_ERROR_TYPE_URL ="http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
     }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        binding = FragmentToolInfoBinding.inflate(layoutInflater)
-
+        binding = FragmentMachineInfoBinding.inflate(layoutInflater)
         //init
-        errorType=ArrayList()
+        errorType = ArrayList()
 
-        selectErrorType("도구")
+        selectErrorType("설비")
 
         return binding.root
     }
@@ -72,7 +70,8 @@ class ToolInfoFragment : Fragment()
                                 val errorName = json.getString("error_name")
                                 errorType.add(errorName)
 
-                                //setSpinnerAdapter(binding.workSettingSpinner,requireContext(), errorType)
+                                setSpinnerAdapter(binding.workSettingSpinner,requireContext(), errorType)
+                                setSpinnerAdapter(binding.machineErrorSpinner,requireContext(), errorType)
                             }
                         }
                         catch (e: Exception)
@@ -106,5 +105,6 @@ class ToolInfoFragment : Fragment()
         }
 
     }
+
 
 }

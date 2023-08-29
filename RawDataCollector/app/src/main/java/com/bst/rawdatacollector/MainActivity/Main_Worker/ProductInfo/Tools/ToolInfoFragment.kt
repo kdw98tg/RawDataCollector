@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Tools
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
-import com.bst.rawdatacollector.databinding.FragmentMachineInfoBinding
+import com.bst.rawdatacollector.databinding.FragmentToolInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -22,45 +22,25 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class MachineInfoFragment : Fragment()
+class ToolInfoFragment : Fragment()
 {
-    private lateinit var binding:FragmentMachineInfoBinding
+    private lateinit var binding:FragmentToolInfoBinding
     private lateinit var errorType:ArrayList<String>
 
     companion object{
         private const val SELECT_ERROR_TYPE_URL ="http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        binding = FragmentMachineInfoBinding.inflate(layoutInflater)
-        //init
-        errorType = ArrayList()
+        binding = FragmentToolInfoBinding.inflate(layoutInflater)
 
-        selectErrorType("설비")
+        //init
+        errorType=ArrayList()
+
+        selectErrorType("도구")
 
         return binding.root
-    }
-
-    private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>)
-    {
-        val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, stringLists)
-        spinner.adapter = spinnerAdapter//어뎁터 생성
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
-        {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long)
-            {
-                //고른 아이템을 반환
-                val selectedItem = spinnerAdapter.getItem()
-                Toast.makeText(context, "선택된 아이템:$selectedItem", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?)
-            {
-
-            }
-
-        }
-
     }
 
     private fun selectErrorType(_type:String)
@@ -92,8 +72,7 @@ class MachineInfoFragment : Fragment()
                                 val errorName = json.getString("error_name")
                                 errorType.add(errorName)
 
-                                setSpinnerAdapter(binding.workSettingSpinner,requireContext(), errorType)
-                                setSpinnerAdapter(binding.machineErrorSpinner,requireContext(), errorType)
+                                //setSpinnerAdapter(binding.workSettingSpinner,requireContext(), errorType)
                             }
                         }
                         catch (e: Exception)
@@ -106,5 +85,26 @@ class MachineInfoFragment : Fragment()
         })
     }
 
+    private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>)
+    {
+        val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, stringLists)
+        spinner.adapter = spinnerAdapter//어뎁터 생성
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
+        {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long)
+            {
+                //고른 아이템을 반환
+                val selectedItem = spinnerAdapter.getItem()
+                Toast.makeText(context, "선택된 아이템:$selectedItem", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?)
+            {
+
+            }
+
+        }
+
+    }
 
 }

@@ -1,24 +1,34 @@
 package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.ProductError
+import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
+import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.ItemErrorListBinding
 
 class ErrorListAdapter(private val context: Context, private val errorList: ArrayList<ProductError>, private val errorType: ArrayList<String>) :
     RecyclerView.Adapter<ErrorListAdapter.ViewHolder>()
 {
+    private var amountChangedListener: VoidArrayListDelegate? = null
+
+    private val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, errorType)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
         val binding: ItemErrorListBinding = ItemErrorListBinding.inflate(LayoutInflater.from(context), parent, false)
+        setSpinnerAdapter(binding.errorListSpinner, context, errorType)
         return ViewHolder(binding)
     }
 
@@ -30,15 +40,42 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         val productError = errorList[position]
-        //여기서 문제 발생
-        //다 만들어진 스피너 객체를 받아오는 방법 생각해보기
-        setSpinnerAdapter(holder.binding.machineErrorSpinner, context, errorType)
+        holder.binding.amountText.addTextChangedListener(object : TextWatcher
+        {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
+            {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
+            {
+            }
+
+            override fun afterTextChanged(p0: Editable?)
+            {
+                Log.d("호출됨1", "afterTextChanged: 호출됨")
+                val list = ArrayList<ProductError>()
+                if (list.size < errorList.size)
+                {
+                    for (i in 0 until errorList.size)
+                    {
+                        val errors = ProductError()
+                        list.add(errors)
+                    }
+                }
+                for (i in 0 until list.size)
+                {
+                    list[i].errorName =spinnerAdapter.getItem()
+                    list[i].errorAmount = holder.binding.amountText.text.toString().toInt()
+                }
+                amountChangedListener?.voidArrayListDelegate(list)
+            }
+        })
+
     }
 
     private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>)
     {
-        val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, stringLists)
-        spinner.adapter = spinnerAdapter//어뎁터 생성
+        spinner.adapter = spinnerAdapter//어뎁터 부착
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long)
@@ -50,11 +87,14 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
 
             override fun onNothingSelected(p0: AdapterView<*>?)
             {
-
             }
-
         }
 
+    }
+
+    fun setAmountChangedListener(_amountChangedListener: VoidArrayListDelegate)
+    {
+        amountChangedListener = _amountChangedListener
     }
 
     inner class ViewHolder(val binding: ItemErrorListBinding) : RecyclerView.ViewHolder(binding.root)
