@@ -23,12 +23,14 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
 {
     private var amountChangedListener: VoidArrayListDelegate? = null
 
+    val list = ArrayList<ProductError>()
+
     private val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, errorType)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
         val binding: ItemErrorListBinding = ItemErrorListBinding.inflate(LayoutInflater.from(context), parent, false)
-        setSpinnerAdapter(binding.errorListSpinner, context, errorType)
+        setSpinnerAdapter(binding.errorListSpinner, context,errorType)
         return ViewHolder(binding)
     }
 
@@ -53,7 +55,7 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
             override fun afterTextChanged(p0: Editable?)
             {
                 Log.d("호출됨1", "afterTextChanged: 호출됨")
-                val list = ArrayList<ProductError>()
+
                 if (list.size < errorList.size)
                 {
                     for (i in 0 until errorList.size)
@@ -82,7 +84,10 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
             {
                 //고른 아이템을 반환
                 val selectedItem = spinnerAdapter.getItem()
-                Toast.makeText(context, "선택된 아이템:$selectedItem", Toast.LENGTH_SHORT).show()
+                for (i in 0 until list.size)
+                {
+                    list[i].errorName =spinnerAdapter.getItem()
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?)
