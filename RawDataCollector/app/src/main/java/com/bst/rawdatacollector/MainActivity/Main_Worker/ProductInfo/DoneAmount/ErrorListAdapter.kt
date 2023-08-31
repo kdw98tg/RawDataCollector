@@ -23,8 +23,6 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
 {
     private var amountChangedListener: VoidArrayListDelegate? = null
 
-    //private val list = ArrayList<ProductError>()
-
     private val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, errorType)
 
     private lateinit var binding: ItemErrorListBinding
@@ -74,8 +72,8 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
         {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long)
             {
-                errorList[position].errorName = holder.binding.errorListSpinner.adapter.getItem(position).toString()
-                Toast.makeText(context, holder.binding.errorListSpinner.adapter.getItem(position).toString(),Toast.LENGTH_SHORT).show()
+                //해당 에러리스트의 항목을 가져와서 넘겨줌
+                errorList[position].errorName = spinnerAdapter.getItem()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?)
