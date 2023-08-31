@@ -1,5 +1,6 @@
 package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,29 +9,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
-import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.ItemErrorListBinding
+import java.util.Collections
 
 class ErrorListAdapter(private val context: Context, private val errorList: ArrayList<ProductError>, private val errorType: ArrayList<String>) :
     RecyclerView.Adapter<ErrorListAdapter.ViewHolder>()
 {
     private var amountChangedListener: VoidArrayListDelegate? = null
 
-    val list = ArrayList<ProductError>()
+    //private val list = ArrayList<ProductError>()
 
     private val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, errorType)
 
+    private lateinit var binding: ItemErrorListBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
-        val binding: ItemErrorListBinding = ItemErrorListBinding.inflate(LayoutInflater.from(context), parent, false)
-        setSpinnerAdapter(binding.errorListSpinner, context,errorType)
+        binding = ItemErrorListBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -39,9 +40,10 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
         return errorList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int)
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int)
     {
         val productError = errorList[position]
+
         holder.binding.amountText.addTextChangedListener(object : TextWatcher
         {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
@@ -54,40 +56,26 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
 
             override fun afterTextChanged(p0: Editable?)
             {
-                Log.d("호출됨1", "afterTextChanged: 호출됨")
-
-                if (list.size < errorList.size)
-                {
-                    for (i in 0 until errorList.size)
-                    {
-                        val errors = ProductError()
-                        list.add(errors)
-                    }
-                }
-                for (i in 0 until list.size)
-                {
-                    list[i].errorName =spinnerAdapter.getItem()
-                    list[i].errorAmount = holder.binding.amountText.text.toString().toInt()
-                }
-                amountChangedListener?.voidArrayListDelegate(list)
+                //errorList 의 위치에 있는 값을 받아서 리스트에 저장
+                //리스너로 erroList를 Activity 로 전달
+                productError.errorAmount = holder.binding.amountText.text.toString().toInt()
+                amountChangedListener?.voidArrayListDelegate(errorList)
             }
         })
 
+        setSpinnerAdapter(binding.errorListSpinner, context, errorType, holder, position)
+
     }
 
-    private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>)
+    private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>, holder: ViewHolder, position: Int)
     {
         spinner.adapter = spinnerAdapter//어뎁터 부착
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
         {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long)
             {
-                //고른 아이템을 반환
-                val selectedItem = spinnerAdapter.getItem()
-                for (i in 0 until list.size)
-                {
-                    list[i].errorName =spinnerAdapter.getItem()
-                }
+                errorList[position].errorName = holder.binding.errorListSpinner.adapter.getItem(position).toString()
+                Toast.makeText(context, holder.binding.errorListSpinner.adapter.getItem(position).toString(),Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?)
@@ -97,11 +85,19 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
 
     }
 
+
     fun setAmountChangedListener(_amountChangedListener: VoidArrayListDelegate)
     {
         amountChangedListener = _amountChangedListener
     }
 
     inner class ViewHolder(val binding: ItemErrorListBinding) : RecyclerView.ViewHolder(binding.root)
+    {
+        fun getAdapterPos(): Int
+        {
+            return adapterPosition
+        }
+    }
+
 
 }

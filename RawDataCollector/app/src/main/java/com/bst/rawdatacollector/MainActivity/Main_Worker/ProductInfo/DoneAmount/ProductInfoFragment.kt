@@ -34,7 +34,7 @@ class ProductInfoFragment : Fragment()
 
     private var doneAmount: String = ""
 
-    private var doneAmountChangedListener: DoneAmountChangedListener? =  null
+    private var doneAmountChangedListener: DoneAmountChangedListener? = null
     private var productErrorListChangedListener: ProductErrorListChangedListener? = null
 
     companion object
@@ -70,15 +70,18 @@ class ProductInfoFragment : Fragment()
         binding.errorListRecyclerView.adapter = errorListAdapter
         binding.errorListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.doneAmountText.addTextChangedListener(object:TextWatcher{
+        binding.doneAmountText.addTextChangedListener(object : TextWatcher
+        {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
             {
 
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
             {
 
             }
+
             override fun afterTextChanged(p0: Editable?)
             {
                 doneAmountChangedListener?.onChanged(binding.doneAmountText.text.toString())
@@ -86,7 +89,8 @@ class ProductInfoFragment : Fragment()
         })
 
         //델리게이트 설정 - Adapter 내의 아이템의 EditText 가 변경되었을때 호출
-        errorListAdapter.setAmountChangedListener(object:VoidArrayListDelegate{
+        errorListAdapter.setAmountChangedListener(object : VoidArrayListDelegate
+        {
 
             override fun voidArrayListDelegate(_arrayList: ArrayList<ProductError>)
             {
@@ -97,10 +101,9 @@ class ProductInfoFragment : Fragment()
 
         //불량 리스트 추가
         binding.addErrorListBtn.setOnClickListener {
-            val error: ProductError = ProductError()
+            val error = ProductError()
             errorList.add(error)
-            Log.d("에러 메세지1 " , "onViewCreated: ${errorList[0].errorName}")
-            errorListAdapter.notifyDataSetChanged()
+            errorListAdapter.notifyItemInserted(errorList.size)
         }
     }
 
@@ -147,10 +150,12 @@ class ProductInfoFragment : Fragment()
 
     interface DoneAmountChangedListener
     {
-        fun onChanged(doneAmount:String)
+        fun onChanged(doneAmount: String)
     }
-    interface ProductErrorListChangedListener{
-        fun onChanged(errorList:ArrayList<ProductError>)
+
+    interface ProductErrorListChangedListener
+    {
+        fun onChanged(errorList: ArrayList<ProductError>)
     }
 
 

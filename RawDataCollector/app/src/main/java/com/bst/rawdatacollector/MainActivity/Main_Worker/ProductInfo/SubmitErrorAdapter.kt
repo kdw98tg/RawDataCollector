@@ -2,6 +2,7 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,7 @@ class SubmitErrorAdapter(private val context: Context,
         val productError:ProductError = errorList[position]
         holder.binding.errorName.text = productError.errorName
         holder.binding.errorAmount.text = productError.errorAmount.toString() + "개"
+
     }
     inner class ViewHolder(val binding: ItemSubmitErrorsBinding):RecyclerView.ViewHolder(binding.root)
 }

@@ -7,20 +7,21 @@ import com.bst.rawdatacollector.MainActivity.Main_Worker.CurStateFragment.CurSta
 import com.bst.rawdatacollector.MainActivity.Main_Worker.FragmentHome.HomeFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment.ProductListFragment
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.databinding.ActivityMainBinding
+import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.databinding.ActivityMainWorkerBinding
 
 
 class MainActivityWorker : AppCompatActivity()
 {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainWorkerBinding
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainWorkerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         //시작 화면 세팅
         replaceFragment(HomeFragment())
 
@@ -38,9 +39,7 @@ class MainActivityWorker : AppCompatActivity()
 
                 }
             }
-
             true
-
         }
     }
 

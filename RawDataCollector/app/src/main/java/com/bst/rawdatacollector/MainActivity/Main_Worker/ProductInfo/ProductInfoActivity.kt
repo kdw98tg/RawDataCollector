@@ -129,7 +129,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         //TODO 콜백으로 구현하기
         doneAmountText.text = "$doneAmount 개"
         acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).getUserName()
-        setRecyclerViewAdapter(productErrorRecyclerView, errorLists )
+        setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
 
         dialogBuilder.setView(dialogView)
 
