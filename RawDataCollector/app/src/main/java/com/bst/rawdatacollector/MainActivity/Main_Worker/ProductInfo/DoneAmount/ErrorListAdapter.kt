@@ -42,6 +42,7 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
     {
         val productError = errorList[position]
 
+        //불량 갯수 EditText textChange 이벤트 관리
         holder.binding.amountText.addTextChangedListener(object : TextWatcher
         {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
@@ -61,11 +62,11 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
             }
         })
 
-        setSpinnerAdapter(binding.errorListSpinner, context, errorType, holder, position)
+        setSpinnerAdapter(binding.errorListSpinner, holder, position)
 
     }
 
-    private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>, holder: ViewHolder, position: Int)
+    private fun setSpinnerAdapter(spinner: Spinner, holder: ViewHolder, position: Int)
     {
         spinner.adapter = spinnerAdapter//어뎁터 부착
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
@@ -83,19 +84,10 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
 
     }
 
-
     fun setAmountChangedListener(_amountChangedListener: VoidArrayListDelegate)
     {
         amountChangedListener = _amountChangedListener
     }
 
     inner class ViewHolder(val binding: ItemErrorListBinding) : RecyclerView.ViewHolder(binding.root)
-    {
-        fun getAdapterPos(): Int
-        {
-            return adapterPosition
-        }
-    }
-
-
 }

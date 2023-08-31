@@ -26,11 +26,6 @@ class ViewPagerAdapter(fragmentManager:FragmentManager, lifecycle:Lifecycle, pri
                 ProductInfoFragment()
             }
 
-            1 ->
-            {
-                ToolInfoFragment()
-            }
-
             else ->
             {
                 MachineInfoFragment()

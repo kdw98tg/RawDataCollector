@@ -56,14 +56,14 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
         //init
         spinnerLists = SpinnerArrayLists()
-        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 3)//fragmentManager, lifecycle, tab 개수
+        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
         machineErrorFragment = MachineInfoFragment()
         toolInfoFragment = ToolInfoFragment()
         productInfoFragment = ProductInfoFragment()
         errorLists = ArrayList()
 
         //tabList 설정
-        setTabList(binding.tabLayout, "제품 수량", "도구 정보", "기계 불량")
+        setTabList(binding.tabLayout, "제품 수량",  "기계 불량")
 
         //viewPager 어뎁터 설정
         binding.viewPager.adapter = viewPagerAdapter
@@ -105,11 +105,11 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
     }
 
-    private fun setTabList(tabLayout: TabLayout, tab1: String, tab2: String, tab3: String)
+    private fun setTabList(tabLayout: TabLayout, tab1: String, tab2: String)
     {
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab1))
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab2))
-        tabLayout.addTab(binding.tabLayout.newTab().setText(tab3))
+        //tabLayout.addTab(binding.tabLayout.newTab().setText(tab3))
     }
 
     @SuppressLint("SetTextI18n")
