@@ -59,12 +59,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                  >
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/addErrorListBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_alignParentEnd="true"
                     android:text="+" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/subErrorListBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/addErrorListBtn"
+                        android:textSize="20sp"
+                        android:text="-" />
+                </RelativeLayout>
+
+
 
             </LinearLayout>
 

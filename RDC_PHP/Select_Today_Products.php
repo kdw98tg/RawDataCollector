@@ -6,7 +6,7 @@
 	$userCode = $_POST['userCode'];
     $curDate = $_POST['curDate'];
 
-	$query = "SELECT product.product_code, product.product_name, request_user.name AS requester, accept_user.name AS accepter
+	$query = "SELECT product.product_name, product.product_code, request_user.name AS requester, accept_user.name AS accepter,  product.product_image,equipment_code
 	FROM producing
 	INNER JOIN product ON producing.product_code = product.product_code
 	INNER JOIN user AS request_user ON producing.request_user = request_user.user_code
@@ -27,7 +27,8 @@
 				$rows["request_user"]= $row[2];
 				$rows["accept_user"] = $row[3];
 				$rows["product_image"] = $row[4];
-			
+				$rows["equipment_code"] = $row[5];
+
 				array_push($result, $rows);
 		}
         echo json_encode(array("results"=>$result));	

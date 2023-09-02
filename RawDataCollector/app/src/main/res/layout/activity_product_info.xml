@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:text="제품A"
-            android:textAlignment="viewEnd"
+            android:textAlignment="center"
             android:textSize="30dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="ABC-123"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:textSize="30dp"
             android:textStyle="bold"
 
@@ -126,5 +126,6 @@
         android:paddingEnd="25dp"
         android:text="제출"
         android:textSize="25dp" />
+
 
 </RelativeLayout>

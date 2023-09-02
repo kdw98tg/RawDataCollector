@@ -3,14 +3,15 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
-import com.bst.rawdatacollector.DataClass.Product
+import com.bst.rawdatacollector.DataClass.Producing
+import com.bst.rawdatacollector.Delegate.ProductClickListener
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.ProductInfoActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.FragmentProductListBinding
@@ -30,7 +31,7 @@ class ProductListFragment() : Fragment()
 {
     private lateinit var binding: FragmentProductListBinding
     private lateinit var productAdapter: ProductAdapter
-    private lateinit var productList: ArrayList<Product>
+    private lateinit var productList: ArrayList<Producing>
 
     companion object{
         private const val PRODUCT_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Today_Products.php"
@@ -59,11 +60,17 @@ class ProductListFragment() : Fragment()
         val linearLayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = linearLayoutManager//setLayoutManger
 
-        productAdapter.setProductItemTouchCallback(object : VoidVoidDelegate
+        productAdapter.setProductItemTouchCallback(object : ProductClickListener
         {
-            override fun voidVoidDelegate()
+
+            override fun productSelected(productName: String, productCode: String, requestName: String, acceptName: String,equipmentCode:String)
             {
                 val intent: Intent = Intent(requireContext(), ProductInfoActivity::class.java)
+                intent.putExtra("productName",productName)
+                intent.putExtra("productCode",productCode)
+                intent.putExtra("requestName",requestName)
+                intent.putExtra("acceptName",acceptName)
+                intent.putExtra("equipmentCode",equipmentCode)
                 startActivity(intent)
             }
 
@@ -95,17 +102,20 @@ class ProductListFragment() : Fragment()
                         {
                             val jsonObject = JSONObject(response.body!!.string())
                             val jsonArray = JSONArray(jsonObject.getString("results"))
+                            Log.d("바디", "onResponse: $jsonObject")
 
                             for (i in 0 until jsonArray.length())
                             {
                                 val json: JSONObject = jsonArray.getJSONObject(i)
-                                val product = Product()
-                                product.productName = json.getString("product_name")
-                                product.productCode = json.getString("product_code")
-                                product.requestName = json.getString("request_user")
-                                product.acceptName = json.getString("accept_user")
-                                product.productImg = json.getString("product_image")
-                                productList.add(product)
+                                val producing = Producing()
+                                producing.productName = json.getString("product_name")
+                                producing.productCode = json.getString("product_code")
+                                producing.requestName = json.getString("request_user")
+                                producing.acceptName = json.getString("accept_user")
+                                producing.productImg = json.getString("product_image")
+                                producing.equipmentCode = json.getString("equipment_code")
+                                Log.d("장비번호1", "onResponse: ${producing.equipmentCode}")
+                                productList.add(producing)
                                 productAdapter.notifyDataSetChanged()
                             }
                         }

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bst.rawdatacollector.DataClass.Product
 import com.bst.rawdatacollector.DataClass.WorkList
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityWorkHistoryBinding

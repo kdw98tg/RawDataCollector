@@ -1,18 +1,21 @@
 package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductInfoFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Machine.MachineInfoFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentInfoFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Tools.ToolInfoFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.SpinnerInterface.SpinnerArrayLists
@@ -27,11 +30,12 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Date
 
 class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountChangedListener, ProductInfoFragment.ProductErrorListChangedListener,
-                            MachineInfoFragment.MachineErrorChangedListener, MachineInfoFragment.MachineStoppedTimeChangedListener,
-                            MachineInfoFragment.MachineRestartTimeChangedListener, MachineInfoFragment.MachineStoppedTimeAmountChangedListener
+                            EquipmentInfoFragment.EquipmentErrorChangedListener, EquipmentInfoFragment.EquipmentStoppedTimeChangedListener,
+                            EquipmentInfoFragment.EquipmentRestartTimeChangedListener, EquipmentInfoFragment.EquipmentStoppedTimeAmountChangedListener
 {
     private lateinit var binding: ActivityProductInfoBinding
     private lateinit var spinnerLists: SpinnerArrayLists
@@ -39,22 +43,30 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
     private lateinit var toolInfoFragment: ToolInfoFragment
     private lateinit var productInfoFragment: ProductInfoFragment
-    private lateinit var machineErrorFragment: MachineInfoFragment
+    private lateinit var equipmentErrorFragment: EquipmentInfoFragment
 
     private lateinit var errorLists: ArrayList<ProductError>
 
-    private var machineTimeAmount: String = ""
+    private var equipmentTimeAmount: String = ""
     private var doneAmount: String = "0"
-    private var machineErrorType: String = ""
-    private var machineStoppedTime: String = ""
-    private var machineRestartTime: String = ""
+    private var equipmentErrorType: String = ""
+    private var equipmentStoppedTime: String = ""
+    private var equipmentRestartTime: String = ""
 
     private val client: OkHttpClient = OkHttpClient()
+
+    private lateinit var productName: String
+    private lateinit var productCode: String
+    private lateinit var requestCode: String
+    private lateinit var acceptCode: String
+    private lateinit var equipmentCode: String
 
     companion object
     {
         private const val INSERT_DONE_AMOUNT_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_DoneAmount.php"
         private const val INSERT_PRODUCT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_ProductError.php"
+        private const val INSERT_EQUIPMENT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_EquipmentError.php"
+
     }
 
     //DoneAmountListener의 함수 재정의
@@ -73,25 +85,26 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
     //MachineErrorTypeListener
     override fun onMachineErrorTypeChanged(errorType: String)
     {
-        machineErrorType = errorType
+        equipmentErrorType = errorType
     }
 
     override fun onMachineStoppedTimeChanged(machineStoppedTime: String)
     {
-        this.machineStoppedTime = machineStoppedTime
+        this.equipmentStoppedTime = machineStoppedTime
     }
 
     override fun onMachineRestartTimeChanged(machineRestartTime: String)
     {
-        this.machineRestartTime = machineRestartTime
+        this.equipmentRestartTime = machineRestartTime
     }
 
     override fun onMachineStoppedTimeAmountChanged(machineTimeAmount: String)
     {
-        this.machineTimeAmount = machineTimeAmount
+        this.equipmentTimeAmount = machineTimeAmount
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -101,11 +114,19 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         //init
         spinnerLists = SpinnerArrayLists()
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
-        machineErrorFragment = MachineInfoFragment()
+        equipmentErrorFragment = EquipmentInfoFragment()
         toolInfoFragment = ToolInfoFragment()
         productInfoFragment = ProductInfoFragment()
         errorLists = ArrayList()
 
+        //getIntent
+        productName = intent.getStringExtra("productName").toString()
+        productCode = intent.getStringExtra("productCode").toString()
+        requestCode = intent.getStringExtra("requestCode").toString()
+        acceptCode = intent.getStringExtra("acceptCode").toString()
+        equipmentCode = intent.getStringExtra("equipmentCode").toString()
+
+        Log.d("장비번호", "onCreate: $equipmentCode")
 
         //일 시작할건지 물어보는 Dialog
         //아니요 누르면 finish()
@@ -114,6 +135,10 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         {
             workStartDialog()
         }
+
+        //제일 상단 뷰 세팅 (제품정보)
+        binding.productCodeText.text = productCode
+        binding.productNameText.text = productName
 
 
         //tabList 설정
@@ -173,6 +198,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         //tabLayout.addTab(binding.tabLayout.newTab().setText(tab3))
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     private fun showSubmitDialog()
     {
@@ -195,10 +221,10 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         doneAmountText.text = "$doneAmount 개"
         acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).userName
         setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
-        machineErrorText.text = machineErrorType
-        machineStoppedTimeText.text = machineStoppedTime
-        machineRestartTimeText.text = machineRestartTime
-        timeAmountText.text = machineTimeAmount
+        machineErrorText.text = equipmentErrorType
+        machineStoppedTimeText.text = equipmentStoppedTime
+        machineRestartTimeText.text = equipmentRestartTime
+        timeAmountText.text = equipmentTimeAmount
         workStartTimeText.text = binding.workStartText.text
         workEndText.text = binding.workEndText.text
 
@@ -208,17 +234,26 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
             // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
             dialog.dismiss()
         }.setPositiveButton("확인") { dialog, which ->
+
             Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
+
+            val userCode = UserData.getInstance(this@ProductInfoActivity).userCode
             //통신 해야 함
-            updateDoneAmount(UserData.getInstance(this@ProductInfoActivity).userCode, doneAmount, "2023-09-02", "123-456")
+            updateDoneAmount(userCode, doneAmount, getCurDate().toString(), productCode)
             for (i in 0 until errorLists.size)
             {
 
-                insertProductError(UserData.getInstance(this@ProductInfoActivity).userCode,
-                    "123-456",
+                insertProductError(userCode,
+                    productCode,
                     errorLists[i].errorName,
                     errorLists[i].errorAmount.toString())
             }
+            //if(machineStoppedTime!="00:00:00")
+            //{
+            insertEquipmentError(userCode,equipmentCode,equipmentErrorType,getCurDateToDateTimeFormat(equipmentStoppedTime),getCurDateToDateTimeFormat(equipmentRestartTime))
+            Log.d("포멧", "showSubmitDialog:${getCurDateToDateTimeFormat(equipmentStoppedTime)},${getCurDateToDateTimeFormat(equipmentRestartTime)}")
+            //insertEquipmentError(userCode,equipmentCode,machineErrorType,"1000-01-01 00:00:00","1000-01-01 00:00:00")
+            //}
         }
 
         val alertDialog = dialogBuilder.create()
@@ -323,5 +358,42 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         })
     }
 
+    private fun insertEquipmentError(reportUser: String, equipmentCode: String, errorType: String, stoppedTime: String, restartTime: String)
+    {
+        val body: FormBody = FormBody.Builder().add("reportUser", reportUser).add("equipmentCode", equipmentCode).add("errorType", errorType)
+            .add("stoppedTime", stoppedTime).add("restartTime", restartTime).build()
+
+        val request = Request.Builder().url(INSERT_EQUIPMENT_ERROR_URL).post(body).build()
+
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+                runOnUiThread {
+
+                    Toast.makeText(applicationContext, "equip 전송 안됨", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "equip 성공", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurDate(): LocalDate
+    {
+        return LocalDate.now()
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurDateToDateTimeFormat(time:String):String
+    {
+        return LocalDate.now().toString() + " " + time
+    }
 
 }

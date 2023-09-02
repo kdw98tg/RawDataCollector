@@ -5,8 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductInfoFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Machine.MachineInfoFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Tools.ToolInfoFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentInfoFragment
 
 class ViewPagerAdapter(fragmentManager:FragmentManager, lifecycle:Lifecycle, private val amount:Int): FragmentStateAdapter(fragmentManager,lifecycle)
 {
@@ -28,7 +27,7 @@ class ViewPagerAdapter(fragmentManager:FragmentManager, lifecycle:Lifecycle, pri
 
             else ->
             {
-                MachineInfoFragment()
+                EquipmentInfoFragment()
             }
         }
     }

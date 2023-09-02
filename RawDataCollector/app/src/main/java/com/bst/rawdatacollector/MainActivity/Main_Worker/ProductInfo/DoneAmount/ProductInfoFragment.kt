@@ -30,7 +30,6 @@ class ProductInfoFragment : Fragment()
     private lateinit var errorList: ArrayList<ProductError>
     private lateinit var errorType: ArrayList<String>
 
-    private var doneAmount: String = ""
 
     private var doneAmountChangedListener: DoneAmountChangedListener? = null
     private var productErrorListChangedListener: ProductErrorListChangedListener? = null
@@ -102,6 +101,10 @@ class ProductInfoFragment : Fragment()
             val error = ProductError()
             errorList.add(error)
             errorListAdapter.notifyItemInserted(errorList.size)
+        }
+        binding.subErrorListBtn.setOnClickListener{
+            errorList.remove(errorList[errorList.size-1])
+            errorListAdapter.notifyItemRemoved(errorList.size)
         }
     }
 
