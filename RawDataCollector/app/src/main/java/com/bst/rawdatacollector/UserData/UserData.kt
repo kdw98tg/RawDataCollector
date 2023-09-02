@@ -5,6 +5,22 @@ import android.content.Context
 class UserData private constructor(context: Context)
 {
 
+    private var userCode: String = ""
+    private var userPw: String = ""
+    private var userName: String = ""
+    private var userEmail: String = ""
+    private var userCompany: String = ""
+    private var userPhoneNumber: String = ""
+    private var userProfileImg:String=""
+    private var userPosition: String = ""
+
+    var startWork:Boolean = false
+        get() = field
+        set(values)
+        {
+            field = values
+        }
+
     companion object
     {
         @Volatile
@@ -21,14 +37,10 @@ class UserData private constructor(context: Context)
             return instance!!
         }
 
-        private var userCode: String = ""
-        private var userPw: String = ""
-        private var userName: String = ""
-        private var userEmail: String = ""
-        private var userCompany: String = ""
-        private var userPhoneNumber: String = ""
-        private var userProfileImg:String=""
-        private var userPosition: String = ""
+
+
+
+
 
     }
 //region getter/setter

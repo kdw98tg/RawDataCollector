@@ -34,13 +34,15 @@ class ToolInfoFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
         binding = FragmentToolInfoBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
         //init
         errorType=ArrayList()
-
         selectErrorType("도구")
-
-        return binding.root
     }
 
     private fun selectErrorType(_type:String)

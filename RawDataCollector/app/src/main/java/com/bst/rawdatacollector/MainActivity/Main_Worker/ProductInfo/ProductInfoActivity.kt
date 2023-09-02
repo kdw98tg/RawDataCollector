@@ -19,6 +19,8 @@ import com.bst.rawdatacollector.SpinnerInterface.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityProductInfoBinding
 import com.google.android.material.tabs.TabLayout
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountChangedListener, ProductInfoFragment.ProductErrorListChangedListener,
                             MachineInfoFragment.MachineErrorChangedListener, MachineInfoFragment.MachineStoppedTimeChangedListener,
@@ -34,11 +36,11 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
     private lateinit var errorLists: ArrayList<ProductError>
 
-    private var machineTimeAmount:String=""
+    private var machineTimeAmount: String = ""
     private var doneAmount: String = "0"
     private var machineErrorType: String = ""
-    private var machineStoppedTime:String = ""
-    private var machineRestartTime:String = ""
+    private var machineStoppedTime: String = ""
+    private var machineRestartTime: String = ""
 
     //DoneAmountListener의 함수 재정의
     override fun onAmountChanged(doneAmount: String)
@@ -58,6 +60,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
     {
         machineErrorType = errorType
     }
+
     override fun onMachineStoppedTimeChanged(machineStoppedTime: String)
     {
         this.machineStoppedTime = machineStoppedTime
@@ -67,6 +70,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
     {
         this.machineRestartTime = machineRestartTime
     }
+
     override fun onMachineStoppedTimeAmountChanged(machineTimeAmount: String)
     {
         this.machineTimeAmount = machineTimeAmount
@@ -86,6 +90,16 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         toolInfoFragment = ToolInfoFragment()
         productInfoFragment = ProductInfoFragment()
         errorLists = ArrayList()
+
+
+        //일 시작할건지 물어보는 Dialog
+        //아니요 누르면 finish()
+        //예 누르면 db에 시작 시간 입력
+        if (!UserData.getInstance(this@ProductInfoActivity).startWork)
+        {
+            workStartDialog()
+        }
+
 
         //tabList 설정
         setTabList(binding.tabLayout, "제품 수량", "기계 불량")
@@ -124,8 +138,15 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
         //button click event -> submit
         binding.submitBtn.setOnClickListener {
-
-            showSubmitDialog()
+            binding.workEndText.text = getCurTime()
+            if(doneAmount == "0")
+            {
+                submitErrorDialog()
+            }
+            else
+            {
+                showSubmitDialog()
+            }
         }
 
     }
@@ -152,6 +173,8 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         val machineStoppedTimeText = dialogView.findViewById<TextView>(R.id.machineStoppedTime)
         val machineRestartTimeText = dialogView.findViewById<TextView>(R.id.machineRestartTime)
         val timeAmountText = dialogView.findViewById<TextView>(R.id.machineTimeAmountText)
+        val workStartTimeText = dialogView.findViewById<TextView>(R.id.workStartText)
+        val workEndText = dialogView.findViewById<TextView>(R.id.workEndText)
 
         //TODO 각 정보를 받아올 작업 해야함
         //TODO 콜백으로 구현하기
@@ -162,6 +185,8 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         machineStoppedTimeText.text = machineStoppedTime
         machineRestartTimeText.text = machineRestartTime
         timeAmountText.text = machineTimeAmount
+        workStartTimeText.text = binding.workStartText.text
+        workEndText.text = binding.workEndText.text
 
         dialogBuilder.setView(dialogView)
 
@@ -184,6 +209,22 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         _recyclerView.layoutManager = LinearLayoutManager(this@ProductInfoActivity)
     }
 
+    private fun workStartDialog()
+    {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("작업 시작").setMessage("작업을 시작 하시겠습니까?")
+        builder.setPositiveButton("네") { dialogInterface, i ->
+            //UserData.getInstance(this@ProductInfoActivity).startWork = true
+            binding.workStartText.text = getCurTime()
+        }
+        builder.setNegativeButton("아니요") { dialogInterface, i ->
+            //아니요 누르면 다시 돌아감
+            finish()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
     private fun submitErrorDialog()
     {
@@ -195,7 +236,13 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         dialog.show()
     }
 
-
+    private fun getCurTime(): String
+    {
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val dateFormat = SimpleDateFormat("kk시 mm분")
+        return dateFormat.format(date)
+    }
 
 
 }

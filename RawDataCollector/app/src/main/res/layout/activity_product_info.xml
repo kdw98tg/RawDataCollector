@@ -51,6 +51,8 @@
     </LinearLayout>
 
 
+
+
     <ImageView
         android:id="@+id/productImageView"
         android:layout_width="match_parent"
@@ -59,9 +61,51 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/productimg" />
 
+    <LinearLayout
+        android:id="@+id/workTimeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/border_all"
+        android:layout_below="@+id/productImageView"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/workStartText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="~"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/workEndText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_below="@id/productImageView"
+        android:layout_below="@id/workTimeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
