@@ -47,8 +47,8 @@ class WorkHistoryActivity : AppCompatActivity()
         binding.workHistoryRecyclerView.layoutManager = linearLayoutManager
 
         selectedDate = intent.getStringExtra("selectedDate")
-        Log.d("지정된 날짜", "onCreate: $selectedDate , ${UserData.getInstance(this@WorkHistoryActivity).getUserCode()}")
-        selectCurWorkHistory(UserData.getInstance(this@WorkHistoryActivity).getUserCode(), selectedDate!!)
+        Log.d("지정된 날짜", "onCreate: $selectedDate , ${UserData.getInstance(this@WorkHistoryActivity).userCode}")
+        selectCurWorkHistory(UserData.getInstance(this@WorkHistoryActivity).userCode, selectedDate!!)
     }
 
     private fun selectCurWorkHistory(_userCode:String, _selectedDate:String)

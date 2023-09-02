@@ -89,7 +89,7 @@ class ToolInfoFragment : Fragment()
 
     private fun setSpinnerAdapter(spinner: Spinner, context: Context, stringLists: ArrayList<String>)
     {
-        val spinnerAdapter: CustomSpinnerAdapter = CustomSpinnerAdapter(context, stringLists)
+        val spinnerAdapter = CustomSpinnerAdapter(context, stringLists)
         spinner.adapter = spinnerAdapter//어뎁터 생성
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
         {

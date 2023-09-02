@@ -4,23 +4,6 @@ import android.content.Context
 
 class UserData private constructor(context: Context)
 {
-
-    private var userCode: String = ""
-    private var userPw: String = ""
-    private var userName: String = ""
-    private var userEmail: String = ""
-    private var userCompany: String = ""
-    private var userPhoneNumber: String = ""
-    private var userProfileImg:String=""
-    private var userPosition: String = ""
-
-    var startWork:Boolean = false
-        get() = field
-        set(values)
-        {
-            field = values
-        }
-
     companion object
     {
         @Volatile
@@ -36,93 +19,79 @@ class UserData private constructor(context: Context)
             }
             return instance!!
         }
-
-
-
-
-
-
-    }
-//region getter/setter
-     fun getUserCode(): String
-    {
-        return userCode
     }
 
-     fun setUserCode(_userCode: String)
-    {
-        userCode = _userCode
-    }
+    private var mUserCode: String = ""
+    var userCode: String
+        get() = mUserCode
+        set(values)
+        {
+            mUserCode = values
+        }
 
-     fun getUserPw(): String
-    {
-        return userPw
-    }
+    private var mUserPw: String = ""
+    var userPw: String
+        get() = mUserPw
+        set(values)
+        {
+            mUserPw = values
+        }
 
-     fun setUserPw(_userPw: String)
-    {
-        userPw = _userPw
-    }
+    private var mUserName: String = ""
+    var userName: String
+        get() = mUserName
+        set(values)
+        {
+            mUserName = values
+        }
 
-     fun getUserName(): String
-    {
-        return userName
-    }
+    private var mUserEmail: String = ""
+    var userEmail: String
+        get() = mUserEmail
+        set(values)
+        {
+            mUserEmail = values
+        }
 
-     fun setUserName(_userName: String)
-    {
-        userName = _userName
-    }
+    private var mUserCompany: String = ""
+    var userCompany: String
+        get() = userCompany
+        set(values)
+        {
+            userCompany = values
+        }
 
-     fun getUserEmail(): String
-    {
-        return userCode
-    }
+    private var mUserPhoneNumber: String = ""
+    var userPhoneNumber: String
+        get() = mUserPhoneNumber
+        set(values)
+        {
+            mUserPhoneNumber = values
+        }
 
-     fun setUserEmail(_userEmail: String)
-    {
-        userEmail = _userEmail
-    }
+    private var mUserProfileImg: String = ""
+    var userProfileImg: String
+        get() = mUserProfileImg
+        set(values)
+        {
+            mUserProfileImg = values
+        }
 
-     fun getUserCompany(): String
-    {
-        return userCompany
-    }
+    private var mUserPosition: String = ""
+    var userPosition: String
+        get() = mUserPosition
+        set(values)
+        {
+            mUserPosition = values
+        }
 
-     fun setUserCompany(_userCompany: String)
-    {
-        userCompany = _userCompany
-    }
+    private var mStartWork: Boolean = false
+    var startWork: Boolean
+        get() = mStartWork
+        set(values)
+        {
+            mStartWork = values
+        }
 
-     fun getUserPhoneNumber(): String
-    {
-        return userPhoneNumber
-    }
-
-     fun setUserPhoneNumber(_userPhoneNumber: String)
-    {
-        userPhoneNumber = _userPhoneNumber
-    }
-     fun getUserPosition(): String
-    {
-        return userPosition
-    }
-
-     fun setUserPosition(_userPosition: String)
-    {
-        userPosition = _userPosition
-    }
-
-    fun getUserProfileImg(): String
-    {
-        return userProfileImg
-    }
-
-    fun setUserProfileImg(_userProfileImg: String)
-    {
-        userProfileImg = _userProfileImg
-    }
-
-//endregion
 
 }

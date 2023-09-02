@@ -84,8 +84,8 @@ class UserInfoActivity : AppCompatActivity()
     {
         //creating a file
         val file = File(path)
-        val userCode: String = UserData.getInstance(this@UserInfoActivity).getUserCode()
-        val userCompany: String = UserData.getInstance(this@UserInfoActivity).getUserCompany()
+        val userCode: String = UserData.getInstance(this@UserInfoActivity).userCode
+        val userCompany: String = UserData.getInstance(this@UserInfoActivity).userCompany
         //TODO 파일 이름 바꾸기
         val fileName: String = userCompany + userCode.replace("@", "").replace(".", "")
 
@@ -129,11 +129,11 @@ class UserInfoActivity : AppCompatActivity()
 
     private fun viewInit()
     {
-        binding.nameText.text = userData.getUserName()
-        binding.company.text = userData.getUserCompany()
-        binding.userCode.text = userData.getUserCode()
-        binding.position.text = userData.getUserPosition()
-        binding.position.text = userData.getUserPhoneNumber()
+        binding.nameText.text = userData.userName
+        binding.company.text = userData.userCompany
+        binding.userCode.text = userData.userCode
+        binding.position.text = userData.userPosition
+        binding.position.text = userData.userPhoneNumber
 
         Glide.with(this).load(PIC_LOAD_URL).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.userProfileImg)
     }

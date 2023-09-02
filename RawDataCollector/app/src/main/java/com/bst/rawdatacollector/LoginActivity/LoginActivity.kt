@@ -137,14 +137,14 @@ class LoginActivity : AppCompatActivity()
     )
     {
         val userData = UserData.getInstance(this@LoginActivity)
-        userData.setUserCode(userCode)
-        userData.setUserPw(userPw)
-        userData.setUserName(userName)
-        userData.setUserEmail(userEmail)
-        userData.setUserCompany(userCompany)
-        userData.setUserPhoneNumber(userPhoneNumber)
-        userData.setUserProfileImg(userProfileImg)
-        userData.setUserPosition(userPosition)
+        userData.userCode = userCode
+        userData.userPw = userPw
+        userData.userName = userName
+        userData.userEmail= userEmail
+        userData.userCompany = userCompany
+        userData.userPhoneNumber = userPhoneNumber
+        userData.userProfileImg = userProfileImg
+        userData.userPosition = userPosition
     }
 
     private fun moveActivity(_activityClass: Class<*>)//액티비티를 받아서 intent 수행

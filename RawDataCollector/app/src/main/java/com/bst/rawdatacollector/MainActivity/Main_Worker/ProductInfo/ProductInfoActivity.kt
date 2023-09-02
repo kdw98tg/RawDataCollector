@@ -179,7 +179,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         //TODO 각 정보를 받아올 작업 해야함
         //TODO 콜백으로 구현하기
         doneAmountText.text = "$doneAmount 개"
-        acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).getUserName()
+        acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).userName
         setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
         machineErrorText.text = machineErrorType
         machineStoppedTimeText.text = machineStoppedTime

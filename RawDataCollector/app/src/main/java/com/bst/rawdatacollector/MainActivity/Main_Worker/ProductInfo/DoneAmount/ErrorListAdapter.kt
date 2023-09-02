@@ -62,11 +62,11 @@ class ErrorListAdapter(private val context: Context, private val errorList: Arra
             }
         })
 
-        setSpinnerAdapter(binding.errorListSpinner, holder, position)
+        setSpinnerAdapter(binding.errorListSpinner, position)
 
     }
 
-    private fun setSpinnerAdapter(spinner: Spinner, holder: ViewHolder, position: Int)
+    private fun setSpinnerAdapter(spinner: Spinner,  position: Int)
     {
         spinner.adapter = spinnerAdapter//어뎁터 부착
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener

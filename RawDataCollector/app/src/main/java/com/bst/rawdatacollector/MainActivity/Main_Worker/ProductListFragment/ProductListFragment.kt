@@ -45,7 +45,7 @@ class ProductListFragment() : Fragment()
 
         //setTestList()
 
-        selectTodayProductLists(UserData.getInstance(requireContext()).getUserCode(),LocalDate.now().toString())
+        selectTodayProductLists(UserData.getInstance(requireContext()).userCode,LocalDate.now().toString())
 
         productAdapter = ProductAdapter(requireContext(), productList)//kotlin 은 requireContext()
 

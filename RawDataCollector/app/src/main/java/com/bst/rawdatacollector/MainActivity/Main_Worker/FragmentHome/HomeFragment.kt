@@ -48,11 +48,11 @@ class HomeFragment : Fragment()
         //출근
         binding.attendanceBtn.setOnClickListener {
             Log.d("시간", "onCreateView: ${getCurDate()}, ${getCurTime()}")
-            insertStartTime(UserData.getInstance(requireContext()).getUserCode(),getCurDate(),getCurTime())
+            insertStartTime(UserData.getInstance(requireContext()).userCode,getCurDate(),getCurTime())
         }
         //퇴근
         binding.endBtn.setOnClickListener {
-            insertEndTime(UserData.getInstance(requireContext()).getUserCode(),getCurDate(),getCurTime())
+            insertEndTime(UserData.getInstance(requireContext()).userCode,getCurDate(),getCurTime())
         }
         //회원정보 조회
         binding.userInfoImg.setOnClickListener {
