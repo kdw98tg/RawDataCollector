@@ -229,10 +229,7 @@ class MachineInfoFragment : Fragment()
     {
         val firstTimeAmount = stoppedHour * 60 + startMinute
         val secondTimeAmount = restartHour * 60 + restartMinute
-        if (firstTimeAmount > secondTimeAmount)
-        {
-            return 0
-        }
+
         return secondTimeAmount - firstTimeAmount
     }
 

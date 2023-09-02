@@ -162,8 +162,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="고장 내용"
-                    android:textAlignment="center"
+                    android:text="고장 내용 : "
+                    android:textAlignment="textEnd"
                     android:textSize="15dp" />
 
                 <TextView
@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="고장 내용"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textSize="15dp" />
             </LinearLayout>
 
