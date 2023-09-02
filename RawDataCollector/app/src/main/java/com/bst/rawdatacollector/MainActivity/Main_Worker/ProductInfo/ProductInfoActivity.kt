@@ -19,6 +19,13 @@ import com.bst.rawdatacollector.SpinnerInterface.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityProductInfoBinding
 import com.google.android.material.tabs.TabLayout
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -41,6 +48,14 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
     private var machineErrorType: String = ""
     private var machineStoppedTime: String = ""
     private var machineRestartTime: String = ""
+
+    private val client: OkHttpClient = OkHttpClient()
+
+    companion object
+    {
+        private const val INSERT_DONE_AMOUNT_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_DoneAmount.php"
+        private const val INSERT_PRODUCT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_ProductError.php"
+    }
 
     //DoneAmountListener의 함수 재정의
     override fun onAmountChanged(doneAmount: String)
@@ -139,7 +154,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         //button click event -> submit
         binding.submitBtn.setOnClickListener {
             binding.workEndText.text = getCurTime()
-            if(doneAmount == "0")
+            if (doneAmount == "0")
             {
                 submitErrorDialog()
             }
@@ -176,8 +191,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         val workStartTimeText = dialogView.findViewById<TextView>(R.id.workStartText)
         val workEndText = dialogView.findViewById<TextView>(R.id.workEndText)
 
-        //TODO 각 정보를 받아올 작업 해야함
-        //TODO 콜백으로 구현하기
+        //정보 view에 세팅
         doneAmountText.text = "$doneAmount 개"
         acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).userName
         setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
@@ -196,6 +210,15 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         }.setPositiveButton("확인") { dialog, which ->
             Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
             //통신 해야 함
+            updateDoneAmount(UserData.getInstance(this@ProductInfoActivity).userCode, doneAmount, "2023-09-02", "123-456")
+            for (i in 0 until errorLists.size)
+            {
+
+                insertProductError(UserData.getInstance(this@ProductInfoActivity).userCode,
+                    "123-456",
+                    errorLists[i].errorName,
+                    errorLists[i].errorAmount.toString())
+            }
         }
 
         val alertDialog = dialogBuilder.create()
@@ -236,12 +259,68 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         dialog.show()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun getCurTime(): String
     {
         val now = System.currentTimeMillis()
         val date = Date(now)
         val dateFormat = SimpleDateFormat("kk시 mm분")
         return dateFormat.format(date)
+    }
+
+    private fun updateDoneAmount(acceptUser: String, doneAmount: String, workDate: String, productCode: String)
+    {
+        val body: FormBody =
+            FormBody.Builder().add("acceptUser", acceptUser).add("doneAmount", doneAmount).add("workDate", workDate).add("productCode", productCode)
+                .build()
+        val request = Request.Builder().url(INSERT_DONE_AMOUNT_URL).post(body).build()
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+                runOnUiThread {
+
+                    Toast.makeText(applicationContext, "doneAmount 전송 안됨", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                if (response.isSuccessful)
+                {
+                    runOnUiThread {
+
+                        Toast.makeText(applicationContext, "doneAmount 성공", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun insertProductError(reportUser: String, productCode: String, errorType: String, amount: String)
+    {
+        val body: FormBody =
+            FormBody.Builder().add("reportUser", reportUser).add("productCode", productCode).add("errorType", errorType).add("amount", amount).build()
+        val request = Request.Builder().url(INSERT_PRODUCT_ERROR_URL).post(body).build()
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+                runOnUiThread {
+
+                    Toast.makeText(applicationContext, "errors 전송 안됨", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "errors 성공", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
 

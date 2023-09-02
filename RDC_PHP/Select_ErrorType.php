@@ -5,7 +5,7 @@
 
 	$type = $_POST['type'];	
 
-	$query = "SELECT error_name FROM error_list WHERE error_type = '$type' ";
+	$query = "SELECT error_name FROM error_types WHERE error_type = '$type' ";
 	 
 	//echo $query;
 	

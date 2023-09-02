@@ -55,10 +55,10 @@ class UserData private constructor(context: Context)
 
     private var mUserCompany: String = ""
     var userCompany: String
-        get() = userCompany
+        get() = mUserCompany
         set(values)
         {
-            userCompany = values
+            mUserCompany = values
         }
 
     private var mUserPhoneNumber: String = ""
