@@ -3,6 +3,7 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Machine
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,9 +33,31 @@ class MachineInfoFragment : Fragment()
     private lateinit var binding: FragmentMachineInfoBinding
     private lateinit var errorType: ArrayList<String>
 
+    private var machineErrorChangedListener: MachineErrorChangedListener? = null
+    private var machineStoppedTimeChangedListener: MachineStoppedTimeChangedListener? = null
+    private var machineRestartTimeChangedListener: MachineRestartTimeChangedListener? = null
+    private var machineTimeAmountChangedListener: MachineStoppedTimeAmountChangedListener? = null
+
+
+    private var timeAmount: String = ""
+    private var stoppedHour: Int = 0
+    private var stoppedMinute: Int = 0
+    private var restartHour: Int = 0
+    private var restartMinute: Int = 0
+
+
     companion object
     {
         private const val SELECT_ERROR_TYPE_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
+    }
+
+    override fun onAttach(context: Context)
+    {
+        super.onAttach(context)
+        machineErrorChangedListener = context as MachineErrorChangedListener
+        machineStoppedTimeChangedListener = context as MachineStoppedTimeChangedListener
+        machineRestartTimeChangedListener = context as MachineRestartTimeChangedListener
+        machineTimeAmountChangedListener = context as MachineStoppedTimeAmountChangedListener
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
@@ -51,18 +74,20 @@ class MachineInfoFragment : Fragment()
         selectErrorType("설비")
 
         binding.startTimeBtn.setOnClickListener {
-            showMachineErrorTimeDialog(binding.startTimeBtn)
+            setMachineStoppedTimeDialog(binding.startTimeBtn)
         }
         binding.endTimeBtn.setOnClickListener {
-            showMachineErrorTimeDialog(binding.endTimeBtn)
+            setMachineRestartTimeDialog(binding.endTimeBtn)
+            //에러 시작시간보다 작으면 return 시켜야함
         }
 
     }
 
-    private fun showMachineErrorTimeDialog(btn: Button)
+    private fun setMachineStoppedTimeDialog(btn: Button)
     {
         val dialogBuilder = AlertDialog.Builder(requireContext())
         val inflater = LayoutInflater.from(requireContext())
+        var h: String = ""//Listener 로 값을 넘겨주기 위한 변수
 
         //dialogView Init
         val dialogView = inflater.inflate(R.layout.dialog_machine_error_time, null)
@@ -77,11 +102,37 @@ class MachineInfoFragment : Fragment()
             {
                 if (_hour > 12)
                 {
-                    btn.text = "오후 $_hour : $_minute"
+                    if (_minute > 10)
+                    {
+                        btn.text = "$_hour : $_minute"
+                        h = "$_hour : $_minute"
+                        stoppedHour = _hour
+                        stoppedMinute = _minute
+                    }
+                    else
+                    {
+                        btn.text = "$_hour : 0$_minute"
+                        h = "$_hour : 0$_minute"
+                        stoppedHour = _hour
+                        stoppedMinute = _minute
+                    }
                 }
                 else
                 {
-                    btn.text = "오전 $_hour : $_minute"
+                    if (_minute > 10)
+                    {
+                        btn.text = "0$_hour : $_minute"
+                        h = "$_hour : $_minute"
+                        stoppedHour = _hour
+                        stoppedMinute = _minute
+                    }
+                    else
+                    {
+                        btn.text = "0$_hour : 0$_minute"
+                        h = "$_hour : 0$_minute"
+                        stoppedHour = _hour
+                        stoppedMinute = _minute
+                    }
                 }
             }
         })
@@ -90,13 +141,107 @@ class MachineInfoFragment : Fragment()
             // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
             dialog.dismiss()
         }.setPositiveButton("확인") { dialog, which ->
-            Toast.makeText(requireContext(), "저장 되었습니다.", Toast.LENGTH_SHORT).show()
+            Log.d("멈춘시간", "setMachineStoppedTimeDialog: $stoppedHour")
+            machineStoppedTimeChangedListener?.onMachineStoppedTimeChanged(h)
+            //통신 해야 함
+        }
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
+    }
 
+    private fun setMachineRestartTimeDialog(btn: Button)
+    {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        val inflater = LayoutInflater.from(requireContext())
+        var h: String = ""//Listener 로 값을 넘겨주기 위한 변수
+
+        //dialogView Init
+        val dialogView = inflater.inflate(R.layout.dialog_machine_error_time, null)
+        val timePicker: TimePicker = dialogView.findViewById(R.id.timePicker)
+
+        dialogBuilder.setView(dialogView)
+
+        timePicker.setOnTimeChangedListener(object : TimePicker.OnTimeChangedListener
+        {
+            @SuppressLint("SetTextI18n")
+            override fun onTimeChanged(_timePicker: TimePicker?, _hour: Int, _minute: Int)
+            {
+                if (_hour > 12)
+                {
+                    if (_minute > 10)
+                    {
+                        btn.text = "$_hour : $_minute"
+                        h = "$_hour : $_minute"
+                        restartHour = _hour
+                        restartMinute = _minute
+                    }
+                    else
+                    {
+                        btn.text = "$_hour : 0$_minute"
+                        h = "$_hour : 0$_minute"
+                        restartHour = _hour
+                        restartMinute = _minute
+                    }
+                }
+                else
+                {
+                    if (_minute > 10)
+                    {
+                        btn.text = "$_hour : $_minute"
+                        h = "$_hour : $_minute"
+                        restartHour = _hour
+                        restartMinute = _minute
+                    }
+                    else
+                    {
+                        btn.text = "$_hour : 0$_minute"
+                        h = "$_hour : 0$_minute"
+                        restartHour = _hour
+                        restartMinute = _minute
+                    }
+                }
+            }
+        })
+
+        dialogBuilder.setNegativeButton("취소") { dialog, which ->
+            // 취소 버튼 클릭 시 아무 작업도 수행하지 않음
+            dialog.dismiss()
+        }.setPositiveButton("확인") { dialog, which ->
+            machineRestartTimeChangedListener?.onMachineRestartTimeChanged(h)
+            if (getTimeAmount(stoppedHour, stoppedMinute, restartHour, restartMinute) < 0)
+            {
+                Toast.makeText(requireContext(), "시간을 다시 확인해 주세요", Toast.LENGTH_SHORT).show()
+                return@setPositiveButton
+            }
+            else
+            {
+                timeAmount = getTimeAmount_12H_Foramt(stoppedHour, stoppedMinute, restartHour, restartMinute)
+                machineTimeAmountChangedListener?.onMachineStoppedTimeAmountChanged(timeAmount)
+            }
 
             //통신 해야 함
         }
         val alertDialog = dialogBuilder.create()
         alertDialog.show()
+    }
+
+    private fun getTimeAmount(stoppedHour: Int, startMinute: Int, restartHour: Int, restartMinute: Int): Int
+    {
+        val firstTimeAmount = stoppedHour * 60 + startMinute
+        val secondTimeAmount = restartHour * 60 + restartMinute
+        if (firstTimeAmount > secondTimeAmount)
+        {
+            return 0
+        }
+        return secondTimeAmount - firstTimeAmount
+    }
+
+    private fun getTimeAmount_12H_Foramt(stoppedHour: Int, startMinute: Int, restartHour: Int, restartMinute: Int): String
+    {
+        val timeAmount = getTimeAmount(stoppedHour, startMinute, restartHour, restartMinute)
+        val hour = timeAmount / 60
+        val minute = timeAmount % 60
+        return "$hour 시간 $minute 분"
     }
 
     private fun selectErrorType(_type: String)
@@ -151,7 +296,7 @@ class MachineInfoFragment : Fragment()
             {
                 //고른 아이템을 반환
                 val selectedItem = spinnerAdapter.getItem()
-                Toast.makeText(context, "선택된 아이템:$selectedItem", Toast.LENGTH_SHORT).show()
+                machineErrorChangedListener?.onMachineErrorTypeChanged(selectedItem)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?)
@@ -160,6 +305,25 @@ class MachineInfoFragment : Fragment()
             }
 
         }
+    }
+
+    interface MachineErrorChangedListener
+    {
+        fun onMachineErrorTypeChanged(errorType: String)
+    }
+
+    interface MachineStoppedTimeChangedListener
+    {
+        fun onMachineStoppedTimeChanged(machineStoppedTime: String)
+    }
+
+    interface MachineRestartTimeChangedListener
+    {
+        fun onMachineRestartTimeChanged(machineRestartTime: String)
+    }
+    interface MachineStoppedTimeAmountChangedListener
+    {
+        fun onMachineStoppedTimeAmountChanged(machineTimeAmount:String)
     }
 
 }

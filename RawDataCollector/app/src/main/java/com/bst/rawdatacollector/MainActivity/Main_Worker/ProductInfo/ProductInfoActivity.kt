@@ -3,7 +3,6 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
@@ -21,7 +20,9 @@ import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityProductInfoBinding
 import com.google.android.material.tabs.TabLayout
 
-class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountChangedListener, ProductInfoFragment.ProductErrorListChangedListener
+class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountChangedListener, ProductInfoFragment.ProductErrorListChangedListener,
+                            MachineInfoFragment.MachineErrorChangedListener, MachineInfoFragment.MachineStoppedTimeChangedListener,
+                            MachineInfoFragment.MachineRestartTimeChangedListener, MachineInfoFragment.MachineStoppedTimeAmountChangedListener
 {
     private lateinit var binding: ActivityProductInfoBinding
     private lateinit var spinnerLists: SpinnerArrayLists
@@ -31,22 +32,46 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
     private lateinit var productInfoFragment: ProductInfoFragment
     private lateinit var machineErrorFragment: MachineInfoFragment
 
-    private lateinit var errorLists:ArrayList<ProductError>
+    private lateinit var errorLists: ArrayList<ProductError>
 
+    private var machineTimeAmount:String=""
     private var doneAmount: String = "0"
+    private var machineErrorType: String = ""
+    private var machineStoppedTime:String = ""
+    private var machineRestartTime:String = ""
 
     //DoneAmountListener의 함수 재정의
-    override fun onChanged(doneAmount: String)
+    override fun onAmountChanged(doneAmount: String)
     {
         //프래그먼트에서 보낸 매시지
         this.doneAmount = doneAmount
     }
+
     //ErrorListsListener 의 함수 재정의
-    override fun onChanged(errorList: ArrayList<ProductError>)
+    override fun onListChanged(errorList: ArrayList<ProductError>)
     {
         errorLists = errorList
-        Log.d("호출됨3", "afterTextChanged: 호출됨")
     }
+
+    //MachineErrorTypeListener
+    override fun onMachineErrorTypeChanged(errorType: String)
+    {
+        machineErrorType = errorType
+    }
+    override fun onMachineStoppedTimeChanged(machineStoppedTime: String)
+    {
+        this.machineStoppedTime = machineStoppedTime
+    }
+
+    override fun onMachineRestartTimeChanged(machineRestartTime: String)
+    {
+        this.machineRestartTime = machineRestartTime
+    }
+    override fun onMachineStoppedTimeAmountChanged(machineTimeAmount: String)
+    {
+        this.machineTimeAmount = machineTimeAmount
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -63,7 +88,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         errorLists = ArrayList()
 
         //tabList 설정
-        setTabList(binding.tabLayout, "제품 수량",  "기계 불량")
+        setTabList(binding.tabLayout, "제품 수량", "기계 불량")
 
         //viewPager 어뎁터 설정
         binding.viewPager.adapter = viewPagerAdapter
@@ -120,16 +145,23 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
         //dialogView Init
         val dialogView = inflater.inflate(R.layout.dialog_confirm_product, null)
-        val machineErrorRecyclerView = dialogView.findViewById<RecyclerView>(R.id.productErrorRecyclerView)
-        val productErrorRecyclerView = dialogView.findViewById<RecyclerView>(R.id.machineErrorRecyclerView)
+        val machineErrorText = dialogView.findViewById<TextView>(R.id.machineErrorText)
+        val productErrorRecyclerView = dialogView.findViewById<RecyclerView>(R.id.productErrorRecyclerView)
         val acceptUserNameText = dialogView.findViewById<TextView>(R.id.acceptUserNameText)
         val doneAmountText = dialogView.findViewById<TextView>(R.id.doneAmount)
+        val machineStoppedTimeText = dialogView.findViewById<TextView>(R.id.machineStoppedTime)
+        val machineRestartTimeText = dialogView.findViewById<TextView>(R.id.machineRestartTime)
+        val timeAmountText = dialogView.findViewById<TextView>(R.id.machineTimeAmountText)
 
         //TODO 각 정보를 받아올 작업 해야함
         //TODO 콜백으로 구현하기
         doneAmountText.text = "$doneAmount 개"
         acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).getUserName()
         setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
+        machineErrorText.text = machineErrorType
+        machineStoppedTimeText.text = machineStoppedTime
+        machineRestartTimeText.text = machineRestartTime
+        timeAmountText.text = machineTimeAmount
 
         dialogBuilder.setView(dialogView)
 
@@ -145,7 +177,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         alertDialog.show()
     }
 
-    private fun setRecyclerViewAdapter(_recyclerView:RecyclerView, _errorList:ArrayList<ProductError>)
+    private fun setRecyclerViewAdapter(_recyclerView: RecyclerView, _errorList: ArrayList<ProductError>)
     {
         val adapter = SubmitErrorAdapter(this@ProductInfoActivity, _errorList)
         _recyclerView.adapter = adapter
@@ -162,6 +194,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         val dialog = builder.create()
         dialog.show()
     }
+
 
 
 

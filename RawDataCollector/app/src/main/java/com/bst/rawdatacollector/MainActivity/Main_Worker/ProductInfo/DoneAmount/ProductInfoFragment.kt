@@ -9,11 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
-import com.bst.rawdatacollector.Delegate.VoidVoidDelegate
 import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -84,7 +82,7 @@ class ProductInfoFragment : Fragment()
 
             override fun afterTextChanged(p0: Editable?)
             {
-                doneAmountChangedListener?.onChanged(binding.doneAmountText.text.toString())
+                doneAmountChangedListener?.onAmountChanged(binding.doneAmountText.text.toString())
             }
         })
 
@@ -95,7 +93,7 @@ class ProductInfoFragment : Fragment()
             override fun voidArrayListDelegate(_arrayList: ArrayList<ProductError>)
             {
                 Log.d("호출됨2", "afterTextChanged: 호출됨")
-                productErrorListChangedListener?.onChanged(_arrayList)
+                productErrorListChangedListener?.onListChanged(_arrayList)
             }
         })
 
@@ -150,12 +148,12 @@ class ProductInfoFragment : Fragment()
 
     interface DoneAmountChangedListener
     {
-        fun onChanged(doneAmount: String)
+        fun onAmountChanged(doneAmount: String)
     }
 
     interface ProductErrorListChangedListener
     {
-        fun onChanged(errorList: ArrayList<ProductError>)
+        fun onListChanged(errorList: ArrayList<ProductError>)
     }
 
 
