@@ -249,7 +249,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
             Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
 
             val userCode = userData.userCode
-            //통신 해야 함
+
             updateDoneAmount(userCode, doneAmount, getCurDate().toString(), productCode)//완료 갯수 전송
             for (i in 0 until errorLists.size)//불량 정보 전송
             {
@@ -257,15 +257,17 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
                 insertProductError(userCode, productCode, errorLists[i].errorName, errorLists[i].errorAmount.toString())
             }
 
-            insertEquipmentError(userCode,
-                equipmentCode,
-                equipmentErrorType,
-                getCurDateToDateTimeFormat(equipmentStoppedTime),
-                getCurDateToDateTimeFormat(equipmentRestartTime))//기계 불량 전송
-
+            if(equipmentStoppedTime!="")  //기계가 안멈춘걸 의미
+            {
+                insertEquipmentError(userCode,
+                    equipmentCode,
+                    equipmentErrorType,
+                    getCurDateToDateTimeFormat(equipmentStoppedTime),
+                    getCurDateToDateTimeFormat(equipmentRestartTime))//기계 불량 전송
+            }
 
             updateWorkEndTime(userData.userCode, getCurTime(), getCurDate().toString(), productCode)//끝난시간 저장
-
+            finish()
         }
 
         val alertDialog = dialogBuilder.create()
@@ -287,10 +289,6 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         builder.setPositiveButton("네") { dialogInterface, i ->
             userData.isWorking = true
             binding.workStartText.text = getCurTime_24H()
-            Log.d("현재시간", "showSubmitDialog: ${getCurTime()}")
-            Log.d("현재시간", "showSubmitDialog: ${getCurDate()}")
-            Log.d("현재시간", "showSubmitDialog: ${userData.userCode}")
-            Log.d("현재시간", "showSubmitDialog: ${productCode}")
             updateWorkStartTime(userData.userCode, getCurTime(), getCurDate().toString(), productCode)
         }
         builder.setNegativeButton("아니요") { dialogInterface, i ->
@@ -311,8 +309,6 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         val dialog = builder.create()
         dialog.show()
     }
-
-
 
 
     private fun updateDoneAmount(acceptUser: String, doneAmount: String, workDate: String, productCode: String)
@@ -431,7 +427,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
                             //예누르면 userData.isWorking이 true가 됨
                             //true 가되면 다른 일은 못함
                             runOnUiThread {
-                            workStartDialog()
+                                workStartDialog()
 
                             }
                         }
@@ -439,7 +435,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
                         {
                             //작업중이라고, 다른 작업 끝내고 다시 오셈 Dialog
                             runOnUiThread {
-                                Toast.makeText(applicationContext,"작업중이거나 오류",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(applicationContext, "작업중이거나 오류", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -521,6 +517,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
     {
         return LocalDate.now().toString() + " " + time
     }
+
     @SuppressLint("SimpleDateFormat")
     private fun getCurTime_24H(): String
     {
@@ -529,6 +526,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         val dateFormat = SimpleDateFormat("kk시 mm분")
         return dateFormat.format(date)
     }
+
     @SuppressLint("SimpleDateFormat")
     private fun getCurTime(): String
     {
