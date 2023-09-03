@@ -33,20 +33,27 @@ class ProductListFragment() : Fragment()
     private lateinit var productAdapter: ProductAdapter
     private lateinit var productList: ArrayList<Producing>
 
-    companion object{
+    companion object
+    {
         private const val PRODUCT_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Today_Products.php"
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
     {
+        //view init
         binding = FragmentProductListBinding.inflate(_inflater, _container, false)
+        return binding.root
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+        //init
         productList = ArrayList()
 
-
-        //setTestList()
-
-        selectTodayProductLists(UserData.getInstance(requireContext()).userCode,LocalDate.now().toString())
+        selectTodayProductLists(UserData.getInstance(requireContext()).userCode, LocalDate.now().toString())
 
         productAdapter = ProductAdapter(requireContext(), productList)//kotlin 은 requireContext()
 
@@ -60,32 +67,39 @@ class ProductListFragment() : Fragment()
         val linearLayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = linearLayoutManager//setLayoutManger
 
+        //어뎁터에서 받아오는 아이템 클릭 이벤트
         productAdapter.setProductItemTouchCallback(object : ProductClickListener
         {
 
-            override fun productSelected(productName: String, productCode: String, requestName: String, acceptName: String,equipmentCode:String)
+            override fun productSelected(
+                productName: String,
+                productCode: String,
+                requestName: String,
+                acceptName: String,
+                equipmentCode: String,
+                process: String
+            )
             {
                 val intent: Intent = Intent(requireContext(), ProductInfoActivity::class.java)
-                intent.putExtra("productName",productName)
-                intent.putExtra("productCode",productCode)
-                intent.putExtra("requestName",requestName)
-                intent.putExtra("acceptName",acceptName)
-                intent.putExtra("equipmentCode",equipmentCode)
+                intent.putExtra("productName", productName)
+                intent.putExtra("productCode", productCode)
+                intent.putExtra("requestName", requestName)
+                intent.putExtra("acceptName", acceptName)
+                intent.putExtra("equipmentCode", equipmentCode)
+                intent.putExtra("process", process)
                 startActivity(intent)
             }
 
         })
-
-        return binding.root
     }
 
-    private fun selectTodayProductLists(_userCode:String, _curDate : String)
+    private fun selectTodayProductLists(_userCode: String, _curDate: String)
     {
         val client = OkHttpClient()
-        val body = FormBody.Builder().add("userCode",_userCode).add("curDate",_curDate).build()
+        val body = FormBody.Builder().add("userCode", _userCode).add("curDate", _curDate).build()
         val request = Request.Builder().url(PRODUCT_URL).post(body).build()
 
-        client.newCall(request).enqueue(object: Callback
+        client.newCall(request).enqueue(object : Callback
         {
             override fun onFailure(call: Call, e: IOException)
             {
@@ -94,15 +108,13 @@ class ProductListFragment() : Fragment()
 
             override fun onResponse(call: Call, response: Response)
             {
-                if(response.isSuccessful)
+                if (response.isSuccessful)
                 {
-                    //val mainActivity = requireContext() as MainActivity //runOnUiThread 사용하기 위한 방법
                     activity?.runOnUiThread {
                         try
                         {
                             val jsonObject = JSONObject(response.body!!.string())
                             val jsonArray = JSONArray(jsonObject.getString("results"))
-                            Log.d("바디", "onResponse: $jsonObject")
 
                             for (i in 0 until jsonArray.length())
                             {
@@ -114,7 +126,8 @@ class ProductListFragment() : Fragment()
                                 producing.acceptName = json.getString("accept_user")
                                 producing.productImg = json.getString("product_image")
                                 producing.equipmentCode = json.getString("equipment_code")
-                                Log.d("장비번호1", "onResponse: ${producing.equipmentCode}")
+                                producing.process = json.getString("process")
+
                                 productList.add(producing)
                                 productAdapter.notifyDataSetChanged()
                             }

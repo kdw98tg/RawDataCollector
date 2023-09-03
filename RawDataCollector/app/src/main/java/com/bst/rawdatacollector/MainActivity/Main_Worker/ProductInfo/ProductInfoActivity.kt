@@ -28,6 +28,8 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -37,16 +39,19 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
                             EquipmentInfoFragment.EquipmentErrorChangedListener, EquipmentInfoFragment.EquipmentStoppedTimeChangedListener,
                             EquipmentInfoFragment.EquipmentRestartTimeChangedListener, EquipmentInfoFragment.EquipmentStoppedTimeAmountChangedListener
 {
+    //view 생성
     private lateinit var binding: ActivityProductInfoBinding
     private lateinit var spinnerLists: SpinnerArrayLists
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
+    //프래그먼트 생성
     private lateinit var toolInfoFragment: ToolInfoFragment
     private lateinit var productInfoFragment: ProductInfoFragment
     private lateinit var equipmentErrorFragment: EquipmentInfoFragment
 
-    private lateinit var errorLists: ArrayList<ProductError>
 
+    //프래그먼트에서 받은 값들을 저장할 변수
+    private lateinit var errorLists: ArrayList<ProductError>
     private var equipmentTimeAmount: String = ""
     private var doneAmount: String = "0"
     private var equipmentErrorType: String = ""
@@ -55,17 +60,25 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
     private val client: OkHttpClient = OkHttpClient()
 
+    //작업 정보를 클릭했을때 받을 변수들
     private lateinit var productName: String
     private lateinit var productCode: String
     private lateinit var requestCode: String
     private lateinit var acceptCode: String
     private lateinit var equipmentCode: String
+    private lateinit var process: String
+
+    private val userData: UserData = UserData.getInstance(this@ProductInfoActivity)
 
     companion object
     {
         private const val INSERT_DONE_AMOUNT_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_DoneAmount.php"
         private const val INSERT_PRODUCT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_ProductError.php"
         private const val INSERT_EQUIPMENT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_EquipmentError.php"
+        private const val UPDATE_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkStartTime.php"
+        private const val UPDATE_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkEndTime.php"
+        private const val SELECT_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkStartTime.php"
+        private const val SELECT_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkEndTime.php"
 
     }
 
@@ -125,16 +138,13 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         requestCode = intent.getStringExtra("requestCode").toString()
         acceptCode = intent.getStringExtra("acceptCode").toString()
         equipmentCode = intent.getStringExtra("equipmentCode").toString()
+        process = intent.getStringExtra("process").toString()
 
         Log.d("장비번호", "onCreate: $equipmentCode")
 
-        //일 시작할건지 물어보는 Dialog
-        //아니요 누르면 finish()
-        //예 누르면 db에 시작 시간 입력
-        if (!UserData.getInstance(this@ProductInfoActivity).startWork)
-        {
-            workStartDialog()
-        }
+        //들어갔을때 해당 정보로 worktime을 받아오고, 00:00:00 이면 일을 시작하겠냐고 물어봄
+        selectWorkStartTime(userData.userCode, getCurDate().toString(), productCode)
+
 
         //제일 상단 뷰 세팅 (제품정보)
         binding.productCodeText.text = productCode
@@ -178,7 +188,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
         //button click event -> submit
         binding.submitBtn.setOnClickListener {
-            binding.workEndText.text = getCurTime()
+            binding.workEndText.text = getCurTime_24H()
             if (doneAmount == "0")
             {
                 submitErrorDialog()
@@ -216,11 +226,11 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         val timeAmountText = dialogView.findViewById<TextView>(R.id.machineTimeAmountText)
         val workStartTimeText = dialogView.findViewById<TextView>(R.id.workStartText)
         val workEndText = dialogView.findViewById<TextView>(R.id.workEndText)
+        setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
 
         //정보 view에 세팅
         doneAmountText.text = "$doneAmount 개"
-        acceptUserNameText.text = UserData.getInstance(this@ProductInfoActivity).userName
-        setRecyclerViewAdapter(productErrorRecyclerView, errorLists)
+        acceptUserNameText.text = userData.userName
         machineErrorText.text = equipmentErrorType
         machineStoppedTimeText.text = equipmentStoppedTime
         machineRestartTimeText.text = equipmentRestartTime
@@ -235,25 +245,27 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
             dialog.dismiss()
         }.setPositiveButton("확인") { dialog, which ->
 
+            userData.isWorking = false
             Toast.makeText(applicationContext, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
 
-            val userCode = UserData.getInstance(this@ProductInfoActivity).userCode
+            val userCode = userData.userCode
             //통신 해야 함
-            updateDoneAmount(userCode, doneAmount, getCurDate().toString(), productCode)
-            for (i in 0 until errorLists.size)
+            updateDoneAmount(userCode, doneAmount, getCurDate().toString(), productCode)//완료 갯수 전송
+            for (i in 0 until errorLists.size)//불량 정보 전송
             {
 
-                insertProductError(userCode,
-                    productCode,
-                    errorLists[i].errorName,
-                    errorLists[i].errorAmount.toString())
+                insertProductError(userCode, productCode, errorLists[i].errorName, errorLists[i].errorAmount.toString())
             }
-            //if(machineStoppedTime!="00:00:00")
-            //{
-            insertEquipmentError(userCode,equipmentCode,equipmentErrorType,getCurDateToDateTimeFormat(equipmentStoppedTime),getCurDateToDateTimeFormat(equipmentRestartTime))
-            Log.d("포멧", "showSubmitDialog:${getCurDateToDateTimeFormat(equipmentStoppedTime)},${getCurDateToDateTimeFormat(equipmentRestartTime)}")
-            //insertEquipmentError(userCode,equipmentCode,machineErrorType,"1000-01-01 00:00:00","1000-01-01 00:00:00")
-            //}
+
+            insertEquipmentError(userCode,
+                equipmentCode,
+                equipmentErrorType,
+                getCurDateToDateTimeFormat(equipmentStoppedTime),
+                getCurDateToDateTimeFormat(equipmentRestartTime))//기계 불량 전송
+
+
+            updateWorkEndTime(userData.userCode, getCurTime(), getCurDate().toString(), productCode)//끝난시간 저장
+
         }
 
         val alertDialog = dialogBuilder.create()
@@ -267,13 +279,19 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         _recyclerView.layoutManager = LinearLayoutManager(this@ProductInfoActivity)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun workStartDialog()
     {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("작업 시작").setMessage("작업을 시작 하시겠습니까?")
         builder.setPositiveButton("네") { dialogInterface, i ->
-            //UserData.getInstance(this@ProductInfoActivity).startWork = true
-            binding.workStartText.text = getCurTime()
+            userData.isWorking = true
+            binding.workStartText.text = getCurTime_24H()
+            Log.d("현재시간", "showSubmitDialog: ${getCurTime()}")
+            Log.d("현재시간", "showSubmitDialog: ${getCurDate()}")
+            Log.d("현재시간", "showSubmitDialog: ${userData.userCode}")
+            Log.d("현재시간", "showSubmitDialog: ${productCode}")
+            updateWorkStartTime(userData.userCode, getCurTime(), getCurDate().toString(), productCode)
         }
         builder.setNegativeButton("아니요") { dialogInterface, i ->
             //아니요 누르면 다시 돌아감
@@ -294,14 +312,8 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         dialog.show()
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun getCurTime(): String
-    {
-        val now = System.currentTimeMillis()
-        val date = Date(now)
-        val dateFormat = SimpleDateFormat("kk시 mm분")
-        return dateFormat.format(date)
-    }
+
+
 
     private fun updateDoneAmount(acceptUser: String, doneAmount: String, workDate: String, productCode: String)
     {
@@ -385,15 +397,145 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         })
     }
 
+    private fun selectWorkStartTime(acceptUser: String, workDate: String, productCode: String)
+    {
+        var workStartTime: String? = null
+        val body: FormBody = FormBody.Builder().add("acceptUser", acceptUser).add("workDate", workDate).add("productCode", productCode).build()
+        val request = Request.Builder().url(SELECT_WORK_START_TIME_URL).post(body).build()
+
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+            }
+
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call, response: Response)
+            {
+                if (response.isSuccessful)
+                {
+                    val result = response.body!!.string()
+                    try
+                    {
+                        val jsonObject = JSONObject(result)
+                        val jsonArray = JSONArray(jsonObject.getString("results"))
+                        val json = jsonArray.getJSONObject(0)
+
+                        workStartTime = json.getString("work_start_time").toString()
+                        Log.d("시작시간", "onResponse: $workStartTime")
+                        if (workStartTime == "00:00:00" && !userData.isWorking)
+                        {
+                            //일 시작할건지 물어보는 Dialog
+                            //아니요 누르면 finish()
+                            //예누르면 userData.isWorking이 true가 됨
+                            //true 가되면 다른 일은 못함
+                            runOnUiThread {
+                            workStartDialog()
+
+                            }
+                        }
+                        else
+                        {
+                            //작업중이라고, 다른 작업 끝내고 다시 오셈 Dialog
+                            runOnUiThread {
+                                Toast.makeText(applicationContext,"작업중이거나 오류",Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    catch (e: Exception)
+                    {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        })
+
+
+    }
+
+    private fun updateWorkStartTime(acceptUser: String, workStartTime: String, workDate: String, productCode: String)
+    {
+        val body: FormBody = FormBody.Builder().add("acceptUser", acceptUser).add("workStartTime", workStartTime).add("workDate", workDate)
+            .add("productCode", productCode).build()
+
+        val request = Request.Builder().url(UPDATE_WORK_START_TIME_URL).post(body).build()
+
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+                runOnUiThread {
+
+                    Toast.makeText(applicationContext, "작업시간 전송 안됨", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "작업시간 넣기 성공", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun updateWorkEndTime(acceptUser: String, workEndTime: String, workDate: String, productCode: String)
+    {
+        val body: FormBody =
+            FormBody.Builder().add("acceptUser", acceptUser).add("workEndTime", workEndTime).add("workDate", workDate).add("productCode", productCode)
+                .build()
+
+        val request = Request.Builder().url(UPDATE_WORK_END_TIME_URL).post(body).build()
+
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+                runOnUiThread {
+
+                    Toast.makeText(applicationContext, "equip 전송 안됨", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "equip 성공", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getCurDate(): LocalDate
     {
         return LocalDate.now()
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getCurDateToDateTimeFormat(time:String):String
+    private fun getCurDateToDateTimeFormat(time: String): String
     {
         return LocalDate.now().toString() + " " + time
+    }
+    @SuppressLint("SimpleDateFormat")
+    private fun getCurTime_24H(): String
+    {
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val dateFormat = SimpleDateFormat("kk시 mm분")
+        return dateFormat.format(date)
+    }
+    @SuppressLint("SimpleDateFormat")
+    private fun getCurTime(): String
+    {
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val dateFormat = SimpleDateFormat("kk:mm:ss")
+        return dateFormat.format(date)
     }
 
 }

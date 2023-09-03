@@ -7,11 +7,30 @@
     android:background="@drawable/border_all"
     android:orientation="horizontal">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="5dp"
-        android:src="@drawable/productimg" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/productImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/productimg" />
+
+        <TextView
+            android:id="@+id/workingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/productImg"
+            android:layout_marginTop="5dp"
+            android:text="작업중 .."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,6 +96,32 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="공    정 :"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/processName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="공정 명"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="생산자 :"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -111,7 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="김태형"
+                android:text="관리자 명"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 

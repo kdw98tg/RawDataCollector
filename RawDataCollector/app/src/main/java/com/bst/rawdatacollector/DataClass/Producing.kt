@@ -6,9 +6,10 @@ data class Producing(
     var requestName: String,
     var acceptName: String,
     var productImg: String,
-    var equipmentCode: String
+    var equipmentCode: String,
+    var process:String
 )
 {
-    constructor() : this("", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "","")
 }
 

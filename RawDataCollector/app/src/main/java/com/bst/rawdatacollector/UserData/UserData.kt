@@ -85,12 +85,20 @@ class UserData private constructor(context: Context)
             mUserPosition = values
         }
 
-    private var mStartWork: Boolean = false
-    var startWork: Boolean
-        get() = mStartWork
+    private var mIsWorking: Boolean = false
+    var isWorking: Boolean
+        get() = mIsWorking
         set(values)
         {
-            mStartWork = values
+            mIsWorking = values
+        }
+
+    private var mWage:Int = 0
+    var userWage:Int
+        get() = mWage
+        set(values)
+        {
+            mWage = values
         }
 
 

@@ -87,6 +87,8 @@ class LoginActivity : AppCompatActivity()
                         val jsonObject = JSONObject(result)
                         val jsonArray = JSONArray(jsonObject.getString("results"))
 
+                        Log.d("로그인", "onResponse: ${jsonObject}")
+
                         //JsonObject 해체 작업
                         val json = jsonArray.getJSONObject(0)
                         val userCode = json.getString("user_code").toString()
@@ -97,27 +99,33 @@ class LoginActivity : AppCompatActivity()
                         val userPhoneNumber = json.getString("phone_number").toString()
                         val userProfileImg = json.getString("profile_img").toString()
                         val userPosition = json.getString("position").toString()
-
+                        val userWage = json.getString("wage").toInt()
                         //userData에 집어넣음
-                        setUserData(userCode, userPw, userName, userEmail, userCompany, userPhoneNumber, userProfileImg, userPosition)
+                        setUserData(userCode, userPw, userName, userEmail, userCompany, userPhoneNumber, userProfileImg, userPosition,userWage)
 
                         //다 됐으면 권한에 따라 MainActivity로 옮김
-                        if (userPosition == "사원")//사원이면 메인으로
+
+                        if (userPosition == "사원")//사원이면 작업자 메인으로
                         {
                             moveActivity(MainActivityWorker::class.java)
                         }
-                        else//관리자면 관리자 화면으로
+                        else if(userPosition=="관리자")//관리자면 관리자 화면으로
                         {
                             runOnUiThread {
                                 Toast.makeText(applicationContext, "관리자 모드로 로그인 하셨습니다", Toast.LENGTH_SHORT).show()
                                 moveActivity(MainActivityManager::class.java)
                             }
                         }
+                        else
+                        {
+                            //여기는 공장장 페이지로 이동 -> 도구만 관리함
+                        }
                     }
                     catch (e: Exception)//로그인 실패시
                     {
                         runOnUiThread {
                             Toast.makeText(applicationContext, "사번 또는 비밀번호를 확인하세요", Toast.LENGTH_SHORT).show()
+                            binding.loginBtn.isEnabled = true
                         }
                     }
                 }
@@ -133,7 +141,8 @@ class LoginActivity : AppCompatActivity()
         userCompany: String,
         userPhoneNumber: String,
         userProfileImg: String,
-        userPosition: String
+        userPosition: String,
+        userWage:Int
     )
     {
         val userData = UserData.getInstance(this@LoginActivity)
@@ -145,6 +154,7 @@ class LoginActivity : AppCompatActivity()
         userData.userPhoneNumber = userPhoneNumber
         userData.userProfileImg = userProfileImg
         userData.userPosition = userPosition
+        userData.userWage = userWage
     }
 
     private fun moveActivity(_activityClass: Class<*>)//액티비티를 받아서 intent 수행

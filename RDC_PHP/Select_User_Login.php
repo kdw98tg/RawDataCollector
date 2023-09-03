@@ -25,6 +25,8 @@
 				$rows["phone_number"] = $row[5];
 				$rows["profile_img"] = $row[6];
 				$rows["position"] = $row[7];
+				$rows["wage"] = $row[8];
+
 				array_push($result, $rows);
 		}
         echo json_encode(array("results"=>$result));	
