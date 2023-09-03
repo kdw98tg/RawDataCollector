@@ -78,7 +78,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         private const val UPDATE_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkStartTime.php"
         private const val UPDATE_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkEndTime.php"
         private const val SELECT_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkStartTime.php"
-        private const val SELECT_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkEndTime.php"
+        private const val SELECT_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkEndTime.php"//그날 기계 수리가 안됐을때 사용할듯
 
     }
 
@@ -446,8 +446,6 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
                 }
             }
         })
-
-
     }
 
     private fun updateWorkStartTime(acceptUser: String, workStartTime: String, workDate: String, productCode: String)
