@@ -1,8 +1,6 @@
 package com.bst.rawdatacollector.MainActivity.Main_Manager.ManagementFragment
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
-import com.bst.rawdatacollector.DataClass.User
+import com.bst.rawdatacollector.DataClass.Member
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.DialogBottomMoreBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import okhttp3.Call
@@ -23,7 +20,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-class MoreTasks(private val context: Context, private val collaborator: User?) : BottomSheetDialogFragment()
+class MoreTasks(private val context: Context, private val collaborator: Member?) : BottomSheetDialogFragment()
 {
     private lateinit var client:OkHttpClient
     companion object

@@ -5,34 +5,38 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bst.rawdatacollector.DataClass.User
+import com.bst.rawdatacollector.DataClass.Member
 import com.bst.rawdatacollector.databinding.ItemWorkerBinding
 
-class UserListAdapter(
-    private val context: Context, private val workerList: ArrayList<User>,private val fragmentManager: FragmentManager
-) : RecyclerView.Adapter<UserListAdapter.ViewHolder>()
+class MemberAdapter(
+    private val context: Context, private val memberList: ArrayList<Member>, private val fragmentManager: FragmentManager
+) : RecyclerView.Adapter<MemberAdapter.ViewHolder>()
 {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListAdapter.ViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberAdapter.ViewHolder
     {
         val binding = ItemWorkerBinding.inflate(LayoutInflater.from(context),parent,false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: UserListAdapter.ViewHolder, position: Int)
+    override fun onBindViewHolder(holder: MemberAdapter.ViewHolder, position: Int)
     {
-        val worker = workerList[position]
+        val member = memberList[position]
+
+        holder.binding.collaboratorNameText.text=member.memberName
+        holder.binding.collaboratorEmailText.text = member.memberEmail
+        holder.binding.positionText.text = member.memberPosition
 
         holder.binding.showMoreBtn.setOnClickListener {
             //itemEditCallback?.voidVoidDelegate()
-            val moreTasks = MoreTasks(context,worker)
+            val moreTasks = MoreTasks(context,member)
             moreTasks.show(fragmentManager, MoreTasks.TAG)
         }
     }
 
     override fun getItemCount(): Int
     {
-        return workerList.size
+        return memberList.size
     }
 
     inner class ViewHolder(val binding: ItemWorkerBinding) : RecyclerView.ViewHolder(binding.root)
