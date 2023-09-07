@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.FragmentMachineInfoBinding
 import okhttp3.Call
 import okhttp3.Callback

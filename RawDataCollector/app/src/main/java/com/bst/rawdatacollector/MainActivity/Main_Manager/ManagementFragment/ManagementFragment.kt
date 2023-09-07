@@ -20,66 +20,66 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class ManagementFragment : Fragment() {
+class ManagementFragment : Fragment()
+{
     private lateinit var binding: FragmentManagementBinding
     private lateinit var memberList: ArrayList<Member>
     private lateinit var memberAdapter: MemberAdapter
 
-    companion object {
-        private const val SELECT_MEMBER_URL =
-            "http://kdw98tg.dothome.co.kr/RDC/Select_MembersInfo.php"
+    companion object
+    {
+        private const val SELECT_MEMBER_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_MembersInfo.php"
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
+    {
         binding = FragmentManagementBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
         super.onViewCreated(view, savedInstanceState)
         //init
         memberList = ArrayList()
-        memberAdapter = MemberAdapter(
-            requireContext(),
-            memberList,
-            requireActivity().supportFragmentManager
-        )//오류나면 의심해볼 구간
+        memberAdapter = MemberAdapter(requireContext(), memberList, requireActivity().supportFragmentManager)//오류나면 의심해볼 구간
 
         binding.recyclerView.adapter = memberAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         selectMembers(UserData.getInstance(requireContext()).userCompany)
 
-
         //내꺼는 뺄지말지 정하기
         //인스타처럼할거임
         //selectUserList(UserData.getInstance(requireContext()).userCompany)//유저들 골라옴
-
     }
 
-    private fun selectMembers(company: String) {
+    private fun selectMembers(company: String)
+    {
         val client: OkHttpClient = OkHttpClient()
         val body = FormBody.Builder().add("company", company).build()
         val request = Request.Builder().url(SELECT_MEMBER_URL).post(body).build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
                 e.printStackTrace()
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
+            override fun onResponse(call: Call, response: Response)
+            {
+                if (response.isSuccessful)
+                {
                     val result = response.body!!.string()
                     Log.d("멤버리스트", "onResponse: $result")
-                    try {
+                    try
+                    {
                         val jsonObject = JSONObject(result)
                         val jsonArray = JSONArray(jsonObject.getString("results"))
 
-                        for (i in 0 until jsonArray.length()) {
+                        for (i in 0 until jsonArray.length())
+                        {
                             //JsonObject 해체 작업
                             val json = jsonArray.getJSONObject(i)
                             val memberCode = json.getString("user_code").toString()
@@ -103,11 +103,9 @@ class ManagementFragment : Fragment() {
                             activity?.runOnUiThread {
                                 memberAdapter.notifyDataSetChanged()
                             }
-
                         }
-
-
-                    } catch (e: Exception)//로그인 실패시
+                    }
+                    catch (e: Exception)//로그인 실패시
                     {
                         e.printStackTrace()
                     }

@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity.Main_Manager.CreateNewWork.CreateNewWorkActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity.Main_Worker.WorkHistory.WorkHistoryActivity"
             android:exported="false" />
         <activity

@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
-import com.bst.rawdatacollector.SpinnerInterface.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.ItemErrorListBinding
 import java.util.Collections
 

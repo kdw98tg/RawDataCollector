@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.SpinnerInterface
+package com.bst.rawdatacollector.Utils.SpinnerInterface
 
 class SpinnerArrayLists
 {
