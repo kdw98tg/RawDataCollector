@@ -150,7 +150,6 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         binding.productCodeText.text = productCode
         binding.productNameText.text = productName
 
-
         //tabList 설정
         setTabList(binding.tabLayout, "제품 수량", "기계 불량")
 

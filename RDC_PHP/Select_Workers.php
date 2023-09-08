@@ -5,7 +5,8 @@
 
 	$type = $_POST['type'];	
 
-	$query = "SELECT CONCAT(name,'(',user_code,')') AS name FROM user WHERE position='사원';";
+	//$query = "SELECT CONCAT(name,'(',user_code,')') AS name FROM user WHERE position='사원';";
+	$query = "SELECT user_code as name FROM user WHERE position='사원';";
 	 
 	//echo $query;
 	

@@ -1,6 +1,7 @@
 package com.bst.rawdatacollector.MainActivity.Main_Manager.CreateNewWork
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,14 +11,17 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.NewWork
+import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.Utils.SpinnerInterface.CustomSpinnerAdapter
 import com.bst.rawdatacollector.Utils.SpinnerInterface.SpinnerArrayLists
 import com.bst.rawdatacollector.databinding.ActivityCreateNewWorkBinding
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -41,6 +45,7 @@ class CreateNewWorkActivity : AppCompatActivity()
         private const val SELECT_WORKERS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Workers.php"
         private const val SELECT_PRODUCTS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Products.php"
         private const val SELECT_PROCESSES_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Processes.php"
+        private const val INSERT_NEW_WORK_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_NewWork.php"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -55,10 +60,12 @@ class CreateNewWorkActivity : AppCompatActivity()
         createNewWorkAdapter = CreateNewWorkAdapter(this@CreateNewWorkActivity, newWorkList)
         spinnerArrayLists = SpinnerArrayLists()
 
-        selectWorkerList(spinnerArrayLists)
-        selectEquipmentsList(spinnerArrayLists)
-        selectProductList(spinnerArrayLists)
-        selectProcessList(spinnerArrayLists)
+        selectWorkerList(spinnerArrayLists)//작업자 Spinner 설정
+        selectEquipmentsList(spinnerArrayLists)//장비 Spinner 설정
+        selectProductList(spinnerArrayLists)//제품 Spinner 설정
+        selectProcessList(spinnerArrayLists)//공정 Spinner 설정
+
+
 
 
 
@@ -66,13 +73,32 @@ class CreateNewWorkActivity : AppCompatActivity()
         binding.producingListRecyclerView.layoutManager = LinearLayoutManager(this@CreateNewWorkActivity)
 
         binding.addListBtn.setOnClickListener {
+            if(binding.requestAmountEditText.text.toString() == "")
+            {
+                errorDialog("의뢰 수량을 입력해 주세요.")
+                return@setOnClickListener
+            }
             insertNewWorkToRecyclerView()//기입한 정보를 RecyclerView 에 추가
             clearView()//기입하나 했으면 clear
             Toast.makeText(applicationContext, "추가 되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
-        binding.submitBtn.setOnClickListener{
-            insertNewWork()//RecyclerView 에 있는 정보들을 DB에 업로드 하는 함수
+        binding.submitBtn.setOnClickListener {
+            for (i in 0 until newWorkList.size)
+            {
+                val requestUser = UserData.getInstance(this@CreateNewWorkActivity).userCode
+                val acceptUser = newWorkList[i].acceptUser
+                val equipment = newWorkList[i].equipment
+                val workDate = getCurDate()
+                val product = newWorkList[i].product
+                val amount = newWorkList[i].amount
+                val process = newWorkList[i].process
+                //RecyclerView 에 있는 정보들을 DB에 업로드 하는 함수
+                Log.d("팀원관리", "onCreate: $equipment, ${workDate.toString()}")
+                insertNewWork(requestUser, acceptUser, workDate.toString(), equipment, product, amount, process)
+            }
+            val intent = Intent(this@CreateNewWorkActivity,MainActivityManager::class.java)
+            startActivity(intent)
         }
     }
 
@@ -180,6 +206,7 @@ class CreateNewWorkActivity : AppCompatActivity()
             }
         })
     }
+
     private fun selectProcessList(_spinnerArrayLists: SpinnerArrayLists)
     {
         val client = OkHttpClient()
@@ -214,9 +241,35 @@ class CreateNewWorkActivity : AppCompatActivity()
         })
     }
 
-    private fun insertNewWork()
+    private fun insertNewWork(
+        requestUser: String, acceptUser: String, workDate: String, equipment: String, product: String, amount: String, process: String
+    )
     {
-        
+        val client: OkHttpClient = OkHttpClient()
+        val body =
+            FormBody.Builder().add("requestUser", requestUser).add("acceptUser", acceptUser).add("workDate", workDate).add("equipment", equipment)
+                .add("product", product).add("amount", amount).add("process", process).build()
+        val request = Request.Builder().url(INSERT_NEW_WORK_URL).post(body).build()
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                if (response.isSuccessful)
+                {
+                    runOnUiThread {
+
+                        Toast.makeText(applicationContext, "성공적으로 등록 되었습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        })
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -235,11 +288,26 @@ class CreateNewWorkActivity : AppCompatActivity()
 
     private fun clearView()
     {
-        setSpinnerAdapter(binding.acceptUserSpinner, this@CreateNewWorkActivity,spinnerArrayLists.workerList)//작업자
+        setSpinnerAdapter(binding.acceptUserSpinner, this@CreateNewWorkActivity, spinnerArrayLists.workerList)//작업자
         setSpinnerAdapter(binding.equipmentSpinner, this@CreateNewWorkActivity, spinnerArrayLists.equipmentList)//장비
-        setSpinnerAdapter(binding.productSpinner, this@CreateNewWorkActivity,spinnerArrayLists.productList)//제품
+        setSpinnerAdapter(binding.productSpinner, this@CreateNewWorkActivity, spinnerArrayLists.productList)//제품
         setSpinnerAdapter(binding.processSpinner, this@CreateNewWorkActivity, spinnerArrayLists.processList)//공정
         binding.requestAmountEditText.setText("")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurDate(): LocalDate
+    {
+        return LocalDate.now()
+    }
+    private fun errorDialog(message:String)
+    {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error Message").setMessage(message)
+        builder.setPositiveButton("확인") { dialogInterface, i ->
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
 

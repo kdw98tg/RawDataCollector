@@ -51,9 +51,11 @@ class AllProductListFragment : Fragment()
         //init
         allProducingList = ArrayList()
         allProductAdapter = AllProducingAdapter(requireContext(), allProducingList)
+        binding.dayText.text = getCurDate().toString()
 
         binding.recyclerView.adapter = allProductAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
 
         selectAllProducingLists(getCurDate().toString())//모든 작업을 가져 오는 함수
 

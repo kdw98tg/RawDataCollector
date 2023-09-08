@@ -5,7 +5,8 @@
 
 	$type = $_POST['type'];	
 
-	$query = "SELECT product_name FROM product";
+	//$query = "SELECT product_name FROM product";
+	$query = "SELECT product_code AS product_name FROM product";
 	 
 	//echo $query;
 	
