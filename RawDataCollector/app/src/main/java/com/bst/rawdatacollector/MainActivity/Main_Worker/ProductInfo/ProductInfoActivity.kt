@@ -18,7 +18,7 @@ import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentInfoFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Tools.ToolInfoFragment
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.Utils.SpinnerInterface.SpinnerArrayLists
+import com.bst.rawdatacollector.Utils.Spinner.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityProductInfoBinding
 import com.google.android.material.tabs.TabLayout

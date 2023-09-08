@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.Utils.SpinnerInterface
+package com.bst.rawdatacollector.Utils.Spinner
 
 import android.annotation.SuppressLint
 import android.content.Context

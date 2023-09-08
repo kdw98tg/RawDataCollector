@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.Toast
-import com.bst.rawdatacollector.Utils.SpinnerInterface.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.Spinner.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.FragmentToolInfoBinding
 import okhttp3.Call
 import okhttp3.Callback

@@ -3,7 +3,6 @@ package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.Utils.SpinnerInterface.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.Spinner.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.FragmentMachineInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
