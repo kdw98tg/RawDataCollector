@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/requestUser"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:background="@drawable/border_all"
         android:text="관리자"
@@ -17,25 +17,17 @@
     <TextView
         android:id="@+id/acceptUser"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:background="@drawable/border_all"
         android:text="작업자"
         android:textAlignment="center" />
 
-    <TextView
-        android:id="@+id/workDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/border_all"
-        android:text="일시"
-        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/equipment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:background="@drawable/border_all"
         android:text="장비"
@@ -44,7 +36,7 @@
     <TextView
         android:id="@+id/product"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:background="@drawable/border_all"
         android:text="제품"
@@ -53,7 +45,7 @@
     <TextView
         android:id="@+id/amount"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:background="@drawable/border_all"
         android:text="수량"
@@ -62,10 +54,10 @@
     <TextView
         android:id="@+id/process"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_weight="1"
-        android:text="공정"
         android:background="@drawable/border_all"
+        android:text="공정"
         android:textAlignment="center" />
 
 </LinearLayout>
