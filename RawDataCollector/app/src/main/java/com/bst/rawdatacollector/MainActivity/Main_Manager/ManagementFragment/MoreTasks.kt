@@ -47,7 +47,7 @@ class MoreTasks(private val context: Context, private val collaborator: Member?)
 
         //adapter 로 콜백 넘김
         binding.callBtn.setOnClickListener {
-//            val phoneNumber = collaborator?.collaboratorPhoneNumber
+            //val phoneNumber = collaborator?.collaboratorPhoneNumber
 //            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:${phoneNumber}"))
 //            startActivity(intent)
         }
