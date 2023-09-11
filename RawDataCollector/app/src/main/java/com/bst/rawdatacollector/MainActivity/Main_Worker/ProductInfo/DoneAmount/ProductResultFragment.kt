@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
-import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
+import com.bst.rawdatacollector.databinding.FragmentProductResultBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -23,9 +23,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class ProductInfoFragment : Fragment()
+class ProductResultFragment : Fragment()
 {
-    private lateinit var binding: FragmentProductInfoBinding
+    private lateinit var binding: FragmentProductResultBinding
     private lateinit var errorListAdapter: ErrorListAdapter
     private lateinit var errorList: ArrayList<ProductError>
     private lateinit var errorType: ArrayList<String>
@@ -49,7 +49,7 @@ class ProductInfoFragment : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        binding = FragmentProductInfoBinding.inflate(layoutInflater)
+        binding = FragmentProductResultBinding.inflate(layoutInflater)
         return binding.root
     }
 

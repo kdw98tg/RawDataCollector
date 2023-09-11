@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.bst.rawdatacollector.MainActivity.Main_Engineer.MainActivityEngineer
 import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
 import com.bst.rawdatacollector.MainActivity.Main_Worker.MainActivityWorker
 import com.bst.rawdatacollector.Register.RegisterActivity
@@ -116,13 +115,6 @@ class LoginActivity : AppCompatActivity()
                                 Toast.makeText(applicationContext, "관리자 모드로 로그인 하셨습니다", Toast.LENGTH_SHORT).show()
                             }
                             moveActivity(MainActivityManager::class.java)
-                        }
-                        else//공장장모드로 입장
-                        {
-                            runOnUiThread {
-                                Toast.makeText(applicationContext,"도구 관리자 모드로 로그인 하셨습니다.",Toast.LENGTH_SHORT).show()
-                            }
-                            moveActivity(MainActivityEngineer::class.java)
                         }
                     }
                     catch (e: Exception)//로그인 실패시

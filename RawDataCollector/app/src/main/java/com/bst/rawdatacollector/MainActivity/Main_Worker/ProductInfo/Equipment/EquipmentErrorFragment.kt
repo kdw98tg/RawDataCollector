@@ -27,7 +27,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class EquipmentInfoFragment : Fragment()
+class EquipmentErrorFragment : Fragment()
 {
     private lateinit var binding: FragmentMachineInfoBinding
     private lateinit var errorType: ArrayList<String>

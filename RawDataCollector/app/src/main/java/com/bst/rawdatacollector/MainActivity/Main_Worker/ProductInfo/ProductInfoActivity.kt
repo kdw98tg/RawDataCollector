@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bst.rawdatacollector.DataClass.ProductError
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductInfoFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentInfoFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductResultFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentErrorFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Tools.ToolInfoFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.Utils.Spinner.SpinnerArrayLists
@@ -35,9 +35,9 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
 
-class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountChangedListener, ProductInfoFragment.ProductErrorListChangedListener,
-                            EquipmentInfoFragment.EquipmentErrorChangedListener, EquipmentInfoFragment.EquipmentStoppedTimeChangedListener,
-                            EquipmentInfoFragment.EquipmentRestartTimeChangedListener, EquipmentInfoFragment.EquipmentStoppedTimeAmountChangedListener
+class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmountChangedListener, ProductResultFragment.ProductErrorListChangedListener,
+                            EquipmentErrorFragment.EquipmentErrorChangedListener, EquipmentErrorFragment.EquipmentStoppedTimeChangedListener,
+                            EquipmentErrorFragment.EquipmentRestartTimeChangedListener, EquipmentErrorFragment.EquipmentStoppedTimeAmountChangedListener
 {
     //view 생성
     private lateinit var binding: ActivityProductInfoBinding
@@ -46,8 +46,8 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
 
     //프래그먼트 생성
     private lateinit var toolInfoFragment: ToolInfoFragment
-    private lateinit var productInfoFragment: ProductInfoFragment
-    private lateinit var equipmentErrorFragment: EquipmentInfoFragment
+    private lateinit var productInfoFragment: ProductResultFragment
+    private lateinit var equipmentErrorFragment: EquipmentErrorFragment
 
 
     //프래그먼트에서 받은 값들을 저장할 변수
@@ -127,9 +127,9 @@ class ProductInfoActivity : AppCompatActivity(), ProductInfoFragment.DoneAmountC
         //init
         spinnerLists = SpinnerArrayLists()
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
-        equipmentErrorFragment = EquipmentInfoFragment()
+        equipmentErrorFragment = EquipmentErrorFragment()
         toolInfoFragment = ToolInfoFragment()
-        productInfoFragment = ProductInfoFragment()
+        productInfoFragment = ProductResultFragment()
         errorLists = ArrayList()
 
         //getIntent

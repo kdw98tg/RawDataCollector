@@ -5,9 +5,15 @@
         android:id="@+id/manage"
         android:icon="@drawable/baseline_home_24"/>
     <item android:title="생산 목록"
-        android:id="@+id/productList"
+        android:id="@+id/producingList"
         android:icon="@drawable/baseline_playlist_add_check_24"/>
-    <item android:title="제품 리스트"
-        android:id="@+id/more"
-        android:icon="@drawable/baseline_more_horiz_24"/>
+    <item android:title="제품"
+        android:id="@+id/products"
+        android:icon="@drawable/baseline_settings_suggest_24"/>
+    <item android:title="도구"
+        android:id="@+id/tools"
+        android:icon="@drawable/baseline_build_24"/>
+    <item android:title="장비"
+        android:id="@+id/equipment"
+        android:icon="@drawable/baseline_precision_manufacturing_24"/>
 </menu>
