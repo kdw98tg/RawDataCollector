@@ -66,9 +66,6 @@ class CreateNewWorkActivity : AppCompatActivity()
         selectProcessList(spinnerArrayLists)//공정 Spinner 설정
 
 
-
-
-
         binding.producingListRecyclerView.adapter = createNewWorkAdapter
         binding.producingListRecyclerView.layoutManager = LinearLayoutManager(this@CreateNewWorkActivity)
 

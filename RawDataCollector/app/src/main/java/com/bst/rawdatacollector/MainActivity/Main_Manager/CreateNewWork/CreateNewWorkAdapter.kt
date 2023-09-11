@@ -14,8 +14,6 @@ import java.time.LocalDate
 class CreateNewWorkAdapter(private val context: Context, private val newWorkList: ArrayList<NewWork>) :
     RecyclerView.Adapter<CreateNewWorkAdapter.ViewHolder>()
 {
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreateNewWorkAdapter.ViewHolder
     {
         val binding: ItemCreateWorkBinding = ItemCreateWorkBinding.inflate(LayoutInflater.from(context), parent, false)

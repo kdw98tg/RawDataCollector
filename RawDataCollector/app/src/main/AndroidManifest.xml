@@ -15,6 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity.Main_Manager.EquipmentInfoActivity.EquipmentInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity.Main_Manager.ToolInfoActivity.ToolInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity.Main_Engineer.MainActivityEngineer"
             android:exported="false" />
         <activity

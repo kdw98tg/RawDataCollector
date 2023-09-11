@@ -16,7 +16,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductResultFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentErrorFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Tools.ToolInfoFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.Utils.Spinner.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
@@ -45,7 +44,6 @@ class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmoun
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     //프래그먼트 생성
-    private lateinit var toolInfoFragment: ToolInfoFragment
     private lateinit var productInfoFragment: ProductResultFragment
     private lateinit var equipmentErrorFragment: EquipmentErrorFragment
 
@@ -128,7 +126,6 @@ class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmoun
         spinnerLists = SpinnerArrayLists()
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
         equipmentErrorFragment = EquipmentErrorFragment()
-        toolInfoFragment = ToolInfoFragment()
         productInfoFragment = ProductResultFragment()
         errorLists = ArrayList()
 

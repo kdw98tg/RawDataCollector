@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.AllProjectListsFragment.AllProductListFragment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentInfoFragment.EquipmentInfoFragment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.ManagementFragment.ManagementFragment
+import com.bst.rawdatacollector.MainActivity.Main_Manager.ProductInfoFragment.ProductInfoFragment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.ToolsInfoFragment.ToolsInfoFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.ActivityMainManagerBinding
@@ -28,7 +29,7 @@ class MainActivityManager : AppCompatActivity()
             {
                 R.id.manage -> replaceFragment(ManagementFragment())
                 R.id.producingList -> replaceFragment(AllProductListFragment())
-                R.id.products -> replaceFragment(ToolsInfoFragment())
+                R.id.products -> replaceFragment(ProductInfoFragment())
                 R.id.tools -> replaceFragment(ToolsInfoFragment())
                 R.id.equipment-> replaceFragment(EquipmentInfoFragment())
 
