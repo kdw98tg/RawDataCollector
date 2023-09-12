@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.Producing
 import com.bst.rawdatacollector.databinding.ItemProducelistBinding
 
-class AllProducingAdapter(
+class AllProducingListAdapter(
     private val context: Context, private val allProducingList:ArrayList<Producing>
-): RecyclerView.Adapter<AllProducingAdapter.ViewHolder>()
+): RecyclerView.Adapter<AllProducingListAdapter.ViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder

@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Equipment
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -27,7 +27,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class EquipmentErrorFragment : Fragment()
+class EquipmentResultFragment : Fragment()
 {
     private lateinit var binding: FragmentMachineInfoBinding
     private lateinit var errorType: ArrayList<String>

@@ -20,7 +20,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class ToolsListFragment : Fragment()
+class ToolListFragment : Fragment()
 {
 
     private lateinit var binding: FragmentToolsInfoBinding

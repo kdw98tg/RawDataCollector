@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.FragmentHome
+package com.bst.rawdatacollector.MainActivity.Main_Worker.AttendanceFragment
 
 import android.content.Intent
 import android.os.Build
@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.UserInfo.UserInfoActivity
-import com.bst.rawdatacollector.databinding.FragmentHomeBinding
+import com.bst.rawdatacollector.databinding.FragmentAttendanceBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -25,9 +25,9 @@ import java.time.LocalDate
 import java.util.Date
 
 
-class HomeFragment : Fragment()
+class AttendanceFragment : Fragment()
 {
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentAttendanceBinding
 
     companion object
     {
@@ -38,7 +38,7 @@ class HomeFragment : Fragment()
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding = FragmentAttendanceBinding.inflate(layoutInflater)
 
         //viewInit
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".MainActivity.Main_Worker.ProductInfo.ProductInfoActivity">
+    tools:context=".MainActivity.Main_Worker.ProduceResult.ProduceResultActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"

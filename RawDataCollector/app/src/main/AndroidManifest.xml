@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity.Main_Worker.ProductInfo.ProductInfoActivity"
+            android:name=".MainActivity.Main_Worker.ProduceResult.ProduceResultActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity.Main_Worker.MainActivityWorker"

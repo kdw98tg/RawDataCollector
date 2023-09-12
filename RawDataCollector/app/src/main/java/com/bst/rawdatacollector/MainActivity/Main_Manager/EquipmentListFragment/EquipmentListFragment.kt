@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentInfoFragment
+package com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentListFragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Equipment
-import com.bst.rawdatacollector.DataClass.Tool
-import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.FragmentEquipmentInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -20,7 +18,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class EquipmentInfoFragment : Fragment()
+class EquipmentListFragment : Fragment()
 {
 
     private lateinit var binding: FragmentEquipmentInfoBinding

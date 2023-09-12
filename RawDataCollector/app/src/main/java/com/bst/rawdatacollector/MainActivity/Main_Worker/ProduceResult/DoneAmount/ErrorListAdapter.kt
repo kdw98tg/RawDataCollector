@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.DoneAmount
 
 import android.annotation.SuppressLint
 import android.content.Context

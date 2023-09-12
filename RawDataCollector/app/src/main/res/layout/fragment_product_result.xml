@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="350dp"
-    tools:context=".MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductResultFragment">
+    tools:context=".MainActivity.Main_Worker.ProduceResult.DoneAmount.ProductResultFragment">
 
     <ScrollView
         android:layout_width="match_parent"

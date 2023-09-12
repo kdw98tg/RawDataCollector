@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bst.rawdatacollector.DataClass.Tool
 import com.bst.rawdatacollector.DataClass.ToolUses
-import com.bst.rawdatacollector.MainActivity.Main_Manager.ToolsInfoFragment.ToolsListFragment
-import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.ActivityToolInfoBinding
 import okhttp3.*
 import org.json.JSONArray

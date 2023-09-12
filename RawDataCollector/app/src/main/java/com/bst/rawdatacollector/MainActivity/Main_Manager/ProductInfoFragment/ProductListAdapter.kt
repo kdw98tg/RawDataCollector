@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.Product
 import com.bst.rawdatacollector.databinding.ItemProductListBinding
 
-class ProductInfoAdapter(private val context: Context, private val productList:ArrayList<Product>): RecyclerView.Adapter<ProductInfoAdapter.ViewHolder>()
+class ProductListAdapter(private val context: Context, private val productList:ArrayList<Product>): RecyclerView.Adapter<ProductListAdapter.ViewHolder>()
 {
 
     private var equipmentClickedListener: ProductClickedListener?=null

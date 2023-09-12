@@ -4,10 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.CurStateFragment.CurStateFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.FragmentHome.HomeFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment.ProductListFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.AttendanceFragment.AttendanceFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceListFragment.ProduceListFragment
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityMainWorkerBinding
 
 
@@ -23,15 +22,15 @@ class MainActivityWorker : AppCompatActivity()
         setContentView(binding.root)
 
         //시작 화면 세팅
-        replaceFragment(HomeFragment())
+        replaceFragment(AttendanceFragment())
 
         //bottom nav 세팅
         binding.bottomNavigationView.setOnItemSelectedListener {
 
             when (it.itemId)
             {
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.productList -> replaceFragment(ProductListFragment())
+                R.id.home -> replaceFragment(AttendanceFragment())
+                R.id.productList -> replaceFragment(ProduceListFragment())
                 R.id.more -> replaceFragment(CurStateFragment())
 
                 else ->

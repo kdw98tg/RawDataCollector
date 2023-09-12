@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceListFragment
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.bst.rawdatacollector.Delegate.ProductClickListener
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ItemProducelistBinding
 
-class ProductAdapter(private val context: Context, private val productList: ArrayList<Producing>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>()
+class ProduceAdapter(private val context: Context, private val productList: ArrayList<Producing>) : RecyclerView.Adapter<ProduceAdapter.ViewHolder>()
 {
     private var productItemTouchCallback: ProductClickListener? = null
 

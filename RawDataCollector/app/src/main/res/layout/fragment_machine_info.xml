@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentErrorFragment">
+    tools:context=".MainActivity.Main_Worker.ProduceResult.Equipment.EquipmentResultFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

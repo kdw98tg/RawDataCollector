@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bst.rawdatacollector.DataClass.ProductError
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.DoneAmount.ProductResultFragment
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.Equipment.EquipmentErrorFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.DoneAmount.ProductResultFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Equipment.EquipmentResultFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.Utils.Spinner.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
-import com.bst.rawdatacollector.databinding.ActivityProductInfoBinding
+import com.bst.rawdatacollector.databinding.ActivityProduceResultBinding
 import com.google.android.material.tabs.TabLayout
 import okhttp3.Call
 import okhttp3.Callback
@@ -34,18 +34,18 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
 
-class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmountChangedListener, ProductResultFragment.ProductErrorListChangedListener,
-                            EquipmentErrorFragment.EquipmentErrorChangedListener, EquipmentErrorFragment.EquipmentStoppedTimeChangedListener,
-                            EquipmentErrorFragment.EquipmentRestartTimeChangedListener, EquipmentErrorFragment.EquipmentStoppedTimeAmountChangedListener
+class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmountChangedListener, ProductResultFragment.ProductErrorListChangedListener,
+                              EquipmentResultFragment.EquipmentErrorChangedListener, EquipmentResultFragment.EquipmentStoppedTimeChangedListener,
+                              EquipmentResultFragment.EquipmentRestartTimeChangedListener, EquipmentResultFragment.EquipmentStoppedTimeAmountChangedListener
 {
     //view 생성
-    private lateinit var binding: ActivityProductInfoBinding
+    private lateinit var binding: ActivityProduceResultBinding
     private lateinit var spinnerLists: SpinnerArrayLists
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     //프래그먼트 생성
-    private lateinit var productInfoFragment: ProductResultFragment
-    private lateinit var equipmentErrorFragment: EquipmentErrorFragment
+    private lateinit var productResultFragment: ProductResultFragment
+    private lateinit var equipmentResultFragment: EquipmentResultFragment
 
 
     //프래그먼트에서 받은 값들을 저장할 변수
@@ -66,7 +66,7 @@ class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmoun
     private lateinit var equipmentCode: String
     private lateinit var process: String
 
-    private val userData: UserData = UserData.getInstance(this@ProductInfoActivity)
+    private val userData: UserData = UserData.getInstance(this@ProduceResultActivity)
 
     companion object
     {
@@ -119,14 +119,14 @@ class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmoun
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        binding = ActivityProductInfoBinding.inflate(layoutInflater)
+        binding = ActivityProduceResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //init
         spinnerLists = SpinnerArrayLists()
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
-        equipmentErrorFragment = EquipmentErrorFragment()
-        productInfoFragment = ProductResultFragment()
+        equipmentResultFragment = EquipmentResultFragment()
+        productResultFragment = ProductResultFragment()
         errorLists = ArrayList()
 
         //getIntent
@@ -272,9 +272,9 @@ class ProductInfoActivity : AppCompatActivity(), ProductResultFragment.DoneAmoun
 
     private fun setRecyclerViewAdapter(_recyclerView: RecyclerView, _errorList: ArrayList<ProductError>)
     {
-        val adapter = SubmitErrorAdapter(this@ProductInfoActivity, _errorList)
+        val adapter = SubmitErrorAdapter(this@ProduceResultActivity, _errorList)
         _recyclerView.adapter = adapter
-        _recyclerView.layoutManager = LinearLayoutManager(this@ProductInfoActivity)
+        _recyclerView.layoutManager = LinearLayoutManager(this@ProduceResultActivity)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

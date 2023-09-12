@@ -1,9 +1,8 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProductListFragment
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceListFragment
 
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +11,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Producing
 import com.bst.rawdatacollector.Delegate.ProductClickListener
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProductInfo.ProductInfoActivity
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.ProduceResultActivity
 import com.bst.rawdatacollector.UserData.UserData
-import com.bst.rawdatacollector.databinding.FragmentProductListBinding
+import com.bst.rawdatacollector.databinding.FragmentProduceListBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -27,10 +26,10 @@ import java.io.IOException
 import java.time.LocalDate
 
 
-class ProductListFragment() : Fragment()
+class ProduceListFragment() : Fragment()
 {
-    private lateinit var binding: FragmentProductListBinding
-    private lateinit var productAdapter: ProductAdapter
+    private lateinit var binding: FragmentProduceListBinding
+    private lateinit var productAdapter: ProduceAdapter
     private lateinit var productList: ArrayList<Producing>
 
     companion object
@@ -42,7 +41,7 @@ class ProductListFragment() : Fragment()
     override fun onCreateView(_inflater: LayoutInflater, _container: ViewGroup?, _savedInstanceState: Bundle?): View
     {
         //view init
-        binding = FragmentProductListBinding.inflate(_inflater, _container, false)
+        binding = FragmentProduceListBinding.inflate(_inflater, _container, false)
         return binding.root
     }
 
@@ -55,7 +54,7 @@ class ProductListFragment() : Fragment()
 
         selectTodayProductLists(UserData.getInstance(requireContext()).userCode, LocalDate.now().toString())
 
-        productAdapter = ProductAdapter(requireContext(), productList)//kotlin 은 requireContext()
+        productAdapter = ProduceAdapter(requireContext(), productList)//kotlin 은 requireContext()
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -80,7 +79,7 @@ class ProductListFragment() : Fragment()
                 process: String
             )
             {
-                val intent: Intent = Intent(requireContext(), ProductInfoActivity::class.java)
+                val intent: Intent = Intent(requireContext(), ProduceResultActivity::class.java)
                 intent.putExtra("productName", productName)
                 intent.putExtra("productCode", productCode)
                 intent.putExtra("requestName", requestName)

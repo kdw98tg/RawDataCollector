@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentInfoFragment
+package com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentListFragment
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Product
-import com.bst.rawdatacollector.DataClass.Tool
-import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -21,11 +18,11 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class ProductInfoFragment : Fragment()
+class ProductListFragment : Fragment()
 {
 
     private lateinit var binding: FragmentProductInfoBinding
-    private lateinit var productAdapter:ProductInfoAdapter
+    private lateinit var productAdapter:ProductListAdapter
     private lateinit var productList:ArrayList<Product>
 
     companion object{
@@ -45,14 +42,14 @@ class ProductInfoFragment : Fragment()
 
         //init
         productList = ArrayList()
-        productAdapter = ProductInfoAdapter(requireContext(),productList)
+        productAdapter = ProductListAdapter(requireContext(),productList)
 
         selectProductList()
 
         binding.productRecyclerView.adapter = productAdapter
         binding.productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        productAdapter.setProductClickedListener(object:ProductInfoAdapter.ProductClickedListener{
+        productAdapter.setProductClickedListener(object: ProductListAdapter.ProductClickedListener{
             override fun onClicked() {
                 //val intent:Intent = Intent(requireContext(),ProductInfoActivity::class)
             }

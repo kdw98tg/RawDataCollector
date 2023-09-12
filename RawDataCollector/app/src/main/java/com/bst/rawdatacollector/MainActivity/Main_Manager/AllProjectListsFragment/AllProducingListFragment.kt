@@ -24,11 +24,11 @@ import java.io.IOException
 import java.time.LocalDate
 
 
-class AllProductListFragment : Fragment()
+class AllProducingListFragment : Fragment()
 {
 
     private lateinit var binding: FragmentProductListManagerBinding
-    private lateinit var allProductAdapter: AllProducingAdapter
+    private lateinit var allProduceAdapter: AllProducingListAdapter
     private lateinit var allProducingList: ArrayList<Producing>
 
 
@@ -50,10 +50,10 @@ class AllProductListFragment : Fragment()
 
         //init
         allProducingList = ArrayList()
-        allProductAdapter = AllProducingAdapter(requireContext(), allProducingList)
+        allProduceAdapter = AllProducingListAdapter(requireContext(), allProducingList)
         binding.dayText.text = getCurDate().toString()
 
-        binding.recyclerView.adapter = allProductAdapter
+        binding.recyclerView.adapter = allProduceAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
@@ -109,7 +109,7 @@ class AllProductListFragment : Fragment()
                             allProducingList.add(producing)
 
                             activity?.runOnUiThread {
-                                allProductAdapter.notifyDataSetChanged()
+                                allProduceAdapter.notifyDataSetChanged()
                             }
                         }
                     }
