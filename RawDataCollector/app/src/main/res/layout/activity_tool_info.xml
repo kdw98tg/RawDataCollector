@@ -1,9 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity.Main_Manager.ToolInfoActivity.ToolInfoActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/toolImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/tool_ex" />
+
+    <TableLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0, 1,2,3">
+
+        <TableRow>
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Tool Code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Tool_name"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Amount"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="S/N"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/toolCodeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/toolNameText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/toolUsesAmountText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/toolSerialNumberText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사용 내역"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="일시"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="S/N"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="사용 설비"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="공정 개수"/>
+
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/usesRecyclerView"/>
+
+
+</LinearLayout>

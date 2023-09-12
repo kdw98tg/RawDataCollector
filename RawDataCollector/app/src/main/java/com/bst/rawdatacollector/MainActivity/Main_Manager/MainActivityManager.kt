@@ -7,7 +7,7 @@ import com.bst.rawdatacollector.MainActivity.Main_Manager.AllProjectListsFragmen
 import com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentInfoFragment.EquipmentInfoFragment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.ManagementFragment.ManagementFragment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.ProductInfoFragment.ProductInfoFragment
-import com.bst.rawdatacollector.MainActivity.Main_Manager.ToolsInfoFragment.ToolsInfoFragment
+import com.bst.rawdatacollector.MainActivity.Main_Manager.ToolsInfoFragment.ToolsListFragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.databinding.ActivityMainManagerBinding
 
@@ -30,7 +30,7 @@ class MainActivityManager : AppCompatActivity()
                 R.id.manage -> replaceFragment(ManagementFragment())
                 R.id.producingList -> replaceFragment(AllProductListFragment())
                 R.id.products -> replaceFragment(ProductInfoFragment())
-                R.id.tools -> replaceFragment(ToolsInfoFragment())
+                R.id.tools -> replaceFragment(ToolsListFragment())
                 R.id.equipment-> replaceFragment(EquipmentInfoFragment())
 
                 else ->

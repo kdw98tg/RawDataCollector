@@ -36,5 +36,12 @@ class SpinnerArrayLists
         {
             mProcessList = values
         }
+    private var mToolList:ArrayList<String> = ArrayList()
+    var toolList :ArrayList<String>
+        get() = mToolList
+        set(values)
+        {
+            mToolList = values
+        }
 
 }

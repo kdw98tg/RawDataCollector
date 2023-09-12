@@ -9,11 +9,12 @@ $acceptUser =$_POST['acceptUser'];
 $workDate = $_POST['workDate'];
 $equipmentCode = $_POST['equipment'];
 $productCode = $_POST['product'];
+$toolCode = $_POST["toolCode"];
 $requestAmount=$_POST['amount'];
 $process=$_POST['process'];
 
-$query = "INSERT INTO producing (request_user, accept_user, work_date, equipment_code,product_code, request_amount,process) 
-VALUES ('$requestUser','$acceptUser','$workDate','$equipmentCode','$productCode','$requestAmount','$process')";
+$query = "INSERT INTO producing (request_user, accept_user, work_date,equipment_code,product_code,tool_code, request_amount,process) 
+VALUES ('$requestUser','$acceptUser','$workDate','$equipmentCode','$productCode','$toolCode','$requestAmount','$process')";
 
 
 $res = mysqli_query($con,$query);

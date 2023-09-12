@@ -80,7 +80,7 @@ class EquipmentInfoFragment : Fragment()
                         val equipmentImg = json.getString("equipment_name").toString()
                         val equipmentName = json.getString("equipment_image").toString()
 
-                        val equipment: Equipment = Equipment(equipmentCode, equipmentImg,equipmentName)
+                        val equipment = Equipment(equipmentCode, equipmentImg,equipmentName)
                         equipmentList.add(equipment)
 
                         activity?.runOnUiThread {

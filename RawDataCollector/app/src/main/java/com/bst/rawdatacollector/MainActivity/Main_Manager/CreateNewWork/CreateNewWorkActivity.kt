@@ -46,6 +46,7 @@ class CreateNewWorkActivity : AppCompatActivity()
         private const val SELECT_PRODUCTS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Products.php"
         private const val SELECT_PROCESSES_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Processes.php"
         private const val INSERT_NEW_WORK_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_NewWork.php"
+        private const val SELECT_TOOLS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Tools.php"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -64,6 +65,7 @@ class CreateNewWorkActivity : AppCompatActivity()
         selectEquipmentsList(spinnerArrayLists)//장비 Spinner 설정
         selectProductList(spinnerArrayLists)//제품 Spinner 설정
         selectProcessList(spinnerArrayLists)//공정 Spinner 설정
+        selectToolList(spinnerArrayLists)//공구 Spinner 설정
 
 
         binding.producingListRecyclerView.adapter = createNewWorkAdapter
@@ -97,6 +99,40 @@ class CreateNewWorkActivity : AppCompatActivity()
             val intent = Intent(this@CreateNewWorkActivity,MainActivityManager::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun selectToolList(spinnerArrayLists: SpinnerArrayLists)
+    {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(SELECT_TOOLS_URL).build()
+        client.newCall(request).enqueue(object : Callback
+        {
+            override fun onFailure(call: Call, e: IOException)
+            {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response)
+            {
+                if (response.isSuccessful)
+                {
+                    val result = response.body!!.string()
+                    val jsonObject = JSONObject(result)
+                    val jsonArray = JSONArray(jsonObject.getString("results"))
+
+                    //JsonObject 해체 작업
+                    for (i in 0 until jsonArray.length())
+                    {
+                        val json = jsonArray.getJSONObject(i)
+                        val toolCode = json.getString("tool_code").toString()
+                        spinnerArrayLists.toolList.add(toolCode)
+                    }
+                    runOnUiThread {
+                        setSpinnerAdapter(binding.toolSpinner, this@CreateNewWorkActivity, spinnerArrayLists.toolList)//장비
+                    }
+                }
+            }
+        })
     }
 
     private fun selectEquipmentsList(_spinnerArrayLists: SpinnerArrayLists)

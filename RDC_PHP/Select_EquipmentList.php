@@ -5,7 +5,7 @@
 
 	$type = $_POST['type'];	
 
-	$query = "SELECT equipment_code, equipment_image FROM equipment";
+	$query = "SELECT * FROM equipment";
 	 
 	//echo $query;
 	
@@ -18,6 +18,7 @@
 		{	
 				$rows["equipment_code"] = $row[0];
 				$rows["equipment_image"] = $row[1];
+				$rows["equipment_name"] = $orw[2];
 				array_push($result, $rows);
 		}
         echo json_encode(array("results"=>$result));	

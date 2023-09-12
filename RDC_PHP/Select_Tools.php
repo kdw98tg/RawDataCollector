@@ -5,7 +5,7 @@
 
 	$type = $_POST['type'];	
 
-	$query = "SELECT * FROM tool";
+	$query = "SELECT tool_code FROM tool";
 	 
 	//echo $query;
 	
@@ -17,10 +17,6 @@
 		while($row = mysqli_fetch_array($res))
 		{	
 				$rows["tool_code"] = $row[0];
-				$rows["tool_name"] = $row[1];
-				$rows["serial_number"] = $row[2];
-				$rows["uses_amount"] = $row[3];
-				$rows["tool_image"] = $row[4];
 				array_push($result, $rows);
 		}
         echo json_encode(array("results"=>$result));	
