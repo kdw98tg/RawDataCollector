@@ -29,7 +29,7 @@ class ProductInfoFragment : Fragment()
     private lateinit var productList:ArrayList<Product>
 
     companion object{
-        private const val SELECT_PRODUCT_LIST = "http://kdw98tg.dothome.co.kr/RDC/Select_Products.php/"
+        private const val SELECT_PRODUCT_LIST = "http://kdw98tg.dothome.co.kr/RDC/Select_ProductList.php/"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
@@ -51,6 +51,12 @@ class ProductInfoFragment : Fragment()
 
         binding.productRecyclerView.adapter = productAdapter
         binding.productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        productAdapter.setProductClickedListener(object:ProductInfoAdapter.ProductClickedListener{
+            override fun onClicked() {
+                //val intent:Intent = Intent(requireContext(),ProductInfoActivity::class)
+            }
+        })
 
     }
     private fun selectProductList()

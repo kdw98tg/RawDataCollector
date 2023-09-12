@@ -61,11 +61,13 @@ class ToolsListFragment : Fragment()
                 intent.putExtra("toolName", tool.toolName)
                 intent.putExtra("toolSerialNumber", tool.toolSerialNumber)
                 intent.putExtra("toolImage", tool.toolImg)
-                intent.putExtra("usesAmount", tool.usesAmount)
+                intent.putExtra("usesAmount", tool.usesAmount.toString())
                 startActivity(intent)
             }
         })
     }
+
+
 
     private fun selectToolList()
     {
