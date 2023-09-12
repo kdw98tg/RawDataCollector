@@ -39,6 +39,7 @@ class ToolInfoActivity : AppCompatActivity()
         toolInfoList = ArrayList()
         toolInfoAdapter = ToolInfoAdapter(this@ToolInfoActivity,toolInfoList)
 
+        //getIntent
         toolCode = intent.getStringExtra("toolCode")
         toolName = intent.getStringExtra("toolName")
         toolSerialNumber = intent.getStringExtra("toolSerialNumber")

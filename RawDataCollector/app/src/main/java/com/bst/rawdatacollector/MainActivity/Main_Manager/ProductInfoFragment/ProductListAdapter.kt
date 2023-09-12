@@ -7,14 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.Product
 import com.bst.rawdatacollector.databinding.ItemProductListBinding
 
-class ProductListAdapter(private val context: Context, private val productList:ArrayList<Product>): RecyclerView.Adapter<ProductListAdapter.ViewHolder>()
+class ProductListAdapter(private val context: Context, private val productList: ArrayList<Product>) :
+    RecyclerView.Adapter<ProductListAdapter.ViewHolder>()
 {
 
-    private var equipmentClickedListener: ProductClickedListener?=null
+    private var equipmentClickedListener: ProductClickedListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
-        val binding:ItemProductListBinding = ItemProductListBinding.inflate(LayoutInflater.from(context),parent,false)
+        val binding: ItemProductListBinding = ItemProductListBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -25,19 +26,21 @@ class ProductListAdapter(private val context: Context, private val productList:A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
-        val product:Product = productList[position]
+        val product: Product = productList[position]
         holder.binding.equipmentInfoLayout.setOnClickListener {
-            equipmentClickedListener?.onClicked()
+            equipmentClickedListener?.onClicked(product)
         }
     }
 
-    fun setProductClickedListener(equipmentClickedListener:ProductClickedListener)
+    fun setProductClickedListener(equipmentClickedListener: ProductClickedListener)
     {
         this.equipmentClickedListener = equipmentClickedListener
     }
 
-    interface ProductClickedListener{
-        fun onClicked()
+    interface ProductClickedListener
+    {
+        fun onClicked(product:Product)
     }
-   inner class ViewHolder(val binding:ItemProductListBinding):RecyclerView.ViewHolder(binding.root)
+
+    inner class ViewHolder(val binding: ItemProductListBinding) : RecyclerView.ViewHolder(binding.root)
 }

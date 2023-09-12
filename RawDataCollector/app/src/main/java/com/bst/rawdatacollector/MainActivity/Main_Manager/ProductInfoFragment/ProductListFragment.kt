@@ -1,5 +1,6 @@
 package com.bst.rawdatacollector.MainActivity.Main_Manager.ProductInfoFragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Product
+import com.bst.rawdatacollector.MainActivity.Main_Manager.ProductInfoActivity.ProductInfoActivity
 import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -32,7 +34,6 @@ class ProductListFragment : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     {
         binding = FragmentProductInfoBinding.inflate(layoutInflater)
-
         return binding.root
     }
 
@@ -50,8 +51,15 @@ class ProductListFragment : Fragment()
         binding.productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         productAdapter.setProductClickedListener(object: ProductListAdapter.ProductClickedListener{
-            override fun onClicked() {
-                //val intent:Intent = Intent(requireContext(),ProductInfoActivity::class)
+
+            override fun onClicked(product: Product)
+            {
+                val intent:Intent = Intent(requireContext(),ProductInfoActivity::class.java)
+                intent.putExtra("productCode",product.productCode)
+                intent.putExtra("productName",product.productName)
+                intent.putExtra("productImg",product.productImg)
+                intent.putExtra("customer",product.customer)
+                startActivity(intent)
             }
         })
 
