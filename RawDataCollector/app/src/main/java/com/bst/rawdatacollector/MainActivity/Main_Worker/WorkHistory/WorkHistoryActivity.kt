@@ -1,8 +1,11 @@
 package com.bst.rawdatacollector.MainActivity.Main_Worker.WorkHistory
 
+import android.annotation.SuppressLint
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.WorkList
 import com.bst.rawdatacollector.UserData.UserData
@@ -16,6 +19,7 @@ import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.time.LocalDate
 
 class WorkHistoryActivity : AppCompatActivity()
 {
@@ -28,6 +32,8 @@ class WorkHistoryActivity : AppCompatActivity()
     companion object{
         private const val SELECT_WORK_HISTORY_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkHistory.php"
     }
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,9 @@ class WorkHistoryActivity : AppCompatActivity()
         workHistoryList = ArrayList()
         workHistoryAdapter = WorkHistoryAdapter(this@WorkHistoryActivity, workHistoryList)
 
+        //viewInit
+        binding.curDateText.text = getCurDate().toString()
+        binding.workWage.text = UserData.getInstance(this@WorkHistoryActivity).userWage.toString() + "원"
 
 
         //setRecyclerView
@@ -49,6 +58,13 @@ class WorkHistoryActivity : AppCompatActivity()
         Log.d("지정된 날짜", "onCreate: $selectedDate , ${UserData.getInstance(this@WorkHistoryActivity).userCode}")
         selectCurWorkHistory(UserData.getInstance(this@WorkHistoryActivity).userCode, selectedDate!!)
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getCurDate(): LocalDate
+    {
+        return LocalDate.now()
+    }
+
 
     private fun selectCurWorkHistory(_userCode:String, _selectedDate:String)
     {

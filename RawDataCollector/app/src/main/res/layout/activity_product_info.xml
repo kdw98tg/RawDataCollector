@@ -1,9 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity.Main_Manager.ProductInfoActivity.ProductInfoActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity.Main_Manager.ToolInfoActivity.ToolInfoActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/toolImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/productimg" />
+
+    <TableLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0, 1,2,3,4">
+
+        <TableRow>
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Product Code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Product Name"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Company"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Request Amount"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="Done Amount"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/productCodeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/productNameText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/companyText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/requestAmountText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/doneAmountText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/black"
+                android:text="tool_code"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="생산 내역"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="일시"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="생산자"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="생산 개수"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:text="불량 개수"/>
+
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/usesRecyclerView"/>
+
+
+</LinearLayout>

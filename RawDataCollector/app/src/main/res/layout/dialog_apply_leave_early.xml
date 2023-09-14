@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/leaveEarlyEditText"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="20dp"
+        android:hint="조퇴 사유를 입력하세요."
+        android:background="@drawable/border_all"
+        android:scrollHorizontally="true"
+        android:inputType="textMultiLine"/>
+
+</LinearLayout>

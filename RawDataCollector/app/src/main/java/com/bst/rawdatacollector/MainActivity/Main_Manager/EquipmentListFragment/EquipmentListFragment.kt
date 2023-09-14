@@ -1,5 +1,6 @@
 package com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentListFragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Equipment
+import com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentInfoActivity.EquipmentInfoActivity
 import com.bst.rawdatacollector.databinding.FragmentEquipmentInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -48,6 +50,20 @@ class EquipmentListFragment : Fragment()
 
         binding.equipmentRecyclerView.adapter = equipmentAdapter
         binding.equipmentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        equipmentAdapter.setEquipmentClickedListener(object: EquipmentListAdapter.EquipmentClickedListener
+        {
+            override fun onCLicked(equipment: Equipment)
+            {
+                val intent: Intent = Intent(requireContext(),EquipmentInfoActivity::class.java)
+                intent.putExtra("equipmentCode",equipment.equipmentCode)
+                intent.putExtra("equipmentName",equipment.equipmentName)
+                intent.putExtra("equipmentImg",equipment.equipmentImage)
+                startActivity(intent)
+
+            }
+
+        })
 
     }
 

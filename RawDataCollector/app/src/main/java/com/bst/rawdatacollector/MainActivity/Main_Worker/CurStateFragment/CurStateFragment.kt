@@ -62,8 +62,6 @@ class CurStateFragment : Fragment()
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun setMonthView() //화면 설정
     {
-
-
         val selectedDate = LocalDate.now()
         //년월 텍스트뷰 셋팅
         binding.monthYearText.text = (monthYearFromDate(selectedDate))

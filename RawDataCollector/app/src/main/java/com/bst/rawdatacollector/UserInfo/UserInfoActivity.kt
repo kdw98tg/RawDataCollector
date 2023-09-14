@@ -133,7 +133,7 @@ class UserInfoActivity : AppCompatActivity()
         binding.company.text = userData.userCompany
         binding.userCode.text = userData.userCode
         binding.position.text = userData.userPosition
-        binding.position.text = userData.userPhoneNumber
+        binding.phoneNumber.text = userData.userPhoneNumber
 
         Glide.with(this).load(PIC_LOAD_URL).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.userProfileImg)
     }

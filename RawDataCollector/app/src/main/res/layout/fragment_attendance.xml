@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,185 +13,196 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userInfoImg"
             android:layout_width="50dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             android:src="@drawable/baseline_person_24"
             app:civ_border_overlay="true"
-            app:civ_circle_background_color="#EEEEEE"
-            />
+            app:civ_circle_background_color="#EEEEEE" />
 
         <TextView
             android:id="@+id/dayText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2023년 07월 14일"
-            android:textSize="25sp"
-            android:textColor="@color/black"
             android:layout_marginTop="20dp"
-            android:textAlignment="center"/>
+            android:text="2023년 07월 14일"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="근무 현황"
-            android:textSize="50sp"
             android:layout_margin="30dp"
+            android:text="근무 현황"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textAlignment="center"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/border_all"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/baseline_access_time_24"
-                android:drawablePadding="10dp"
-                android:text="총 근무시간" />
-
-            <TextView
-                android:id="@+id/totalWorkTime"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="7시간 40분" />
-
-        </LinearLayout>
+            android:textSize="50sp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/border_all"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/baseline_hourglass_top_24"
-                android:drawablePadding="10dp"
-                android:text="오늘 근무시간" />
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-            <Chronometer
-                android:id="@+id/chronometer"
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/baseline_access_time_24"
+                    android:drawablePadding="10dp"
+                    android:text="총 근무시간" />
+
+                <TextView
+                    android:id="@+id/totalWorkTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00시간 00분" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/baseline_hourglass_top_24"
+                    android:drawablePadding="10dp"
+                    android:text="오늘 근무시간" />
+
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+                <!--
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="7시간 40분" /> -->
+
+
+            </LinearLayout>
+
             <!--
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="7시간 40분" /> -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/baseline_donut_large_24"
+                    android:drawablePadding="10dp"
+                    android:text="할일 달성비율" />
+
+                <TextView
+                    android:id="@+id/todoRateText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="89%" />
+
+            </LinearLayout>
+-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/setAbsentTimeText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="오전 09 : 00"
+                    android:textAlignment="center"
+
+                    android:textSize="23sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="~"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/setEndTimeText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="오후 18 : 00"
+                    android:textAlignment="center"
+                    android:textSize="23sp" />
+
+            </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/attendanceBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/lightBlue"
+                        android:text="출근"
+                        android:textSize="18sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/endBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/lightBlue"
+                        android:text="퇴근"
+                        android:textSize="18sp" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/leaveEarlyBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/baseline_donut_large_24"
-                android:drawablePadding="10dp"
-                android:text="할일 달성비율" />
-
-            <TextView
-                android:id="@+id/todoRateText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="89%" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/setAbsentTimeText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="오전 09 : 00"
-                android:textAlignment="center"
-
-                android:textSize="23sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="~"
-                android:textAlignment="center"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/setEndTimeText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:text="오후 18 : 00"
-                android:textAlignment="center"
-                android:textSize="23sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:backgroundTint="@color/lightBlue"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/attendanceBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/lightBlue"
-                android:text="출근"
-                android:textSize="18sp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/endBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/lightBlue"
-                android:text="퇴근"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </LinearLayout>
+            android:layout_gravity="end"
+            android:text="조퇴 신청"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </FrameLayout>

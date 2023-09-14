@@ -10,6 +10,7 @@ import com.bst.rawdatacollector.databinding.ItemEquipmentListBinding
 class EquipmentListAdapter(private val context: Context, private val equipmentList: ArrayList<Equipment>) :
     RecyclerView.Adapter<EquipmentListAdapter.ViewHolder>()
 {
+    private var equipmentClickedListener:EquipmentClickedListener?=null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
@@ -26,8 +27,17 @@ class EquipmentListAdapter(private val context: Context, private val equipmentLi
     override fun onBindViewHolder(holder: ViewHolder, position: Int)
     {
         val equipment = equipmentList[position]
-
-
+        holder.binding.equipmentInfoLayout.setOnClickListener{
+            equipmentClickedListener?.onCLicked(equipment)
+        }
+    }
+    fun setEquipmentClickedListener(equipmentClickedListener:EquipmentClickedListener)
+    {
+        this.equipmentClickedListener = equipmentClickedListener
+    }
+    interface EquipmentClickedListener
+    {
+        fun onCLicked(equipment:Equipment)
     }
     inner class ViewHolder(val binding:ItemEquipmentListBinding):RecyclerView.ViewHolder(binding.root)
 

@@ -93,12 +93,19 @@ class UserData private constructor(context: Context)
             mIsWorking = values
         }
 
-    private var mWage:Int = 0
-    var userWage:Int
+    private var mWage: Int = 0
+    var userWage: Int
         get() = mWage
         set(values)
         {
             mWage = values
+        }
+    private var mUserTotalWorkTime:Int=0
+    var userTotalWorkTime:Int
+        get() = mUserTotalWorkTime
+        set(values)
+        {
+            mUserTotalWorkTime = values
         }
 
 

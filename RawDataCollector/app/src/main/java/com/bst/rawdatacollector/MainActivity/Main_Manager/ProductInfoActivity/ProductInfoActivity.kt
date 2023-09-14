@@ -26,6 +26,5 @@ class ProductInfoActivity : AppCompatActivity()
         productImg = intent.getStringExtra("productImg")
         customer = intent.getStringExtra("customer")
 
-
     }
 }

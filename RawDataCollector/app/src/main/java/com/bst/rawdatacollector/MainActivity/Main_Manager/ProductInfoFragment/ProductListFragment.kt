@@ -24,10 +24,11 @@ class ProductListFragment : Fragment()
 {
 
     private lateinit var binding: FragmentProductInfoBinding
-    private lateinit var productAdapter:ProductListAdapter
-    private lateinit var productList:ArrayList<Product>
+    private lateinit var productAdapter: ProductListAdapter
+    private lateinit var productList: ArrayList<Product>
 
-    companion object{
+    companion object
+    {
         private const val SELECT_PRODUCT_LIST = "http://kdw98tg.dothome.co.kr/RDC/Select_ProductList.php/"
     }
 
@@ -43,32 +44,35 @@ class ProductListFragment : Fragment()
 
         //init
         productList = ArrayList()
-        productAdapter = ProductListAdapter(requireContext(),productList)
+        productAdapter = ProductListAdapter(requireContext(), productList)
 
         selectProductList()
 
         binding.productRecyclerView.adapter = productAdapter
         binding.productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        productAdapter.setProductClickedListener(object: ProductListAdapter.ProductClickedListener{
+        productAdapter.setProductClickedListener(object : ProductListAdapter.ProductClickedListener
+        {
 
             override fun onClicked(product: Product)
             {
-                val intent:Intent = Intent(requireContext(),ProductInfoActivity::class.java)
-                intent.putExtra("productCode",product.productCode)
-                intent.putExtra("productName",product.productName)
-                intent.putExtra("productImg",product.productImg)
-                intent.putExtra("customer",product.customer)
+                val intent: Intent = Intent(requireContext(), ProductInfoActivity::class.java)
+                intent.putExtra("productCode", product.productCode)
+                intent.putExtra("productName", product.productName)
+                intent.putExtra("productImg", product.productImg)
+                intent.putExtra("customer", product.customer)
                 startActivity(intent)
             }
         })
 
     }
+
     private fun selectProductList()
     {
         val client = OkHttpClient()
         val request = Request.Builder().url(SELECT_PRODUCT_LIST).build()
-        client.newCall(request).enqueue(object:Callback{
+        client.newCall(request).enqueue(object : Callback
+        {
             override fun onFailure(call: Call, e: IOException)
             {
                 e.printStackTrace()
@@ -76,7 +80,7 @@ class ProductListFragment : Fragment()
 
             override fun onResponse(call: Call, response: Response)
             {
-                if(response.isSuccessful)
+                if (response.isSuccessful)
                 {
                     val result = response.body!!.string()
                     try

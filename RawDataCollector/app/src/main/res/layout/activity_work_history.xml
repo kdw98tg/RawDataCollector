@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity.Main_Worker.WorkHistory.WorkHistoryActivity">
 
+
     <TextView
         android:id="@+id/curDateText"
         android:layout_width="match_parent"
@@ -24,78 +25,78 @@
         android:textAlignment="center"
         android:textSize="25sp" />
 
-
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="20dp"
+        android:stretchColumns="0, 1">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="근무 시간 : "
-            android:textAlignment="textEnd"
-            android:textSize="25sp" />
+        <TableRow>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingStart="5dp"
-            android:text="100 시간"
-            android:textSize="25sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:text="근무 시간"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/totalWorkTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:text="총 근무시간"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </TableRow>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        <TableRow>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="급        여 : "
-            android:textAlignment="textEnd"
-            android:textSize="25sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:text="급여"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingStart="5dp"
-            android:text="9560원 / 시간"
-            android:textSize="25sp" />
+            <TextView
+                android:id="@+id/workWage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:text="개인 급여"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </TableRow>
 
-    </LinearLayout>
+        <TableRow>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:text="예상 급여"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="예상 월급: "
-            android:textAlignment="textEnd"
-            android:textSize="25sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingStart="5dp"
-            android:text="956000원"
-            android:textSize="25sp" />
-
-    </LinearLayout>
+            <TextView
+                android:id="@+id/totalWage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:text="956000원"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </TableRow>
+    </TableLayout>
 
 
     <TextView
@@ -115,19 +116,20 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="작업 내용"
+            android:layout_weight="1"
             android:background="@drawable/border_all"
-            android:textAlignment="textEnd"
+            android:text="작업 내용"
+            android:textAlignment="center"
             android:textSize="25sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingStart="5dp"
+            android:layout_weight="1"
             android:background="@drawable/border_all"
+            android:paddingStart="5dp"
             android:text="완료 수량"
+            android:textAlignment="center"
             android:textSize="25sp" />
 
     </LinearLayout>
