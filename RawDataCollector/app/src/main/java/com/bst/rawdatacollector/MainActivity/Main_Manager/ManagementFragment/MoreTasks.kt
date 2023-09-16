@@ -1,6 +1,8 @@
 package com.bst.rawdatacollector.MainActivity.Main_Manager.ManagementFragment
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,7 +22,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-class MoreTasks(private val context: Context, private val collaborator: Member?) : BottomSheetDialogFragment()
+class MoreTasks(private val context: Context, private val member: Member) : BottomSheetDialogFragment()
 {
     private lateinit var client:OkHttpClient
     companion object
@@ -47,9 +49,9 @@ class MoreTasks(private val context: Context, private val collaborator: Member?)
 
         //adapter 로 콜백 넘김
         binding.callBtn.setOnClickListener {
-            //val phoneNumber = collaborator?.collaboratorPhoneNumber
-//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:${phoneNumber}"))
-//            startActivity(intent)
+            val phoneNumber = member.memberPhoneNumber
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tel:${phoneNumber}"))
+            startActivity(intent)
         }
 
         //collaborator 권한 수정하기

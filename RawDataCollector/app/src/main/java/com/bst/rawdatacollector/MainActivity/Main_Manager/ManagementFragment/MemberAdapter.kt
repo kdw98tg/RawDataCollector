@@ -13,6 +13,8 @@ class MemberAdapter(
 ) : RecyclerView.Adapter<MemberAdapter.ViewHolder>()
 {
 
+    private var memberClickedListener:MemberClickedListener?=null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberAdapter.ViewHolder
     {
         val binding = ItemWorkerBinding.inflate(LayoutInflater.from(context),parent,false)
@@ -27,11 +29,19 @@ class MemberAdapter(
         holder.binding.collaboratorEmailText.text = member.memberEmail
         holder.binding.positionText.text = member.memberPosition
 
-        holder.binding.showMoreBtn.setOnClickListener {
-            //itemEditCallback?.voidVoidDelegate()
+        holder.binding.moreTaskLayout.setOnClickListener {
+            //memberClickedListener?.onClicked()
             val moreTasks = MoreTasks(context,member)
             moreTasks.show(fragmentManager, MoreTasks.TAG)
         }
+    }
+    fun setOnClickedCallback(memberClickedListener:MemberClickedListener)
+    {
+        this.memberClickedListener = memberClickedListener
+    }
+    interface MemberClickedListener
+    {
+        fun onClicked()
     }
 
     override fun getItemCount(): Int

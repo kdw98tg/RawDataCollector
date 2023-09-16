@@ -6,10 +6,11 @@ data class NewWork(
     var workDate:String,
     var equipment:String,
     var product:String,
+    var toolCode:String,
     var amount:String,
     var process:String
 )
 {
-    constructor():this("","","","","","","")
+    constructor():this("","","","","","","","")
 }
 

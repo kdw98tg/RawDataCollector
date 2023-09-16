@@ -74,7 +74,7 @@ class CreateNewWorkActivity : AppCompatActivity()
         binding.addListBtn.setOnClickListener {
             if(binding.requestAmountEditText.text.toString() == "")
             {
-                errorDialog("의뢰 수량을 입력해 주세요.")
+                errorDialog("작업 수량을 입력해 주세요.")
                 return@setOnClickListener
             }
             insertNewWorkToRecyclerView()//기입한 정보를 RecyclerView 에 추가
@@ -90,11 +90,12 @@ class CreateNewWorkActivity : AppCompatActivity()
                 val equipment = newWorkList[i].equipment
                 val workDate = getCurDate()
                 val product = newWorkList[i].product
+                val toolCode = newWorkList[i].toolCode
                 val amount = newWorkList[i].amount
                 val process = newWorkList[i].process
                 //RecyclerView 에 있는 정보들을 DB에 업로드 하는 함수
                 Log.d("팀원관리", "onCreate: $equipment, ${workDate.toString()}")
-                insertNewWork(requestUser, acceptUser, workDate.toString(), equipment, product, amount, process)
+                insertNewWork(requestUser, acceptUser, workDate.toString(), equipment, product, toolCode,amount, process)
             }
             val intent = Intent(this@CreateNewWorkActivity,MainActivityManager::class.java)
             startActivity(intent)
@@ -128,7 +129,7 @@ class CreateNewWorkActivity : AppCompatActivity()
                         spinnerArrayLists.toolList.add(toolCode)
                     }
                     runOnUiThread {
-                        setSpinnerAdapter(binding.toolSpinner, this@CreateNewWorkActivity, spinnerArrayLists.toolList)//장비
+                        setSpinnerAdapter(binding.toolSpinner, this@CreateNewWorkActivity, spinnerArrayLists.toolList)//도구
                     }
                 }
             }
@@ -275,12 +276,12 @@ class CreateNewWorkActivity : AppCompatActivity()
     }
 
     private fun insertNewWork(
-        requestUser: String, acceptUser: String, workDate: String, equipment: String, product: String, amount: String, process: String
+        requestUser: String, acceptUser: String, workDate: String, equipment: String, product: String, toolCode:String,amount: String, process: String
     )
     {
         val client: OkHttpClient = OkHttpClient()
         val body =
-            FormBody.Builder().add("requestUser", requestUser).add("acceptUser", acceptUser).add("workDate", workDate).add("equipment", equipment)
+            FormBody.Builder().add("requestUser", requestUser).add("acceptUser", acceptUser).add("workDate", workDate).add("equipment", equipment).add("toolCode",toolCode)
                 .add("product", product).add("amount", amount).add("process", process).build()
         val request = Request.Builder().url(INSERT_NEW_WORK_URL).post(body).build()
         client.newCall(request).enqueue(object : Callback
@@ -313,6 +314,7 @@ class CreateNewWorkActivity : AppCompatActivity()
         newWork.acceptUser = binding.acceptUserSpinner.selectedItem.toString()
         newWork.equipment = binding.equipmentSpinner.selectedItem.toString()
         newWork.product = binding.productSpinner.selectedItem.toString()
+        newWork.toolCode = binding.toolSpinner.selectedItem.toString()
         newWork.amount = binding.requestAmountEditText.text.toString()
         newWork.process = binding.processSpinner.selectedItem.toString()
         newWorkList.add(newWork)

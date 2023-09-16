@@ -26,6 +26,7 @@ class CreateNewWorkAdapter(private val context: Context, private val newWorkList
         holder.binding.requestUser.text = newWork.requestUser
         holder.binding.acceptUser.text = newWork.acceptUser
         holder.binding.equipment.text = newWork.equipment
+        holder.binding.tool.text = newWork.toolCode
         holder.binding.product.text = newWork.product
         holder.binding.amount.text = newWork.amount
         holder.binding.process.text = newWork.process

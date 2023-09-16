@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="작업 생성"
+        android:text="작업 지시"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25sp"
@@ -67,6 +67,13 @@
                         android:layout_weight="1"
                         android:background="@drawable/border_all"
                         android:text="제품"
+                        android:textAlignment="center" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_all"
+                        android:text="공구"
                         android:textAlignment="center" />
 
                     <TextView
@@ -142,7 +149,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="장비"
+                        android:text="장비명"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
@@ -166,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="제품"
+                        android:text="제품명"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
@@ -189,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="공구"
+                        android:text="공구번호"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
@@ -213,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="의뢰 수량"
+                        android:text="계획수량"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
@@ -240,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="공정"
+                        android:text="공정명"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 

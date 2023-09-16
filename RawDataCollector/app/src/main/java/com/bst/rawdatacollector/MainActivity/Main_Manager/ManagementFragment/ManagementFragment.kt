@@ -49,6 +49,13 @@ class ManagementFragment : Fragment()
 
         selectMembers(UserData.getInstance(requireContext()).userCompany)
 
+//        memberAdapter.setOnClickedCallback(object: MemberAdapter.MemberClickedListener {
+//            override fun onClicked() {
+//                val moreTask = MoreTasks(requireContext())
+//            }
+
+       // })
+
         //내꺼는 뺄지말지 정하기
         //인스타처럼할거임
         //selectUserList(UserData.getInstance(requireContext()).userCompany)//유저들 골라옴
