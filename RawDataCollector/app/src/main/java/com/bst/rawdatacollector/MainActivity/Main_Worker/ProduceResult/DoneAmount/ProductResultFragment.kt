@@ -12,85 +12,80 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.ProduceResultActivity
 import com.bst.rawdatacollector.databinding.FragmentProductResultBinding
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class ProductResultFragment : Fragment()
-{
+class ProductResultFragment() : Fragment() {
     private lateinit var binding: FragmentProductResultBinding
     private lateinit var errorListAdapter: ErrorListAdapter
     private lateinit var errorList: ArrayList<ProductError>
     private lateinit var errorType: ArrayList<String>
 
-
     private var doneAmountChangedListener: DoneAmountChangedListener? = null
     private var productErrorListChangedListener: ProductErrorListChangedListener? = null
 
-    companion object
-    {
-        private const val SELECT_ERROR_TYPE_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
+    private var doneAmount :String=""
+
+    companion object {
+        private const val SELECT_ERROR_TYPE_URL =
+            "http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
     }
 
     //프래그먼트가 생성될때 액티비티에 연결해주고 Listener 를 연결해주는 메소드
-    override fun onAttach(context: Context)
-    {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         doneAmountChangedListener = context as DoneAmountChangedListener
         productErrorListChangedListener = context as ProductErrorListChangedListener
+        doneAmount = this.arguments?.getString("doneAmount").toString()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
-    {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentProductResultBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //init
         errorList = ArrayList()
         errorType = ArrayList()
         errorListAdapter = ErrorListAdapter(requireContext(), errorList, errorType)
 
+        //viewInit
         selectErrorType("제품")
+
+        binding.doneAmountText.setText(doneAmount)
 
         //setRecyclerView
         binding.errorListRecyclerView.adapter = errorListAdapter
         binding.errorListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.doneAmountText.addTextChangedListener(object : TextWatcher
-        {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
-            {
+        binding.doneAmountText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)
-            {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
-            override fun afterTextChanged(p0: Editable?)
-            {
+            override fun afterTextChanged(p0: Editable?) {
                 doneAmountChangedListener?.onAmountChanged(binding.doneAmountText.text.toString())
             }
         })
 
         //델리게이트 설정 - Adapter 내의 아이템의 EditText 가 변경되었을때 호출
-        errorListAdapter.setAmountChangedListener(object : VoidArrayListDelegate
-        {
+        errorListAdapter.setAmountChangedListener(object : VoidArrayListDelegate {
 
-            override fun voidArrayListDelegate(_arrayList: ArrayList<ProductError>)
-            {
+            override fun voidArrayListDelegate(_arrayList: ArrayList<ProductError>) {
                 Log.d("호출됨2", "afterTextChanged: 호출됨")
                 productErrorListChangedListener?.onListChanged(_arrayList)
             }
@@ -102,45 +97,39 @@ class ProductResultFragment : Fragment()
             errorList.add(error)
             errorListAdapter.notifyItemInserted(errorList.size)
         }
-        binding.subErrorListBtn.setOnClickListener{
-            errorList.remove(errorList[errorList.size-1])
+        binding.subErrorListBtn.setOnClickListener {
+            errorList.remove(errorList[errorList.size - 1])
             errorListAdapter.notifyItemRemoved(errorList.size)
         }
     }
 
-    private fun selectErrorType(_type: String)
-    {
+
+
+
+    private fun selectErrorType(_type: String) {
         val client = OkHttpClient()
         val body = FormBody.Builder().add("type", _type).build()
         val request = Request.Builder().url(SELECT_ERROR_TYPE_URL).post(body).build()
 
-        client.newCall(request).enqueue(object : Callback
-        {
-            override fun onFailure(call: Call, e: IOException)
-            {
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
 
-            override fun onResponse(call: Call, response: Response)
-            {
-                if (response.isSuccessful)
-                {
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
                     activity?.runOnUiThread {
-                        try
-                        {
+                        try {
                             val jsonObject = JSONObject(response.body!!.string())
                             val jsonArray = JSONArray(jsonObject.getString("results"))
 
-                            for (i in 0 until jsonArray.length())
-                            {
+                            for (i in 0 until jsonArray.length()) {
                                 val json: JSONObject = jsonArray.getJSONObject(i)
                                 val errorName = json.getString("error_name")
                                 errorType.add(errorName)
                                 errorListAdapter.notifyDataSetChanged()
                             }
-                        }
-                        catch (e: Exception)
-                        {
+                        } catch (e: Exception) {
                             e.printStackTrace()
                         }
                     }
@@ -149,13 +138,11 @@ class ProductResultFragment : Fragment()
         })
     }
 
-    interface DoneAmountChangedListener
-    {
+    interface DoneAmountChangedListener {
         fun onAmountChanged(doneAmount: String)
     }
 
-    interface ProductErrorListChangedListener
-    {
+    interface ProductErrorListChangedListener {
         fun onListChanged(errorList: ArrayList<ProductError>)
     }
 

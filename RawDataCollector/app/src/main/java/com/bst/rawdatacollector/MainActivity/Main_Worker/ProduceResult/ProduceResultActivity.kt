@@ -55,10 +55,12 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
     private var equipmentErrorType: String = ""
     private var equipmentStoppedTime: String = ""
     private var equipmentRestartTime: String = ""
+    private var latestDoneAmount:String="0"
 
     private val client: OkHttpClient = OkHttpClient()
 
     //작업 정보를 클릭했을때 받을 변수들
+    private lateinit var produceNumber:String
     private lateinit var productName: String
     private lateinit var productCode: String
     private lateinit var requestCode: String
@@ -77,6 +79,9 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
         private const val UPDATE_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkEndTime.php"
         private const val SELECT_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkStartTime.php"
         private const val SELECT_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkEndTime.php"//그날 기계 수리가 안됐을때 사용할듯
+        private const val SELECT_DONE_AMOUNT_URL =
+            "http://kdw98tg.dothome.co.kr/RDC/Select_DoneAmount.php/"//처음 DoneAmount 갯수를 가져옴
+
 
     }
 
@@ -122,14 +127,8 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
         binding = ActivityProduceResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //init
-        spinnerLists = SpinnerArrayLists()
-        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
-        equipmentResultFragment = EquipmentResultFragment()
-        productResultFragment = ProductResultFragment()
-        errorLists = ArrayList()
-
         //getIntent
+        produceNumber = intent.getStringExtra("produceNumber").toString()
         productName = intent.getStringExtra("productName").toString()
         productCode = intent.getStringExtra("productCode").toString()
         requestCode = intent.getStringExtra("requestCode").toString()
@@ -137,15 +136,27 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
         equipmentCode = intent.getStringExtra("equipmentCode").toString()
         process = intent.getStringExtra("process").toString()
 
+        //init
+        spinnerLists = SpinnerArrayLists()
+        viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle, 2)//fragmentManager, lifecycle, tab 개수
+        equipmentResultFragment = EquipmentResultFragment()
+        productResultFragment = ProductResultFragment()
+        errorLists = ArrayList()
+
+
+
         Log.d("장비번호", "onCreate: $equipmentCode")
 
         //들어갔을때 해당 정보로 worktime을 받아오고, 00:00:00 이면 일을 시작하겠냐고 물어봄
         selectWorkStartTime(userData.userCode, getCurDate().toString(), productCode)
+        
+        selectDoneAmount(produceNumber)//TODO 이거 오류 수정 해야함
 
 
         //제일 상단 뷰 세팅 (제품정보)
         binding.productCodeText.text = productCode
         binding.productNameText.text = productName
+
 
         //tabList 설정
         setTabList(binding.tabLayout, "제품 수량", "기계 불량")
@@ -197,6 +208,45 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
 
     }
 
+    private fun selectDoneAmount(produceNumber: String) {
+        val client: OkHttpClient = OkHttpClient()
+        val body = FormBody.Builder().add("produceNumber", produceNumber).build()
+        val request = Request.Builder().url(SELECT_DONE_AMOUNT_URL).post(body).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val result = response.body!!.string()
+                    try {
+                        val jsonObject = JSONObject(result)
+                        val jsonArray = JSONArray(jsonObject.getString("results"))
+
+                        //JsonObject 해체 작업
+                        val json = jsonArray.getJSONObject(0)
+                        val doneAmount = json.getString("doneAmount").toString()
+
+                        val bundle = Bundle()
+                        bundle.putString("doneAmount",doneAmount)
+                        productResultFragment.arguments = bundle
+
+                        //viewPager 어뎁터 설정
+
+
+
+                    } catch (e: Exception)//로그인 실패시
+                    {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+        })
+
+    }
     private fun setTabList(tabLayout: TabLayout, tab1: String, tab2: String)
     {
         tabLayout.addTab(binding.tabLayout.newTab().setText(tab1))
@@ -305,6 +355,9 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
         val dialog = builder.create()
         dialog.show()
     }
+
+
+
 
 
     private fun updateDoneAmount(acceptUser: String, doneAmount: String, workDate: String, productCode: String)

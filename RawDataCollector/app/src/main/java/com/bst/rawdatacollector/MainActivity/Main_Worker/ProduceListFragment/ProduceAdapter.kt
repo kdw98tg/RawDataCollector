@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.Producing
-import com.bst.rawdatacollector.Delegate.ProductClickListener
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ItemProducelistBinding
 
@@ -45,12 +44,7 @@ class ProduceAdapter(private val context: Context, private val productList: Arra
 
 
         _holder.binding.productLayout.setOnClickListener {
-            productItemTouchCallback?.productSelected(producing.productName,
-                producing.productCode,
-                producing.requestName,
-                producing.acceptName,
-                producing.equipmentCode,
-                producing.process)
+            productItemTouchCallback?.productSelected(producing)
         }
 
     }
@@ -58,6 +52,11 @@ class ProduceAdapter(private val context: Context, private val productList: Arra
     fun setProductItemTouchCallback(_productItemTouchCallback: ProductClickListener)
     {
         productItemTouchCallback = _productItemTouchCallback
+    }
+
+    interface ProductClickListener
+    {
+        fun productSelected(produce:Producing)
     }
 
     class ViewHolder(val binding: ItemProducelistBinding) : RecyclerView.ViewHolder(binding.root)
