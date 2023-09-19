@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.DoneAmount
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Product
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,7 +12,7 @@ import android.widget.Spinner
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
-import com.bst.rawdatacollector.Utils.Spinner.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.Utils.Spinners.CustomSpinnerAdapter
 import com.bst.rawdatacollector.databinding.ItemErrorListBinding
 
 class ErrorListAdapter(private val context: Context, private val errorList: ArrayList<ProductError>, private val errorType: ArrayList<String>) :

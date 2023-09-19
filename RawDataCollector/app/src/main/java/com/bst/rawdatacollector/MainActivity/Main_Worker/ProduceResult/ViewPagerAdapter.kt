@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.DoneAmount.ProductResultFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Product.ProductResultFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Equipment.EquipmentResultFragment
 
 class ViewPagerAdapter(fragmentManager:FragmentManager, lifecycle:Lifecycle, private val amount:Int): FragmentStateAdapter(fragmentManager,lifecycle)

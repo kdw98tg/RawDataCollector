@@ -9,17 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
 import com.bst.rawdatacollector.MainActivity.Main_Worker.MainActivityWorker
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.UserInfo.UserInfoActivity
+import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.MySharedPreferences
 import com.bst.rawdatacollector.databinding.FragmentAttendanceBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -34,13 +32,13 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Date
+import java.util.Locale
 
 
 class AttendanceFragment : Fragment()
 {
     private lateinit var binding: FragmentAttendanceBinding
 
-    private var isAttendance: Boolean = false
 
     companion object
     {
@@ -70,36 +68,46 @@ class AttendanceFragment : Fragment()
             binding.dayText.text = LocalDate.now().toString()
         }
         //시작하자마자 퇴근 못하기 때문에 false
-        binding.endBtn.isEnabled = false
+        if (!MySharedPreferences.getBoolean(requireContext(), "isAttendance", false))//출근한 상태가 아니면
+        {
+            binding.attendanceBtn.isEnabled = true
+            binding.endBtn.isEnabled = false
+        }
+        else if(MySharedPreferences.getBoolean(requireContext(),"isAttendanceComplete",false))//출근을 완료한 상태라면
+        {
+            //둘다 끌거임
+            binding.attendanceBtn.isEnabled = false
+            binding.endBtn.isEnabled = false
+        }
+
 
         //출근
         binding.attendanceBtn.setOnClickListener {
-            if (!isAttendance)
+            if (!MySharedPreferences.getBoolean(requireContext(), "isAttendance", false))//출근한 상태가 아니라면
             {
-                getAttendanceDialog()
+                getAttendanceDialog()//출근Dialog 띄움
             }
             else
             {
-                attendanceErrorDialog("이미 출근을 완료 하셨습니다. 관리자에게 문의하세요.")
+                attendanceErrorDialog("이미 출근을 완료 하셨습니다. 관리자에게 문의하세요.")//버그가 생긴거니까 관리자한테 문의 하라고 함
             }
         }
         //퇴근
         binding.endBtn.setOnClickListener {
 
-            if (isAttendance)
+            if (MySharedPreferences.getBoolean(requireContext(), "isAttendance", false))//출근한 상태라면
             {
-                workEndDialog()
+                workEndDialog()//퇴근 Dialog띄움
             }
             else
             {
-                attendanceErrorDialog("이미 출근을 완료 하셨습니다.")
+                attendanceErrorDialog("이미 퇴근을 완료 하셨습니다.")//이미 퇴근한거임
             }
         }
         //회원정보 조회
         binding.userInfoImg.setOnClickListener {
             val intent = Intent(requireContext(), UserInfoActivity::class.java)
             startActivity(intent)
-
         }
 
         //조퇴신청버튼
@@ -110,7 +118,7 @@ class AttendanceFragment : Fragment()
 
     private fun selectTotalWorkTime(userCode: String)
     {
-        val client: OkHttpClient = OkHttpClient()
+        val client = OkHttpClient()
         val body = FormBody.Builder().add("userCode", userCode).build()
         val request = Request.Builder().url(SELECT_TOTAL_WORK_TIME_URL).post(body).build()
         client.newCall(request).enqueue(object : Callback
@@ -137,7 +145,7 @@ class AttendanceFragment : Fragment()
 
                         UserData.getInstance(requireContext()).userTotalWorkTime = totalWorkTime.toInt()
 
-                        activity?.runOnUiThread{
+                        activity?.runOnUiThread {
                             binding.totalWorkTime.text = totalWorkTime + "시간"
                         }
                     }
@@ -152,10 +160,10 @@ class AttendanceFragment : Fragment()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun insertStartTime(userCode: String, curDate: LocalDate, now: String)
+    private fun insertStartTime(userCode: String, curDateTime: String)
     {
         val client = OkHttpClient()
-        val body = FormBody.Builder().add("userCode", userCode).add("curDate", curDate.toString()).add("curTime", now.toString()).build()
+        val body = FormBody.Builder().add("userCode", userCode).add("curDateTime", curDateTime.toString()).build()
         val request = Request.Builder().url(INSERT_START_TIME_URL).post(body).build()
 
         client.newCall(request).enqueue(object : Callback
@@ -177,10 +185,10 @@ class AttendanceFragment : Fragment()
         })
     }
 
-    private fun insertEndTime(userCode: String, curDate: LocalDate, now: String)
+    private fun insertEndTime(userCode: String, curDateTime: String)
     {
         val client = OkHttpClient()
-        val body = FormBody.Builder().add("userCode", userCode).add("curDate", curDate.toString()).add("curTime", now.toString()).build()
+        val body = FormBody.Builder().add("userCode", userCode).add("curDateTime", curDateTime).build()
         val request = Request.Builder().url(INSERT_END_TIME_URL).post(body).build()
 
         client.newCall(request).enqueue(object : Callback
@@ -232,8 +240,11 @@ class AttendanceFragment : Fragment()
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("출석").setMessage("출석 하시겠습니까?")
         builder.setPositiveButton("확인") { dialogInterface, i ->
-            insertStartTime(UserData.getInstance(requireContext()).userCode, getCurDate(), getCurTime())
-            isAttendance = true
+            insertStartTime(UserData.getInstance(requireContext()).userCode, getCurTime())
+            Log.d("데이트타임", "attendanceErrorDialog:  ${getCurTime()}")
+            //isAttendance = true
+            //sharedPreferences 에 저장
+            MySharedPreferences.putBoolean(requireContext(), "isAttendance", true)
             binding.attendanceBtn.isEnabled = false
             binding.endBtn.isEnabled = true
             binding.chronometer.start()//크로노미터
@@ -251,10 +262,11 @@ class AttendanceFragment : Fragment()
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("퇴근").setMessage("퇴근 하시겠습니까?")
         builder.setPositiveButton("확인") { dialogInterface, i ->
-            insertEndTime(UserData.getInstance(requireContext()).userCode, getCurDate(), getCurTime())
-            binding.attendanceBtn.isEnabled = true
+            insertEndTime(UserData.getInstance(requireContext()).userCode, getCurTime())
             binding.endBtn.isEnabled = false
             binding.chronometer.stop()//크로노미터
+            MySharedPreferences.putBoolean(requireContext(),"isAttendanceComplete",true)
+            //MySharedPreferences.putBoolean(requireContext(),"isAttendance",false)
         }
         builder.setNegativeButton("취소") { dialogInterface, i ->
 
@@ -269,7 +281,7 @@ class AttendanceFragment : Fragment()
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Error Message").setMessage(message)
         builder.setPositiveButton("확인") { dialogInterface, i ->
-            insertStartTime(UserData.getInstance(requireContext()).userCode, getCurDate(), getCurTime())
+
         }
         val dialog = builder.create()
         dialog.show()
@@ -281,12 +293,12 @@ class AttendanceFragment : Fragment()
         return LocalDate.now()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getCurTime(): String
     {
         val now = System.currentTimeMillis()
-        val date = Date(now)
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        return dateFormat.format(date)
+        val simpleDateFormat = SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(now)
+        return getCurDate().toString() + ' ' + simpleDateFormat
     }
 
 

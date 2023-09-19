@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bst.rawdatacollector.DataClass.ProductError
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.DoneAmount.ProductResultFragment
+import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Product.ProductResultFragment
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Equipment.EquipmentResultFragment
 import com.bst.rawdatacollector.R
-import com.bst.rawdatacollector.Utils.Spinner.SpinnerArrayLists
+import com.bst.rawdatacollector.Utils.Utils.Spinners.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.databinding.ActivityProduceResultBinding
 import com.google.android.material.tabs.TabLayout
@@ -234,8 +234,6 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
                         productResultFragment.arguments = bundle
 
                         //viewPager 어뎁터 설정
-
-
 
                     } catch (e: Exception)//로그인 실패시
                     {

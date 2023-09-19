@@ -1,4 +1,4 @@
-package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.DoneAmount
+package com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Product
 
 import android.content.Context
 import android.os.Bundle
@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ProductError
 import com.bst.rawdatacollector.Delegate.VoidArrayListDelegate
-import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.ProduceResultActivity
 import com.bst.rawdatacollector.databinding.FragmentProductResultBinding
 import okhttp3.*
 import org.json.JSONArray

@@ -5,10 +5,10 @@ mysqli_set_charset($con,"utf8");
 
 //안드에서 들어오는 값
 $userCode =$_POST['userCode'];
-$curDate =$_POST['curDate'];
-$curTime =$_POST['curTime'];
+$curDateTime =$_POST['curDateTime'];
+//$curTime =$_POST['curTime'];
 
-$query = "INSERT INTO attendance (user_code, date, start_time) VALUES ('$userCode','$curDate','$curTime')";
+$query = "INSERT INTO attendance (user_code, start_time) VALUES ('$userCode','$curDateTime')";
 
 $res = mysqli_query($con,$query);
 

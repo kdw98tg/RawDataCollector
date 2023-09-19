@@ -2,7 +2,10 @@ package com.bst.rawdatacollector.MainActivity.Main_Manager.ManagementFragment
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemLongClickListener
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bst.rawdatacollector.DataClass.Member
@@ -24,15 +27,14 @@ class MemberAdapter(
         val member = memberList[position]
 
         holder.binding.collaboratorNameText.text=member.memberName
-        holder.binding.collaboratorEmailText.text = member.memberEmail
         holder.binding.positionText.text = member.memberPosition
 
-        holder.binding.moreTaskLayout.setOnClickListener {
-            val moreTasks = MoreTasks(context,member)
+        holder.binding.moreTaskLayout.setOnLongClickListener {
+            val moreTasks = MoreTasks(context, member)
             moreTasks.show(fragmentManager, MoreTasks.TAG)
+            false
         }
     }
-
 
     override fun getItemCount(): Int
     {
@@ -40,4 +42,7 @@ class MemberAdapter(
     }
 
     inner class ViewHolder(val binding: ItemWorkerBinding) : RecyclerView.ViewHolder(binding.root)
+
 }
+
+

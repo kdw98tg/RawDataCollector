@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.NewWork
 import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
 import com.bst.rawdatacollector.UserData.UserData
-import com.bst.rawdatacollector.Utils.Spinner.CustomSpinnerAdapter
-import com.bst.rawdatacollector.Utils.Spinner.SpinnerArrayLists
+import com.bst.rawdatacollector.Utils.Utils.Spinners.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.Utils.Spinners.SpinnerArrayLists
 import com.bst.rawdatacollector.databinding.ActivityCreateNewWorkBinding
 import okhttp3.Call
 import okhttp3.Callback
