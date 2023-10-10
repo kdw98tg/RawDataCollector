@@ -9,6 +9,8 @@ import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
 import com.bst.rawdatacollector.MainActivity.Main_Worker.MainActivityWorker
 import com.bst.rawdatacollector.Register.RegisterActivity
 import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.MySharedPreferences
+import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.SharedPreferencesProperties
 import com.bst.rawdatacollector.databinding.ActivityLoginBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -20,30 +22,37 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
-class LoginActivity : AppCompatActivity()
-{
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
 
-    companion object
-    {
+    companion object {
         private const val LOGIN_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_User_Login.php"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //init
 
+
         binding.loginBtn.setOnClickListener {
-            binding.loginBtn.isEnabled=false
+            binding.loginBtn.isEnabled = false
             val userId = binding.idText.text.toString().trim() { it <= ' ' }//id 추출
             val userPw = binding.pwText.text.toString().trim() { it <= ' ' }//pw 추출
-
-            loginRequest(userId, userPw)//로그인 요청
+            if (MySharedPreferences.getBoolean(this@LoginActivity, SharedPreferencesProperties.autoLogin, false)) {
+                //통신해서 SharedPref에 값을 넣어야 함
+            } else {
+                loginRequest(userId, userPw)//로그인 요청
+            }
+        }
+        if (binding.autoLoginCheckBox.isChecked) {
+            MySharedPreferences.putBoolean(this@LoginActivity, SharedPreferencesProperties.autoLogin, true)
+        }
+        else{
+            MySharedPreferences.putBoolean(this@LoginActivity,SharedPreferencesProperties.autoLogin,false);
         }
 
         binding.registerBtn.setOnClickListener {
@@ -51,24 +60,20 @@ class LoginActivity : AppCompatActivity()
         }
     }
 
-    override fun onRestart()
-    {
+    override fun onRestart() {
         super.onRestart()
         binding.loginBtn.isEnabled = true
     }
 
-    private fun loginRequest(_userId: String, _userPw: String)
-    {
+    private fun loginRequest(_userId: String, _userPw: String) {
         val client = OkHttpClient()
 
         val body = FormBody.Builder().add("userCode", _userId).add("userPw", _userPw).build()
 
         val request = Request.Builder().url(LOGIN_URL).post(body).build()
 
-        client.newCall(request).enqueue(object : Callback
-        {
-            override fun onFailure(call: Call, e: IOException)
-            {
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
                     Toast.makeText(applicationContext, "인터넷 연결을 확인해 주세요", Toast.LENGTH_SHORT).show()
                     binding.loginBtn.isEnabled = true
@@ -76,14 +81,11 @@ class LoginActivity : AppCompatActivity()
                 }
             }
 
-            override fun onResponse(call: Call, response: Response)
-            {
-                if (response.isSuccessful)
-                {
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
 
                     val result = response.body!!.string()
-                    try
-                    {
+                    try {
                         val jsonObject = JSONObject(result)
                         val jsonArray = JSONArray(jsonObject.getString("results"))
 
@@ -101,26 +103,42 @@ class LoginActivity : AppCompatActivity()
                         val userPosition = json.getString("position").toString()
                         val userWage = json.getString("wage").toInt()
                         //userData에 집어넣음
-                        setUserData(userCode, userPw, userName, userEmail, userCompany, userPhoneNumber, userProfileImg, userPosition,userWage)
+                        setUserData(
+                            userCode,
+                            userPw,
+                            userName,
+                            userEmail,
+                            userCompany,
+                            userPhoneNumber,
+                            userProfileImg,
+                            userPosition,
+                            userWage
+                        )
 
                         //다 됐으면 권한에 따라 MainActivity로 옮김
 
                         if (userPosition == "사원")//사원이면 작업자 메인으로
                         {
                             moveActivity(MainActivityWorker::class.java)
-                        }
-                        else if(userPosition=="관리자")//관리자면 관리자 화면으로
+                        } else if (userPosition == "관리자")//관리자면 관리자 화면으로
                         {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, "관리자 모드로 로그인 하셨습니다", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "관리자 모드로 로그인 하셨습니다",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             moveActivity(MainActivityManager::class.java)
                         }
-                    }
-                    catch (e: Exception)//로그인 실패시
+                    } catch (e: Exception)//로그인 실패시
                     {
                         runOnUiThread {
-                            Toast.makeText(applicationContext, "사번 또는 비밀번호를 확인하세요", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                applicationContext,
+                                "사번 또는 비밀번호를 확인하세요",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             binding.loginBtn.isEnabled = true
                         }
                     }
@@ -138,14 +156,13 @@ class LoginActivity : AppCompatActivity()
         userPhoneNumber: String,
         userProfileImg: String,
         userPosition: String,
-        userWage:Int
-    )
-    {
+        userWage: Int
+    ) {
         val userData = UserData.getInstance(this@LoginActivity)
         userData.userCode = userCode
         userData.userPw = userPw
         userData.userName = userName
-        userData.userEmail= userEmail
+        userData.userEmail = userEmail
         userData.userCompany = userCompany
         userData.userPhoneNumber = userPhoneNumber
         userData.userProfileImg = userProfileImg

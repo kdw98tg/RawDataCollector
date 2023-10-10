@@ -18,6 +18,7 @@ import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.UserInfo.UserInfoActivity
 import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.MySharedPreferences
+import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.SharedPreferencesProperties
 import com.bst.rawdatacollector.databinding.FragmentAttendanceBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -68,12 +69,12 @@ class AttendanceFragment : Fragment()
             binding.dayText.text = LocalDate.now().toString()
         }
         //시작하자마자 퇴근 못하기 때문에 false
-        if (!MySharedPreferences.getBoolean(requireContext(), "isAttendance", false))//출근한 상태가 아니면
+        if (!MySharedPreferences.getBoolean(requireContext(), SharedPreferencesProperties.isAttendance, false))//출근한 상태가 아니면
         {
             binding.attendanceBtn.isEnabled = true
             binding.endBtn.isEnabled = false
         }
-        else if(MySharedPreferences.getBoolean(requireContext(),"isAttendanceComplete",false))//출근을 완료한 상태라면
+        else if(MySharedPreferences.getBoolean(requireContext(),SharedPreferencesProperties.attendanceComplete,false))//출근을 완료한 상태라면
         {
             //둘다 끌거임
             binding.attendanceBtn.isEnabled = false
@@ -83,7 +84,7 @@ class AttendanceFragment : Fragment()
 
         //출근
         binding.attendanceBtn.setOnClickListener {
-            if (!MySharedPreferences.getBoolean(requireContext(), "isAttendance", false))//출근한 상태가 아니라면
+            if (!MySharedPreferences.getBoolean(requireContext(), SharedPreferencesProperties.isAttendance, false))//출근한 상태가 아니라면
             {
                 getAttendanceDialog()//출근Dialog 띄움
             }
@@ -244,7 +245,7 @@ class AttendanceFragment : Fragment()
             Log.d("데이트타임", "attendanceErrorDialog:  ${getCurTime()}")
             //isAttendance = true
             //sharedPreferences 에 저장
-            MySharedPreferences.putBoolean(requireContext(), "isAttendance", true)
+            MySharedPreferences.putBoolean(requireContext(), SharedPreferencesProperties.isAttendance, true)
             binding.attendanceBtn.isEnabled = false
             binding.endBtn.isEnabled = true
             binding.chronometer.start()//크로노미터
@@ -265,7 +266,7 @@ class AttendanceFragment : Fragment()
             insertEndTime(UserData.getInstance(requireContext()).userCode, getCurTime())
             binding.endBtn.isEnabled = false
             binding.chronometer.stop()//크로노미터
-            MySharedPreferences.putBoolean(requireContext(),"isAttendanceComplete",true)
+            MySharedPreferences.putBoolean(requireContext(),SharedPreferencesProperties.attendanceComplete,true)
             //MySharedPreferences.putBoolean(requireContext(),"isAttendance",false)
         }
         builder.setNegativeButton("취소") { dialogInterface, i ->
