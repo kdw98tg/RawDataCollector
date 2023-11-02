@@ -48,7 +48,7 @@ class EquipmentResultFragment : Fragment()
 
     companion object
     {
-        private const val SELECT_ERROR_TYPE_URL = "${URLManager.PHP_URL}Select_ErrorType.php/"
+        private const val SELECT_ERROR_TYPE_URL = "${URLManager.PHP_URL}Select_EquipmentErrorType.php"
     }
 
     override fun onAttach(context: Context)
@@ -71,7 +71,7 @@ class EquipmentResultFragment : Fragment()
         super.onViewCreated(view, savedInstanceState)
         //init
         errorType = ArrayList()
-        selectErrorType("설비")
+        selectErrorType()
 
         binding.startTimeBtn.setOnClickListener {
             setEquipmentStoppedTimeDialog(binding.startTimeBtn)
@@ -240,11 +240,12 @@ class EquipmentResultFragment : Fragment()
         return "$hour 시간 $minute 분"
     }
 
-    private fun selectErrorType(_type: String)
+
+
+    private fun selectErrorType()
     {
         val client = OkHttpClient()
-        val body = FormBody.Builder().add("type", _type).build()
-        val request = Request.Builder().url(SELECT_ERROR_TYPE_URL).post(body).build()
+        val request = Request.Builder().url(SELECT_ERROR_TYPE_URL).build()
 
         client.newCall(request).enqueue(object : Callback
         {

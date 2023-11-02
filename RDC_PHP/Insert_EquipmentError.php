@@ -11,7 +11,7 @@ $errorType = $_POST['errorType'];
 $stopTime = $_POST['stoppedTime'];
 $restartTime = $_POST['restartTime'];
 
-$query = "INSERT INTO equipment_error (report_code, equipment_code, error_type, stop_time, restart_time) 
+$query = "INSERT INTO equipment_error (report_code, equipment_code, error_name, stop_time, restart_time) 
 VALUES ('$reportUser','$equipmentCode','$errorType','$stopTime','$restartTime')";
 // $query = "INSERT INTO equipment_error (report_code, equipment_code, error_type, stop_time, restart_time) 
 // VALUES ('$reportUser','$equipmentCode','$errorType','1000-01-01 00:00:00','1000-01-01 00:00:00')";

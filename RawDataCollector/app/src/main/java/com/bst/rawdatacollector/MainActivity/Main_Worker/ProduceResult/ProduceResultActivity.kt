@@ -56,7 +56,6 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
     private var equipmentErrorType: String = ""
     private var equipmentStoppedTime: String = ""
     private var equipmentRestartTime: String = ""
-    private var latestDoneAmount:String="0"
 
     private val client: OkHttpClient = OkHttpClient()
 
@@ -81,8 +80,7 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
         private const val SELECT_WORK_START_TIME_URL = "${URLManager.PHP_URL}Select_WorkStartTime.php"
         private const val SELECT_WORK_END_TIME_URL = "${URLManager.PHP_URL}Select_WorkEndTime.php"//그날 기계 수리가 안됐을때 사용할듯
         private const val SELECT_DONE_AMOUNT_URL =
-            "http://kdw98tg.dothome.co.kr/RDC/Select_DoneAmount.php/"//처음 DoneAmount 갯수를 가져옴
-
+            "${URLManager.PHP_URL}Select_DoneAmount.php/"//처음 DoneAmount 갯수를 가져옴
 
     }
 
@@ -229,12 +227,9 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
                         //JsonObject 해체 작업
                         val json = jsonArray.getJSONObject(0)
                         val doneAmount = json.getString("doneAmount").toString()
-
-                        val bundle = Bundle()
-                        bundle.putString("doneAmount",doneAmount)
-                        productResultFragment.arguments = bundle
-
-                        //viewPager 어뎁터 설정
+                        
+                        //doneAmount 전달
+                        productResultFragment.setDoneAmount(doneAmount)
 
                     } catch (e: Exception)//로그인 실패시
                     {

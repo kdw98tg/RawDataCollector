@@ -4,9 +4,7 @@ require_once "dbDetails.php";
 $con = mysqli_connect(HOST,USER,PASS,DB);
     mysqli_set_charset($con,"utf8");		
 
-	$type = $_POST['type'];	
-
-	$query = "SELECT error_name FROM error_types WHERE error_type = '$type' ";
+	$query = "SELECT error_name FROM equipment_error_types";
 	 
 	//echo $query;
 	

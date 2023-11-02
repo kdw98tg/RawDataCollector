@@ -10,7 +10,7 @@ $productCode =$_POST['productCode'];
 $errorType = $_POST['errorType'];
 $amount = $_POST['amount'];
 
-$query = "INSERT INTO product_error (report_code, product_code, error_type, amount) VALUES ('$reportUser','$productCode','$errorType','$amount')";
+$query = "INSERT INTO product_error (report_code, product_code, error_name, amount) VALUES ('$reportUser','$productCode','$errorType','$amount')";
 
 $res = mysqli_query($con,$query);
 
