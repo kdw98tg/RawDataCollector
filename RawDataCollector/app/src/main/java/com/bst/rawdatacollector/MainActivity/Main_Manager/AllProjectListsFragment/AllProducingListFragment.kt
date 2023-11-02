@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Producing
 import com.bst.rawdatacollector.MainActivity.Main_Manager.CreateNewWork.CreateNewWorkActivity
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentProductListManagerBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -34,7 +35,7 @@ class AllProducingListFragment : Fragment()
 
     companion object
     {
-        private const val SELECT_PRODUCING_LIST_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_AllProducingLists.php"
+        private const val SELECT_PRODUCING_LIST_URL = "${URLManager.PHP_URL}Select_AllProducingLists.php"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View

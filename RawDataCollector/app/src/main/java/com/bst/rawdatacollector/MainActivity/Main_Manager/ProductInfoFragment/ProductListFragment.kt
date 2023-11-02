@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Product
 import com.bst.rawdatacollector.MainActivity.Main_Manager.ProductInfoActivity.ProductInfoActivity
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentProductInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -29,7 +30,7 @@ class ProductListFragment : Fragment()
 
     companion object
     {
-        private const val SELECT_PRODUCT_LIST = "http://kdw98tg.dothome.co.kr/RDC/Select_ProductList.php/"
+        private const val SELECT_PRODUCT_LIST = "${URLManager.PHP_URL}Select_ProductList.php/"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View

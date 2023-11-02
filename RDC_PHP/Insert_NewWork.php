@@ -1,6 +1,7 @@
 <?php
+require_once "dbDetails.php";
 
-$con = mysqli_connect("localhost","kdw98tg","Rlaehddn1!","kdw98tg");
+$con = mysqli_connect(HOST,USER,PASS,DB);
 mysqli_set_charset($con,"utf8");
 
 //안드에서 들어오는 값

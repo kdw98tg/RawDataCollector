@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityUserInfoBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -36,8 +37,9 @@ class UserInfoActivity : AppCompatActivity()
 
     companion object
     {
-        private const val INSERT_PROFILE_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_UserProfileImg.php/"
-        private const val PIC_LOAD_URL = "http://kdw98tg.dothome.co.kr/htmlBSTABC123"
+        private const val INSERT_PROFILE_URL = "${URLManager.PHP_URL}Insert_UserProfileImg.php/"
+        //여기에는 다른 URL이 들어와야함
+        private const val PIC_LOAD_URL = "${URLManager.PHP_URL}htmlBSTABC123"
     }
 
     override fun onCreate(savedInstanceState: Bundle?)

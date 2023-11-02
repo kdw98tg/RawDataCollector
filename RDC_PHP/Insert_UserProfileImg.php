@@ -1,6 +1,7 @@
 <?php
+require_once "dbDetails.php";
 
-$con = mysqli_connect("localhost","kdw98tg","Rlaehddn1!","kdw98tg");
+$con = mysqli_connect(HOST,USER,PASS,DB);
 mysqli_set_charset($con,"utf8");
 
 header("Content-Type:text/html;charset=utf-8");

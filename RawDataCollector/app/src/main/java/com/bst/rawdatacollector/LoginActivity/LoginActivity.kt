@@ -11,6 +11,7 @@ import com.bst.rawdatacollector.Register.RegisterActivity
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.MySharedPreferences
 import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.SharedPreferencesProperties
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityLoginBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     companion object {
-        private const val LOGIN_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_User_Login.php"
+        private const val LOGIN_URL = "${URLManager.PHP_URL}Select_User_Login.php"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

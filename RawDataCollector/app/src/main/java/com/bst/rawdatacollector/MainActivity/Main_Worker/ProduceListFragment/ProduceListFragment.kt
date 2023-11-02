@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Producing
 import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.ProduceResultActivity
 import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentProduceListBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -31,7 +32,7 @@ class ProduceListFragment() : Fragment() {
     private lateinit var productList: ArrayList<Producing>
 
     companion object {
-        private const val PRODUCT_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Today_Products.php"
+        private const val PRODUCT_URL = "${URLManager.PHP_URL}Select_Today_Products.php"
     }
 
 

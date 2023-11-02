@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Member
 import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentManagementBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -28,7 +29,7 @@ class ManagementFragment : Fragment()
 
     companion object
     {
-        private const val SELECT_MEMBER_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_MembersInfo.php"
+        private const val SELECT_MEMBER_URL = "${URLManager.PHP_URL}Select_MembersInfo.php"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View

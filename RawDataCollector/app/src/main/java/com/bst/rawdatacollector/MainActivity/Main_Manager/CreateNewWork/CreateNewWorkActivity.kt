@@ -18,6 +18,7 @@ import com.bst.rawdatacollector.MainActivity.Main_Manager.MainActivityManager
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.Utils.Utils.Spinners.CustomSpinnerAdapter
 import com.bst.rawdatacollector.Utils.Utils.Spinners.SpinnerArrayLists
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityCreateNewWorkBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -41,12 +42,12 @@ class CreateNewWorkActivity : AppCompatActivity()
 
     companion object
     {
-        private const val SELECT_EQUIPMENTS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Equipments.php"
-        private const val SELECT_WORKERS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Workers.php"
-        private const val SELECT_PRODUCTS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Products.php"
-        private const val SELECT_PROCESSES_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Processes.php"
-        private const val INSERT_NEW_WORK_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_NewWork.php"
-        private const val SELECT_TOOLS_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_Tools.php"
+        private const val SELECT_EQUIPMENTS_URL = "${URLManager.PHP_URL}Select_Equipments.php"
+        private const val SELECT_WORKERS_URL = "${URLManager.PHP_URL}Select_Workers.php"
+        private const val SELECT_PRODUCTS_URL = "${URLManager.PHP_URL}Select_Products.php"
+        private const val SELECT_PROCESSES_URL = "${URLManager.PHP_URL}Select_Processes.php"
+        private const val INSERT_NEW_WORK_URL = "${URLManager.PHP_URL}Insert_NewWork.php"
+        private const val SELECT_TOOLS_URL = "${URLManager.PHP_URL}Select_Tools.php"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

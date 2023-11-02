@@ -19,6 +19,7 @@ import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.UserInfo.UserInfoActivity
 import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.MySharedPreferences
 import com.bst.rawdatacollector.Utils.Utils.SharedPreferences.SharedPreferencesProperties
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentAttendanceBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -43,9 +44,9 @@ class AttendanceFragment : Fragment()
 
     companion object
     {
-        private const val INSERT_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_StartTime.php/"
-        private const val INSERT_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_EndTime.php/"
-        private const val SELECT_TOTAL_WORK_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_TotalWorkTime.php/"
+        private const val INSERT_START_TIME_URL = "${URLManager.PHP_URL}Insert_StartTime.php/"
+        private const val INSERT_END_TIME_URL = "${URLManager.PHP_URL}Insert_EndTime.php/"
+        private const val SELECT_TOTAL_WORK_TIME_URL = "${URLManager.PHP_URL}Select_TotalWorkTime.php/"
     }
 
 

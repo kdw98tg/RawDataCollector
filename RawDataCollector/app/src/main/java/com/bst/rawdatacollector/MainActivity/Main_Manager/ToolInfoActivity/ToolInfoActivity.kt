@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.ToolUses
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityToolInfoBinding
 import okhttp3.*
 import org.json.JSONArray
@@ -26,7 +27,7 @@ class ToolInfoActivity : AppCompatActivity()
     private var usesAmount: String? = null
 
     companion object{
-        private const val SELECT_TOOL_USES_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_ToolUses.php/"
+        private const val SELECT_TOOL_USES_URL = "${URLManager.PHP_URL}Select_ToolUses.php/"
     }
 
     override fun onCreate(savedInstanceState: Bundle?)

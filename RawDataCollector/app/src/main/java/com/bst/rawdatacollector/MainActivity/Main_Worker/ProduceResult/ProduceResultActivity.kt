@@ -19,6 +19,7 @@ import com.bst.rawdatacollector.MainActivity.Main_Worker.ProduceResult.Equipment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.Utils.Utils.Spinners.SpinnerArrayLists
 import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityProduceResultBinding
 import com.google.android.material.tabs.TabLayout
 import okhttp3.Call
@@ -72,13 +73,13 @@ class ProduceResultActivity : AppCompatActivity(), ProductResultFragment.DoneAmo
 
     companion object
     {
-        private const val INSERT_DONE_AMOUNT_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_DoneAmount.php"
-        private const val INSERT_PRODUCT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_ProductError.php"
-        private const val INSERT_EQUIPMENT_ERROR_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_EquipmentError.php"
-        private const val UPDATE_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkStartTime.php"
-        private const val UPDATE_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Update_WorkEndTime.php"
-        private const val SELECT_WORK_START_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkStartTime.php"
-        private const val SELECT_WORK_END_TIME_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkEndTime.php"//그날 기계 수리가 안됐을때 사용할듯
+        private const val INSERT_DONE_AMOUNT_URL = "${URLManager.PHP_URL}Update_DoneAmount.php"
+        private const val INSERT_PRODUCT_ERROR_URL = "${URLManager.PHP_URL}Insert_ProductError.php"
+        private const val INSERT_EQUIPMENT_ERROR_URL = "${URLManager.PHP_URL}Insert_EquipmentError.php"
+        private const val UPDATE_WORK_START_TIME_URL = "${URLManager.PHP_URL}Update_WorkStartTime.php"
+        private const val UPDATE_WORK_END_TIME_URL = "${URLManager.PHP_URL}Update_WorkEndTime.php"
+        private const val SELECT_WORK_START_TIME_URL = "${URLManager.PHP_URL}Select_WorkStartTime.php"
+        private const val SELECT_WORK_END_TIME_URL = "${URLManager.PHP_URL}Select_WorkEndTime.php"//그날 기계 수리가 안됐을때 사용할듯
         private const val SELECT_DONE_AMOUNT_URL =
             "http://kdw98tg.dothome.co.kr/RDC/Select_DoneAmount.php/"//처음 DoneAmount 갯수를 가져옴
 

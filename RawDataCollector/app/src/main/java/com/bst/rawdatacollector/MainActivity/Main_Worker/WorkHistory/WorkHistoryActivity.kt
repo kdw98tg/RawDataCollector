@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.WorkList
 import com.bst.rawdatacollector.UserData.UserData
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityWorkHistoryBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -30,7 +31,7 @@ class WorkHistoryActivity : AppCompatActivity()
     private var selectedDate:String? = null
 
     companion object{
-        private const val SELECT_WORK_HISTORY_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_WorkHistory.php"
+        private const val SELECT_WORK_HISTORY_URL = "${URLManager.PHP_URL}Select_WorkHistory.php"
     }
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)

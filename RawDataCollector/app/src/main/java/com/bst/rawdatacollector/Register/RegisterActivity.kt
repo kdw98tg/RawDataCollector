@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.bst.rawdatacollector.LoginActivity.LoginActivity
 import com.bst.rawdatacollector.R
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityRegisterBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -21,7 +22,7 @@ class RegisterActivity : AppCompatActivity()
 
     companion object
     {
-        private const val REGISTER_URL = "http://kdw98tg.dothome.co.kr/RDC/Insert_UserInfo.php"
+        private const val REGISTER_URL = "${URLManager.PHP_URL}Insert_UserInfo.php"
     }
 
     override fun onCreate(savedInstanceState: Bundle?)

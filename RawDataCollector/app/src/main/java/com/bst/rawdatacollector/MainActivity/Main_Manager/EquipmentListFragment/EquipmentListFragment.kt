@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bst.rawdatacollector.DataClass.Equipment
 import com.bst.rawdatacollector.MainActivity.Main_Manager.EquipmentInfoActivity.EquipmentInfoActivity
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentEquipmentInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -29,7 +30,7 @@ class EquipmentListFragment : Fragment()
 
     companion object
     {
-        private const val SELECT_EQUIPMENT_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_EquipmentList.php/"
+        private const val SELECT_EQUIPMENT_URL = "${URLManager.PHP_URL}Select_EquipmentList.php/"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View

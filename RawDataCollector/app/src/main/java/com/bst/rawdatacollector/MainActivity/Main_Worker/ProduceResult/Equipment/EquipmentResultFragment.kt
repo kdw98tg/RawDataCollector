@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.bst.rawdatacollector.R
 import com.bst.rawdatacollector.Utils.Utils.Spinners.CustomSpinnerAdapter
+import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.FragmentMachineInfoBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -47,7 +48,7 @@ class EquipmentResultFragment : Fragment()
 
     companion object
     {
-        private const val SELECT_ERROR_TYPE_URL = "http://kdw98tg.dothome.co.kr/RDC/Select_ErrorType.php/"
+        private const val SELECT_ERROR_TYPE_URL = "${URLManager.PHP_URL}Select_ErrorType.php/"
     }
 
     override fun onAttach(context: Context)
