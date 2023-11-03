@@ -39,7 +39,9 @@ class UserInfoActivity : AppCompatActivity()
     {
         private const val INSERT_PROFILE_URL = "${URLManager.PHP_URL}Insert_UserProfileImg.php/"
         //여기에는 다른 URL이 들어와야함
-        private const val PIC_LOAD_URL = "${URLManager.PHP_URL}htmlBSTABC123"
+        //userProfile 내용 가져오기
+        private const val PIC_LOAD_URL = "${URLManager.PHP_USER_IMAGE_URL}"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -63,7 +65,6 @@ class UserInfoActivity : AppCompatActivity()
         }
 
     }
-
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
@@ -110,7 +111,7 @@ class UserInfoActivity : AppCompatActivity()
 
         //  파일, 사용자 아이디, 파일 이름
         Log.d("112233", "insertUserProfileImg: $userCode")
-        server.postRequest(userCode, "html$fileName", body).enqueue(object : Callback<String>
+        server.postRequest(userCode, "$fileName", body).enqueue(object : Callback<String>
         {
             override fun onResponse(call: Call<String>, response: Response<String>)
             {
