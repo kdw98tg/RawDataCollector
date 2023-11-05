@@ -26,7 +26,6 @@ import java.io.IOException
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
-
     companion object {
         private const val LOGIN_URL = "${URLManager.PHP_URL}Select_User_Login.php"
     }

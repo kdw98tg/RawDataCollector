@@ -17,7 +17,6 @@ $process=$_POST['process'];
 $query = "INSERT INTO producing (request_user, accept_user, work_date,equipment_code,product_code,tool_code, request_amount,process) 
 VALUES ('$requestUser','$acceptUser','$workDate','$equipmentCode','$productCode','$toolCode','$requestAmount','$process')";
 
-
 $res = mysqli_query($con,$query);
 
 mysqli_close($con);

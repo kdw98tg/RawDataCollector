@@ -98,8 +98,8 @@ class CreateNewWorkActivity : AppCompatActivity()
                 Log.d("팀원관리", "onCreate: $equipment, ${workDate.toString()}")
                 insertNewWork(requestUser, acceptUser, workDate.toString(), equipment, product, toolCode,amount, process)
             }
-            val intent = Intent(this@CreateNewWorkActivity,MainActivityManager::class.java)
-            startActivity(intent)
+//            val intent = Intent(this@CreateNewWorkActivity,MainActivityManager::class.java)
+//            startActivity(intent)
         }
     }
 
@@ -297,8 +297,8 @@ class CreateNewWorkActivity : AppCompatActivity()
                 if (response.isSuccessful)
                 {
                     runOnUiThread {
-
                         Toast.makeText(applicationContext, "성공적으로 등록 되었습니다", Toast.LENGTH_SHORT).show()
+                        finish()
                     }
                 }
             }
