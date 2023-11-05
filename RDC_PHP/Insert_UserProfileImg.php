@@ -10,17 +10,14 @@ $userCode = $_POST['userCode'];
 
 $serverDir = $_POST['serverDir'];
 
-//$filePath = $_POST['filePath'];
-
 // 파일 받기
 $profile_File =$_FILES['uploaded_file']['name'];
 
 // 저장할 경로
 
-$file_name =$_SERVER['DOCUMENT_ROOT']."/RDC/UserProfile";//업로드된 파일의 이름을 가져옴
+$file_name =$_SERVER['DOCUMENT_ROOT']."/RDC/Profile/UserProfile";//업로드된 파일의 이름을 가져옴
 $tempData = $_FILES['uploaded_file']['tmp_name'];
 $name = basename($_FILES["uploaded_file"]['name']);
-
 
 $query ="UPDATE user SET profile_img = $serverDir WHERE user_code = $userCode ";
 
@@ -30,8 +27,7 @@ $query ="UPDATE user SET profile_img = $serverDir WHERE user_code = $userCode ";
 //echo ($userId);
 
 $file_path = $file_name."/".$name.".jpg";
-//echo $file_name;
-//echo "file_path = " . $file_path;
+
 if(isset($profile_File)){
  if(move_uploaded_file($tempData, $file_path))
  //if(move_uploaded_file($tempData, "/kdw98tg/www/RDC/Test.jpg"))//되는 코드임

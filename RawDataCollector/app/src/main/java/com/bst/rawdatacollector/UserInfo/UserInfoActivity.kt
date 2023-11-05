@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import com.bst.rawdatacollector.DataClass.Producing
+import com.bst.rawdatacollector.MainActivity.Main_Manager.AllProjectListsFragment.AllProducingListFragment
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityUserInfoBinding
@@ -16,10 +18,15 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.ImagePicker.Companion.REQUEST_CODE
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import okhttp3.FormBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +36,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import java.io.File
+import java.io.IOException
 
 class UserInfoActivity : AppCompatActivity()
 {
@@ -38,10 +46,8 @@ class UserInfoActivity : AppCompatActivity()
     companion object
     {
         private const val INSERT_PROFILE_URL = "${URLManager.PHP_URL}Insert_UserProfileImg.php/"
+        private const val SELECT_USER_PROFILE_URL = "${URLManager.PHP_URL}Select_UserProfile.php"
         //여기에는 다른 URL이 들어와야함
-        //userProfile 내용 가져오기
-        private const val PIC_LOAD_URL = "${URLManager.PHP_USER_IMAGE_URL}"
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -52,6 +58,9 @@ class UserInfoActivity : AppCompatActivity()
 
         //init
         userData = UserData.getInstance(this@UserInfoActivity)
+
+        //Image viewer
+        selectUserProfileImg()
 
         //viewInit
         viewInit()
@@ -130,6 +139,45 @@ class UserInfoActivity : AppCompatActivity()
         })
     }
 
+    private fun selectUserProfileImg()
+    {
+        val client: OkHttpClient = OkHttpClient()
+        val body = FormBody.Builder().add("userCode", UserData.getInstance(this).userCode).build()
+        val request = Request.Builder().url(SELECT_USER_PROFILE_URL).post(body).build()
+        client.newCall(request).enqueue(object : okhttp3.Callback
+        {
+            override fun onFailure(call: okhttp3.Call, e: IOException)
+            {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response)
+            {
+                if (response.isSuccessful)
+                {
+                    try
+                    {
+                        val jsonObject = JSONObject(response.body!!.string())
+                        val jsonArray = JSONArray(jsonObject.getString("results"))
+
+                        val json: JSONObject = jsonArray.getJSONObject(0)
+                        val profile = json.getString("profile_img")
+
+                        runOnUiThread {
+                            viewUserProfile(profile)
+                        }
+                    }
+                    catch (_e: Exception)
+                    {
+                        _e.printStackTrace()
+                    }
+
+                }
+            }
+
+        })
+    }
+
     private fun viewInit()
     {
         binding.nameText.text = userData.userName
@@ -137,8 +185,12 @@ class UserInfoActivity : AppCompatActivity()
         binding.userCode.text = userData.userCode
         binding.position.text = userData.userPosition
         binding.phoneNumber.text = userData.userPhoneNumber
+    }
 
-        Glide.with(this).load(PIC_LOAD_URL).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.userProfileImg)
+    private fun viewUserProfile(imageUrl: String)
+    {
+        val userProfileUrl = URLManager.PHP_USER_IMAGE_URL + imageUrl + ".jpg"
+        Glide.with(this).load(userProfileUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.userProfileImg)
     }
 
     private interface RetrofitInterFace
