@@ -22,7 +22,7 @@ $file_name =$_SERVER['DOCUMENT_ROOT']."/RDC/Profile/UserProfile";//업로드된 
 $tempData = $_FILES['uploaded_file']['tmp_name'];
 $name = basename($_FILES["uploaded_file"]['name']);
 
-$query ="UPDATE user SET profile_img = '$serverDir' WHERE user_code = '$userCode' ";
+$query ="UPDATE user SET profile_img = $serverDir WHERE user_code = $userCode ";
 
 
 // // 임시폴더에서  ->  경로 이동 .파일이름bin
@@ -44,12 +44,14 @@ if(isset($profile_File)){
  if(move_uploaded_file($tempData, $file_path))
  {
     //업로드도 됐고, 파일 이동도 완료됨
-  echo "완료";
+  echo $query;
+
  }
  else
  {
     //파일이동 실패
   echo "실패";
+
  }
 }
 else{
@@ -57,6 +59,7 @@ else{
     //이 조건은 파일이 업로드 되지 않았을 때 실행됨
     //파일 없음 문자열을 출력
  echo "파일없음";
+
 }
 mysqli_query($con,$query);
 
