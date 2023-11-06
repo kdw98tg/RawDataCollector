@@ -6,18 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import com.bst.rawdatacollector.DataClass.Producing
-import com.bst.rawdatacollector.MainActivity.Main_Manager.AllProjectListsFragment.AllProducingListFragment
 import com.bst.rawdatacollector.UserData.UserData
 import com.bst.rawdatacollector.Utils.Utils.URL.URLManager
 import com.bst.rawdatacollector.databinding.ActivityUserInfoBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.github.dhaval2404.imagepicker.ImagePicker.Companion.REQUEST_CODE
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import okhttp3.FormBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -31,7 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -110,10 +104,10 @@ class UserInfoActivity : AppCompatActivity()
 
 
         //gson builder
-        val gson: Gson = GsonBuilder().setLenient().create()
+        //val gson: Gson = GsonBuilder().setLenient().create()
 
         //creating retrofit object
-        val retrofit = Retrofit.Builder().baseUrl(INSERT_PROFILE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build()
+        val retrofit = Retrofit.Builder().baseUrl(INSERT_PROFILE_URL).addConverterFactory(ScalarsConverterFactory.create()).build()
 
         //creating our api
         val server = retrofit.create(RetrofitInterFace::class.java)
