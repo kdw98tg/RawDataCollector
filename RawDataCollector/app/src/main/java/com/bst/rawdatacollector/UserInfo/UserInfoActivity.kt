@@ -93,7 +93,7 @@ class UserInfoActivity : AppCompatActivity()
         val userCode: String = UserData.getInstance(this@UserInfoActivity).userCode
         val userCompany: String = UserData.getInstance(this@UserInfoActivity).userCompany
         //TODO 파일 이름 바꾸기
-        val fileName: String = userCompany + userCode.replace("@", "").replace(".", "")
+        val fileName: String = userCode.replace("@", "").replace(".", "")
 
         //val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
         val requestBody: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
@@ -114,7 +114,7 @@ class UserInfoActivity : AppCompatActivity()
 
         //  파일, 사용자 아이디, 파일 이름
         Log.d("112233", "insertUserProfileImg: $userCode")
-        server.postRequest(userCode, "$fileName", body).enqueue(object : Callback<String>
+        server.postRequest(userCode,  body).enqueue(object : Callback<String>
         {
             override fun onResponse(call: Call<String>, response: Response<String>)
             {
@@ -194,7 +194,7 @@ class UserInfoActivity : AppCompatActivity()
         @Multipart
         @POST("html/Insert_UserProfileImg.php")
         fun postRequest(
-            @Part("userCode") userId: String, @Part("serverDir") serverDir: String, @Part imageFile: MultipartBody.Part
+            @Part("userCode") userId: String,  @Part imageFile: MultipartBody.Part
         ): Call<String>
     }
 }
