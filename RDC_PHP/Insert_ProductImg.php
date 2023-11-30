@@ -7,7 +7,7 @@ mysqli_set_charset($con,"utf8");
 header("Content-Type:text/html;charset=utf-8");
 
 //userCode가 서버DIR로 바로 사용될것임
-$productCode = $_POST['productCode'];
+$productCode = $_POST['keyValue'];
 
 
 // 파일 받기
